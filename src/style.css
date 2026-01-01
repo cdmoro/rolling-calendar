@@ -1,0 +1,216 @@
+:root {
+    --bg-color: white;
+    --text-color: #333;
+    --border-color: #ccc;
+    --accent-color: #4a90e2;
+    --weekend-bg: #f6f6f6;
+}
+
+[data-theme="dark"],
+[data-theme^="dark-"] {
+    --bg-color: #1a1a1a;
+    --text-color: #f0f0f0;
+    --border-color: #333;
+    --weekend-bg: #232323;
+}
+
+[data-theme$="-blue"] {
+    --accent-color: #4a90e2;
+}
+
+[data-theme$="-olive"] {
+    --accent-color: #808000;
+}
+
+[data-theme$="-red"] {
+    --accent-color: #e74c3c;
+}
+
+[data-theme$="-redgrape"] {
+    --accent-color: #8e44ad;
+}
+
+[data-theme$="-orange"] {
+    --accent-color: #e67e22;
+}
+
+[data-theme$="-teal"] {
+    --accent-color: #1abc9c;
+}
+
+[data-theme$="-pink"] {
+    --accent-color: #e84393;
+}
+
+[data-theme$="-cyan"] {
+    --accent-color: #00bcd4;
+}
+
+[data-theme$="-lime"] {
+    --accent-color: #cddc39;
+}
+
+[data-theme$="-purple"] {
+    --accent-color: #9c27b0;
+}
+
+[data-theme$="-green"] {
+    --accent-color: #27ae60;
+}
+
+[data-theme$="-burgundy"] {
+    --accent-color: #701215;
+}
+
+body {
+    margin: 0;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-family: system-ui, sans-serif;
+}
+
+.header {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.layout {
+    display: flex;
+}
+
+.sidebar {
+    width: 260px;
+    padding: 12px;
+    border-right: 1px solid var(--border-color);
+}
+
+.calendar {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    padding: 12px;
+}
+
+#calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.month {
+    border: 2px solid var(--accent-color);
+}
+
+.week {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day {
+    width: 40px;
+    height: 30px;
+    border: 1px solid var(--border-color);
+    padding: 2px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+
+.day.empty {
+    background: color-mix(in srgb, var(--accent-color) 10%, transparent 90%);
+}
+
+.event {
+    background: var(--accent-color);
+    color: white;
+    font-size: 0.65em;
+    padding: 1px 2px;
+    margin-top: 2px;
+}
+
+.event-list {
+    border-top: 1px solid var(--border-color);
+    padding: 12px;
+}
+
+.month-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 40px);
+    grid-auto-rows: 30px;
+}
+
+.week-header {
+    display: grid;
+    grid-template-columns: repeat(7, 40px);
+    grid-auto-rows: 20px;
+    font-weight: bold;
+    text-align: center;
+    font-size: .8rem;
+    line-height: 1.5;
+    background: var(--weekend-bg);
+}
+
+.week-header div {
+    border: solid var(--border-color) 1px;
+}
+
+.week-header div {
+    border-right-width: 0;
+    border-left-width: 0;
+}
+
+.week-header div:first-child {
+    border-left-width: 1px;
+}
+
+.week-header div:last-child {
+    border-right-width: 1px;
+}
+
+
+.weekday {
+    padding: 4px 0;
+}
+
+.day.weekend {
+    /* background: var(--weekend-bg); */
+    font-weight: normal;
+    color: color-mix(in srgb, var(--text-color) 40%, transparent 60%);
+}
+
+.day.marked:not(.weekend) {
+    background: var(--accent-color);
+    color: white;
+}
+
+.day.marked.half:not(.weekend) {
+    /* background: linear-gradient(45deg,
+            var(--accent-color) 50%,
+            transparent 50%);
+    background-position: 10px; */
+
+    background-color: var(--bg-color);
+    opacity: 0.8;
+    background-image: linear-gradient(135deg,
+        var(--accent-color) 25%, transparent 25%),
+        linear-gradient(225deg, var(--accent-color) 25%, transparent 25%),
+        linear-gradient(45deg, var(--accent-color) 25%, transparent 25%),
+        linear-gradient(315deg, var(--accent-color) 25%, color-mix(in srgb, var(--accent-color) 70%, transparent 30%) 25%);
+    background-position: 5px 0, 5px 0, 0 0, 0 0;
+    background-size: 5px 5px;
+    background-repeat: repeat;
+}
+
+.month-title {
+    text-align: center;
+    font-weight: bold;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.5rem 0;
+}
