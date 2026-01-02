@@ -15,28 +15,31 @@
     <input type="month" id="start-month" />
 
     <select id="language-select">
-      <option value="en">EN</option>
-      <option value="es">ES</option>
+      <option value="en" data-label="english">English</option>
+      <option value="es" data-label="spanish">Spanish</option>
+      <option value="it" data-label="italian">Italian</option>
+      <option value="fr" data-label="french">French</option>
+      <option value="pt" data-label="portuguese">Portuguese</option>
     </select>
 
     <select id="theme-select">
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
+      <option value="light" data-label="light">Light</option>
+      <option value="dark" data-label="dark">Dark</option>
     </select>
 
     <select id="color-select">
-      <option value="blue">Blue</option>
-      <option value="olive">Olive</option>
-      <option value="red">Red</option>
-      <option value="redgrape">Red Grape</option>
-      <option value="orange">Orange</option>
-      <option value="teal">Teal</option>
-      <option value="pink">Pink</option>
-      <option value="cyan">Cyan</option>
-      <option value="lime">Lime</option>
-      <option value="purple">Purple</option>
-      <option value="green">Green</option>
-      <option value="burgundy">Burgundy</option>
+      <option value="blue" data-label="blue">Blue</option>
+      <option value="olive" data-label="olive">Olive</option>
+      <option value="red" data-label="red">Red</option>
+      <option value="redgrape" data-label="redgrape">Red Grape</option>
+      <option value="orange" data-label="orange">Orange</option>
+      <option value="teal" data-label="teal">Teal</option>
+      <option value="pink" data-label="pink">Pink</option>
+      <option value="cyan" data-label="cyan">Cyan</option>
+      <option value="lime" data-label="lime">Lime</option>
+      <option value="purple" data-label="purple">Purple</option>
+      <option value="green" data-label="green">Green</option>
+      <option value="burgundy" data-label="burgundy">Burgundy</option>
     </select>
   </header>
 
@@ -75,12 +78,11 @@
       </div>
 
       <div class="reference">
-        <div><span class="day marked"></span> <span data-label="fullDay"></span></div>
-        <div><span class="day marked half"></span> <span data-label="halfDay"></span></div>
+        <div><span class="day marked weekday"></span> <span data-label="fullDay"></span></div>
+        <div><span class="day marked half weekday"></span> <span data-label="halfDay"></span></div>
       </div>
 
       <div class="event-list">
-        <!-- <h2 data-label="events"></h2> -->
         <div id="event-list"></div>
       </div>
     </section>
