@@ -1,7 +1,7 @@
 import { getFixedMonthGrid } from '../calendar/monthGrid'
 import { calendarState } from '../state/calendar'
-import { getDayMark } from '../events/events'
-import { getLocalizedWeekdays } from '../calendar/weekdays'
+import { getEvent, getRangePosition, toLocalISODate } from '../events/events'
+import { addOnClickToWeekdays, getLocalizedWeekdays } from '../calendar/weekdays'
 import { state } from '../state/app'
 
 export function renderCalendar() {
@@ -55,20 +55,32 @@ export function renderCalendar() {
                 cell.textContent = day.getDate().toString()
 
                 const weekday = day.getDay()
-                if (weekday === 0 || weekday === 6) {
-                    cell.classList.add('weekend')
-                }
+                cell.classList.add(weekday === 0 || weekday === 6 ? 'weekend' : 'weekday')
+                cell.dataset.date = toLocalISODate(day);
 
-                const mark = getDayMark(day)
 
-                if (mark) {
+                const event = getEvent(day)
+
+                if (event) {
                     cell.classList.add('marked')
+                    cell.classList.add(event.start === event.end ? 'single' : 'range');
+                    cell.classList.toggle('half', event.halfDay)
 
-                    if (mark.halfDay) {
-                        cell.classList.add('half')
+                    const pos = getRangePosition(
+                        toLocalISODate(day),
+                        event.start,
+                        event.end!
+                    )
+
+                    if (pos === 'start') {
+                        cell.classList.add('range-start')
+                    } else if (pos === 'end') {
+                        cell.classList.add('range-end')
+                    } else if (pos === 'middle') {
+                        cell.classList.add('range-middle')
                     }
 
-                    cell.title = mark.event.title
+                    cell.title = event.title
                 }
 
             }
@@ -82,4 +94,6 @@ export function renderCalendar() {
         monthEl.appendChild(monthGrid)
         grid.appendChild(monthEl)
     }
+
+    addOnClickToWeekdays();
 }

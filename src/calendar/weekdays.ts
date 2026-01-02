@@ -18,3 +18,18 @@ export function getLocalizedWeekdays(
     ))
   )
 }
+
+export function addOnClickToWeekdays() {
+    const startDateInput = document.getElementById('startDate') as HTMLInputElement;
+    const weekDays = document.querySelectorAll<HTMLDivElement>('.weekday');
+    
+    weekDays.forEach((day) => {
+      day.addEventListener('click', () => {
+        if (day.classList.contains('marked')) {
+          return;
+        }
+    
+        startDateInput.value = day.dataset.date || '';
+      })
+    });
+}

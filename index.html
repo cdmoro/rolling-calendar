@@ -52,7 +52,7 @@
 
         <label>
           <span data-label="startDate"></span>
-          <input type="date" name="start" required />
+          <input type="date" id="startDate" name="start" required />
         </label>
 
         <label>
@@ -69,13 +69,18 @@
       </form>
     </aside>
 
-    <section>
+    <section class="main-section">
       <div class="calendar">
         <div id="calendar-grid"></div>
       </div>
 
+      <div class="reference">
+        <div><span class="day marked"></span> <span data-label="fullDay"></span></div>
+        <div><span class="day marked half"></span> <span data-label="halfDay"></span></div>
+      </div>
+
       <div class="event-list">
-        <h2 data-label="events"></h2>
+        <!-- <h2 data-label="events"></h2> -->
         <div id="event-list"></div>
       </div>
     </section>

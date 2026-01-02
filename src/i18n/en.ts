@@ -6,5 +6,6 @@ export default {
     endDate: 'End date',
     addEvent: 'Add event',
     events: 'Events',
+    fullDay: 'Full day',
     halfDay: 'Half day'
 }
