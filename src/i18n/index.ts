@@ -3,9 +3,10 @@ import es from './es';
 import fr from './fr';
 import it from './it';
 import pt from './pt';
+import de from './de';
 import { state } from '../state/app';
 
-const dicts = { en, es, fr, it, pt };
+const dicts = { en, es, fr, it, pt, de };
 
 export function applyTranslations() {
   const dict = dicts[state.language];

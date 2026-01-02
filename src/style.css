@@ -183,12 +183,22 @@ body {
 #event-list .event-item {
     font-size: 0.9em;
     padding: 4px 6px;
-    border-bottom: solid 1px var(--border-color);
+    /* border-bottom: solid 1px var(--border-color); */
+    border-bottom: solid 1px color-mix(in srgb, var(--accent-color) 40%, transparent 60%);
+    display: flex;
+}
+
+#event-list .event-item:hover {
+    background: color-mix(in srgb, var(--accent-color) 20%, transparent 80%);
 }
 
 .event-date {
     min-width: 150px;
     display: inline-block;
+}
+
+.event-title {
+    flex: 1;
 }
 
 .month-grid {
@@ -258,6 +268,12 @@ body {
     background-position: 5px 0, 5px 0, 0 0, 0 0;
     background-size: 5px 5px;
     background-repeat: repeat; */
+}
+
+.day.weekday.selected {
+    background: radial-gradient(circle at center,
+            color-mix(in srgb, var(--accent-color) 70%, var(--bg-color) 30%) 50%,
+            var(--bg-color) 50%);
 }
 
 /* .day.marked.weekend {

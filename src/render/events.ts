@@ -38,6 +38,17 @@ function formatEventDate(
   return `${startMonth} ${start.getDate()} – ${endMonth} ${end.getDate()}`;
 }
 
+function handleDelete(id: string) {
+  if (!id) return;
+
+  const index = calendarState.events.findIndex((event) => event.id === id);
+
+  if (index !== -1) {
+    calendarState.events.splice(index, 1);
+    renderEventList();
+  }
+}
+
 export function renderEventList() {
   const strings = getStrings();
   const list = document.querySelector<HTMLDivElement>('#event-list')!;
@@ -55,9 +66,22 @@ export function renderEventList() {
     div.innerHTML = `
             <span class="event-date">${dateText}</span>
             <span class="event-title">${event.title}${halfDayText}</span>
+            <span class="event-actiions">
+                <button class="event-delete" data-id="${event.id}">&times;</button>
+            </span>
         `;
 
     list.appendChild(div);
+  });
+
+  document.getElementById('event-list')!.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
+      '.event-delete'
+    );
+
+    if (!btn) return;
+
+    handleDelete(btn.dataset.id!);
   });
 
   renderCalendar();

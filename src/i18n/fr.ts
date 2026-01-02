@@ -13,6 +13,7 @@ export default {
   italian: 'Italien',
   french: 'Français',
   portuguese: 'Portugais',
+  german: 'Allemand',
   light: 'Clair',
   dark: 'Sombre',
   blue: 'Bleu',
