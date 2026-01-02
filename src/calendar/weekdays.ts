@@ -22,6 +22,8 @@ export function getLocalizedWeekdays(lang: Language): string[] {
 export function addOnClickToWeekdays() {
   const startDateInput =
     document.querySelector<HTMLInputElement>('#startDate')!;
+    const endDateInput =
+    document.querySelector<HTMLInputElement>('#endDate')!;
   const titleInput = document.querySelector<HTMLInputElement>('#title')!;
   const weekDays = document.querySelectorAll<HTMLDivElement>('.weekday');
 
@@ -36,6 +38,7 @@ export function addOnClickToWeekdays() {
       weekDays.forEach((d) => d.classList.remove('selected'));
       el.classList.add('selected');
       startDateInput.value = el.dataset.date || '';
+      endDateInput.min = el.dataset.date || '';
       titleInput.focus();
     });
   });

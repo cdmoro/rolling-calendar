@@ -66,7 +66,7 @@ export function renderEventList() {
     div.innerHTML = `
             <span class="event-date">${dateText}</span>
             <span class="event-title">${event.title}${halfDayText}</span>
-            <span class="event-actiions">
+            <span class="event-actions">
                 <button class="event-delete" data-id="${event.id}">&times;</button>
             </span>
         `;

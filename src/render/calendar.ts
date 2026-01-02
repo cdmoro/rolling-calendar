@@ -59,6 +59,7 @@ export function renderCalendar() {
           weekday === 0 || weekday === 6 ? 'weekend' : 'weekday'
         );
         cell.dataset.date = toLocalISODate(day);
+        cell.dataset.day = weekday.toString();
 
         const event = getEvent(day);
 

@@ -5,5 +5,5 @@ export type State = {
   startMonth?: string;
   language: Language;
   theme: Theme;
-  color?: string;
+  color: string;
 };

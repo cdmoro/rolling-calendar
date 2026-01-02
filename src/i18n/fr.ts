@@ -27,6 +27,7 @@ export default {
   lime: 'Citron vert',
   purple: 'Pourpre',
   green: 'Vert',
+  grey: 'Gris',
   burgundy: 'Bordeaux',
   settings: 'Paramètres'
 };

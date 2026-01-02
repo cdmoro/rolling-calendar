@@ -8,6 +8,10 @@ import type { CalendarEvent } from './types/calendar';
 
 const startMonthInput =
   document.querySelector<HTMLInputElement>('#start-month')!;
+const startDateInput = 
+  document.querySelector<HTMLInputElement>('#startDate')!;
+const endDateInput = 
+  document.querySelector<HTMLInputElement>('#endDate')!;
 
 export function setTheme(theme: Theme, color: string = 'blue') {
   const html = document.documentElement;
@@ -21,12 +25,25 @@ export function setTheme(theme: Theme, color: string = 'blue') {
   localStorage.setItem('theme', html.getAttribute('data-theme')!);
 }
 
+function resetForm() {
+  const form = document.querySelector<HTMLFormElement>('#event-form')!;
+  form.reset();
+}
+
 startMonthInput.addEventListener('change', (e) => {
   const [y, m] = (e.target as HTMLInputElement).value.split('-').map(Number);
+
   localStorage.setItem('startMonth', (e.target as HTMLInputElement).value);
+
   calendarState.startYear = y;
   calendarState.startMonth = m - 1;
+
+  const minDate = `${y}-${String(m).padStart(2, '0')}-01`;
+  startDateInput.min = minDate;
+  endDateInput.min = minDate;
+
   renderCalendar();
+  resetForm();
 });
 
 function getCalendarStartDate(): Date {
@@ -99,12 +116,16 @@ document
     setTheme(theme, state.color);
   });
 
+startDateInput.addEventListener('change', (e) => {
+  endDateInput.min = (e.target as HTMLInputElement).value;
+});
+
 function main() {
   initState();
   applyTranslations();
   renderCalendar();
 
-  const color = state.color || 'blue';
+  const color = state.color;
   const html = document.documentElement;
   html.setAttribute('data-theme', `${state.theme}-${color}`);
 

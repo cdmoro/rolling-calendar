@@ -27,6 +27,7 @@ export default {
   lime: 'Lima',
   purple: 'Púrpura',
   green: 'Verde',
+  grey: 'Gris',
   burgundy: 'Burdeos',
   settings: 'Configuraciones'
 };
