@@ -1,99 +1,98 @@
-import { getFixedMonthGrid } from '../calendar/monthGrid'
-import { calendarState } from '../state/calendar'
-import { getEvent, getRangePosition, toLocalISODate } from '../events/events'
-import { addOnClickToWeekdays, getLocalizedWeekdays } from '../calendar/weekdays'
-import { state } from '../state/app'
+import { getFixedMonthGrid } from '../calendar/monthGrid';
+import { calendarState } from '../state/calendar';
+import { getEvent, getRangePosition, toLocalISODate } from '../events/events';
+import {
+  addOnClickToWeekdays,
+  getLocalizedWeekdays
+} from '../calendar/weekdays';
+import { state } from '../state/app';
 
 export function renderCalendar() {
-    const grid = document.getElementById('calendar-grid')!
-    grid.innerHTML = ''
+  const grid = document.getElementById('calendar-grid')!;
+  grid.innerHTML = '';
 
-    for (let i = 0; i < 12; i++) {
-        const date = new Date(
-            calendarState.startYear,
-            calendarState.startMonth + i
-        )
+  for (let i = 0; i < 12; i++) {
+    const date = new Date(
+      calendarState.startYear,
+      calendarState.startMonth + i
+    );
 
-        const monthEl = document.createElement('div')
-        monthEl.className = 'month'
+    const monthEl = document.createElement('div');
+    monthEl.className = 'month';
 
-        /* ---- Month title ---- */
-        const title = document.createElement('div')
-        title.className = 'month-title'
-        title.textContent = date.toLocaleString(state.language, {
-            month: 'long',
-            year: 'numeric'
-        })
-        monthEl.appendChild(title)
+    /* ---- Month title ---- */
+    const title = document.createElement('div');
+    title.className = 'month-title';
+    title.textContent = date.toLocaleString(state.language, {
+      month: 'long',
+      year: 'numeric'
+    });
+    monthEl.appendChild(title);
 
-        /* ---- Weekday header ---- */
-        const header = document.createElement('div')
-        header.className = 'week-header'
+    /* ---- Weekday header ---- */
+    const header = document.createElement('div');
+    header.className = 'week-header';
 
-        getLocalizedWeekdays(state.language).forEach(label => {
-            const h = document.createElement('div')
-            h.textContent = label
-            header.appendChild(h)
-        })
+    getLocalizedWeekdays(state.language).forEach((label) => {
+      const h = document.createElement('div');
+      h.textContent = label;
+      header.appendChild(h);
+    });
 
-        monthEl.appendChild(header)
+    monthEl.appendChild(header);
 
-        /* ---- Days grid ---- */
-        const monthGrid = document.createElement('div')
-        monthGrid.className = 'month-grid'
+    /* ---- Days grid ---- */
+    const monthGrid = document.createElement('div');
+    monthGrid.className = 'month-grid';
 
-        const weeks = getFixedMonthGrid(
-            date.getFullYear(),
-            date.getMonth()
-        )
+    const weeks = getFixedMonthGrid(date.getFullYear(), date.getMonth());
 
-        weeks.flat().forEach(day => {
-            const cell = document.createElement('div')
-            cell.className = 'day'
+    weeks.flat().forEach((day) => {
+      const cell = document.createElement('div');
+      cell.className = 'day';
 
-            if (day) {
-                cell.textContent = day.getDate().toString()
+      if (day) {
+        cell.textContent = day.getDate().toString();
 
-                const weekday = day.getDay()
-                cell.classList.add(weekday === 0 || weekday === 6 ? 'weekend' : 'weekday')
-                cell.dataset.date = toLocalISODate(day);
+        const weekday = day.getDay();
+        cell.classList.add(
+          weekday === 0 || weekday === 6 ? 'weekend' : 'weekday'
+        );
+        cell.dataset.date = toLocalISODate(day);
 
+        const event = getEvent(day);
 
-                const event = getEvent(day)
+        if (event) {
+          cell.classList.add('marked');
+          cell.classList.add(event.start === event.end ? 'single' : 'range');
+          cell.classList.toggle('half', event.halfDay);
 
-                if (event) {
-                    cell.classList.add('marked')
-                    cell.classList.add(event.start === event.end ? 'single' : 'range');
-                    cell.classList.toggle('half', event.halfDay)
+          const pos = getRangePosition(
+            toLocalISODate(day),
+            event.start,
+            event.end!
+          );
 
-                    const pos = getRangePosition(
-                        toLocalISODate(day),
-                        event.start,
-                        event.end!
-                    )
+          if (pos === 'start') {
+            cell.classList.add('range-start');
+          } else if (pos === 'end') {
+            cell.classList.add('range-end');
+          } else if (pos === 'middle') {
+            cell.classList.add('range-middle');
+          }
 
-                    if (pos === 'start') {
-                        cell.classList.add('range-start')
-                    } else if (pos === 'end') {
-                        cell.classList.add('range-end')
-                    } else if (pos === 'middle') {
-                        cell.classList.add('range-middle')
-                    }
+          cell.title = event.title;
+        }
+      } else {
+        cell.classList.add('empty');
+      }
 
-                    cell.title = event.title
-                }
+      monthGrid.appendChild(cell);
+    });
 
-            }
-            else {
-                cell.classList.add('empty')
-            }
+    monthEl.appendChild(monthGrid);
+    grid.appendChild(monthEl);
+  }
 
-            monthGrid.appendChild(cell)
-        })
-
-        monthEl.appendChild(monthGrid)
-        grid.appendChild(monthEl)
-    }
-
-    addOnClickToWeekdays();
+  addOnClickToWeekdays();
 }
