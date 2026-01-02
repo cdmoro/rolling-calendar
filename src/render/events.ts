@@ -40,7 +40,7 @@ function formatEventDate(
 
 export function renderEventList() {
   const strings = getStrings();
-  const list = document.getElementById('event-list')!;
+  const list = document.querySelector<HTMLDivElement>('#event-list')!;
   list.innerHTML = '';
 
   calendarState.events.forEach((event) => {

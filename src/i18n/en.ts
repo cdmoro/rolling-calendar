@@ -1,5 +1,5 @@
 export default {
-  title: 'School Calendar',
+  title: 'Academic Calendar',
   newEvent: 'New event',
   eventTitle: 'Title',
   startDate: 'Start date',
@@ -27,4 +27,5 @@ export default {
   purple: 'Purple',
   green: 'Green',
   burgundy: 'Burgundy',
+  settings: 'Settings'
 };

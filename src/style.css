@@ -71,9 +71,16 @@ body {
 
 .header {
     display: flex;
+    align-items: center;
     gap: 12px;
     padding: 12px;
     border-bottom: 1px solid var(--border-color);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 1.8em;
+    flex: 1;
 }
 
 .layout {
@@ -87,6 +94,28 @@ body {
     position: sticky;
     top: 0;
     height: 100vh;
+}
+
+.sidebar h2 {
+    font-size: 1.2em;
+}
+
+.sidebar h2:first-child {
+    margin-top: 0;
+}
+
+.sidebar form label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.9em;
+}
+
+.sidebar .form-control {
+    margin-bottom: 12px;
+}
+
+.sidebar input[type="checkbox"] {
+    margin-left: 0px;
 }
 
 .main-section {

@@ -20,9 +20,8 @@ export function getLocalizedWeekdays(lang: Language): string[] {
 }
 
 export function addOnClickToWeekdays() {
-  const startDateInput = document.getElementById(
-    'startDate'
-  ) as HTMLInputElement;
+  const startDateInput =
+    document.querySelector<HTMLInputElement>('#start-date')!;
   const weekDays = document.querySelectorAll<HTMLDivElement>('.weekday');
 
   weekDays.forEach((day) => {

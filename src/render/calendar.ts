@@ -8,7 +8,7 @@ import {
 import { state } from '../state/app';
 
 export function renderCalendar() {
-  const grid = document.getElementById('calendar-grid')!;
+  const grid = document.querySelector<HTMLDivElement>('#calendar-grid')!;
   grid.innerHTML = '';
 
   for (let i = 0; i < 12; i++) {

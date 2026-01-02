@@ -12,8 +12,6 @@
   <header class="header">
     <h1 data-label="title"></h1>
 
-    <input type="month" id="start-month" />
-
     <select id="language-select">
       <option value="en" data-label="english">English</option>
       <option value="es" data-label="spanish">Spanish</option>
@@ -45,28 +43,34 @@
 
   <main class="layout">
     <aside class="sidebar">
+      <h2 data-label="settings"></h2>
+
+      <input type="month" id="start-month" />
+
       <h2 data-label="newEvent"></h2>
 
       <form id="event-form">
-        <label>
-          <span data-label="eventTitle"></span>
-          <input name="title" required />
-        </label>
+        <div class="form-control">
+        <label for="title" data-label="eventTitle"></label>
+          <input id="title" name="title" required />
+        </div>
 
-        <label>
-          <span data-label="startDate"></span>
-          <input type="date" id="startDate" name="start" required />
-        </label>
+        <div class="form-control">
+          <label for="startDate" data-label="startDate"></label>
+            <input type="date" id="startDate" name="start" required />
+        </div>
 
-        <label>
-          <input type="checkbox" name="halfDay" />
-          <span data-label="halfDay"></span>
-        </label>
+        <div class="form-control">
+          <label for="endDate" data-label="endDate"></label>
+          <input type="date" id="endDate" name="end" />
+        </div>
 
-        <label>
-          <span data-label="endDate"></span>
-          <input type="date" name="end" />
-        </label>
+        <div class="form-control">
+          <label>
+            <input type="checkbox" name="halfDay" />
+            <span data-label="halfDay"></span>
+          </label>
+        </div>
 
         <button type="submit" data-label="addEvent"></button>
       </form>

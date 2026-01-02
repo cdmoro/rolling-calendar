@@ -6,9 +6,8 @@ import { applyTranslations } from './i18n';
 import type { Language, Theme } from './types/app';
 import type { CalendarEvent } from './types/calendar';
 
-const startMonthInput = document.getElementById(
-  'start-month'
-) as HTMLInputElement;
+const startMonthInput =
+  document.querySelector<HTMLInputElement>('#start-month')!;
 
 export function setTheme(theme: Theme, color: string = 'blue') {
   const html = document.documentElement;
@@ -24,6 +23,7 @@ export function setTheme(theme: Theme, color: string = 'blue') {
 
 startMonthInput.addEventListener('change', (e) => {
   const [y, m] = (e.target as HTMLInputElement).value.split('-').map(Number);
+  localStorage.setItem('startMonth', (e.target as HTMLInputElement).value);
   calendarState.startYear = y;
   calendarState.startMonth = m - 1;
   renderCalendar();
@@ -41,65 +41,75 @@ export function sortEventsByStartDate(events: CalendarEvent[]) {
   });
 }
 
-document.getElementById('event-form')!.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const form = e.target as HTMLFormElement;
-  const data = new FormData(form);
+document
+  .querySelector<HTMLFormElement>('#event-form')!
+  .addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const data = new FormData(form);
 
-  const calendarStart = getCalendarStartDate();
-  const eventStart = new Date(data.get('start') as string);
+    const calendarStart = getCalendarStartDate();
+    const eventStart = new Date(data.get('start') as string);
 
-  if (!data.get('end')) {
-    data.set('end', data.get('start') as string);
-  }
+    if (!data.get('end')) {
+      data.set('end', data.get('start') as string);
+    }
 
-  if (eventStart < calendarStart) {
-    alert('Event start date must be within the visible calendar range.');
-    return false;
-  }
+    if (eventStart < calendarStart) {
+      alert('Event start date must be within the visible calendar range.');
+      return false;
+    }
 
-  calendarState.events.push({
-    id: crypto.randomUUID(),
-    title: data.get('title') as string,
-    start: data.get('start') as string,
-    end: data.get('end') as string,
-    halfDay: data.get('halfDay') === 'on'
+    calendarState.events.push({
+      id: crypto.randomUUID(),
+      title: data.get('title') as string,
+      start: data.get('start') as string,
+      end: data.get('end') as string,
+      halfDay: data.get('halfDay') === 'on'
+    });
+
+    form.reset();
+    sortEventsByStartDate(calendarState.events);
+    renderEventList();
   });
 
-  form.reset();
-  sortEventsByStartDate(calendarState.events);
-  renderEventList();
-});
+document
+  .querySelector<HTMLSelectElement>('#language-select')!
+  .addEventListener('change', (e) => {
+    state.language = (e.target as HTMLSelectElement).value as Language;
+    localStorage.setItem('language', state.language);
+    applyTranslations();
+    renderCalendar();
+    renderEventList();
+  });
 
-document.getElementById('language-select')!.addEventListener('change', (e) => {
-  state.language = (e.target as HTMLSelectElement).value as Language;
-  applyTranslations();
-  renderCalendar();
-  renderEventList();
-});
+document
+  .querySelector<HTMLSelectElement>('#theme-select')!
+  .addEventListener('change', (e) => {
+    state.theme = (e.target as HTMLSelectElement).value as Theme;
+    setTheme(state.theme, state.color);
+  });
 
-document.getElementById('theme-select')!.addEventListener('change', (e) => {
-  state.theme = (e.target as HTMLSelectElement).value as Theme;
-  setTheme(state.theme, state.color);
-});
+document
+  .querySelector<HTMLSelectElement>('#color-select')!
+  .addEventListener('change', (e) => {
+    const theme = document.querySelector<HTMLSelectElement>('#theme-select')!
+      .value as Theme;
+    state.color = (e.target as HTMLSelectElement).value;
+    setTheme(theme, state.color);
+  });
 
-document.getElementById('color-select')!.addEventListener('change', (e) => {
-  const theme = document.querySelector<HTMLSelectElement>('#theme-select')!
-    .value as Theme;
-  state.color = (e.target as HTMLSelectElement).value;
-  setTheme(theme, state.color);
-});
-
-function init() {
-  applyTranslations();
-  renderCalendar();
+function main() {
   initState();
+  applyTranslations();
+  renderCalendar();
 
   const color = state.color || 'blue';
   const html = document.documentElement;
   html.setAttribute('data-theme', `${state.theme}-${color}`);
 
   startMonthInput.value = `${calendarState.startYear}-${String(calendarState.startMonth + 1).padStart(2, '0')}`;
+
   document.querySelector<HTMLSelectElement>('#theme-select')!.value =
     state.theme;
   document.querySelector<HTMLSelectElement>('#color-select')!.value = color;
@@ -107,4 +117,4 @@ function init() {
     state.language;
 }
 
-init();
+main();
