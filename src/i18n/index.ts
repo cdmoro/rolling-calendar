@@ -5,22 +5,38 @@ import it from './it';
 import pt from './pt';
 import de from './de';
 import { state } from '../state/app';
+import type { LanguageKey } from '../types/i18n';
 
 const dicts = { en, es, fr, it, pt, de };
 
+export const languageTranslation: Record<LanguageKey, string> = {
+  english: 'English',
+  spanish: 'Español',
+  italian: 'Italiano',
+  french: 'Français',
+  portuguese: 'Português',
+  german: 'Deutsch'
+};
+
+export function getTranslations() {
+  return {
+    ...dicts[state.language],
+    ...languageTranslation
+  };
+}
+
 export function applyTranslations() {
-  const dict = dicts[state.language];
+  const dict = getTranslations();
 
   document.querySelectorAll<HTMLElement>('[data-label]').forEach((el) => {
     const key = el.dataset.label as keyof typeof dict;
     el.textContent = dict[key];
   });
-}
 
-export function getStrings() {
-  return dicts[state.language];
+  document.documentElement.setAttribute('lang', state.language);
 }
 
 export function t(key: keyof (typeof dicts)['en']) {
-  return dicts[state.language][key];
+  const dict = getTranslations();
+  return dict[key];
 }

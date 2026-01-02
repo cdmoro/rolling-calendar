@@ -1,3 +1,12 @@
+export const languagesKeys = [
+  'english',
+  'spanish',
+  'italian',
+  'french',
+  'portuguese',
+  'german'
+] as const;
+
 export const translationKeys = [
   'title',
   'newEvent',
@@ -8,12 +17,6 @@ export const translationKeys = [
   'events',
   'fullDay',
   'halfDay',
-  'english',
-  'spanish',
-  'italian',
-  'french',
-  'portuguese',
-  'german',
   'light',
   'dark',
   'blue',
@@ -33,4 +36,5 @@ export const translationKeys = [
 ] as const;
 
 export type TranslationKey = (typeof translationKeys)[number];
+export type LanguageKey = (typeof languagesKeys)[number];
 export type Translations = Record<TranslationKey, string>;
