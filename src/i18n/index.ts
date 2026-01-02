@@ -20,3 +20,7 @@ export function applyTranslations() {
 export function getStrings() {
   return dicts[state.language];
 }
+
+export function t(key: keyof (typeof dicts)['en']) {
+  return dicts[state.language][key];
+}

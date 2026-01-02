@@ -1,0 +1,36 @@
+export const translationKeys = [
+  'title',
+  'newEvent',
+  'eventTitle',
+  'startDate',
+  'endDate',
+  'addEvent',
+  'events',
+  'fullDay',
+  'halfDay',
+  'english',
+  'spanish',
+  'italian',
+  'french',
+  'portuguese',
+  'german',
+  'light',
+  'dark',
+  'blue',
+  'olive',
+  'red',
+  'redgrape',
+  'orange',
+  'teal',
+  'pink',
+  'cyan',
+  'lime',
+  'purple',
+  'green',
+  'grey',
+  'burgundy',
+  'settings'
+] as const;
+
+export type TranslationKey = (typeof translationKeys)[number];
+export type Translations = Record<TranslationKey, string>;

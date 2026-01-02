@@ -1,4 +1,6 @@
-export default {
+import type { Translations } from '../types/i18n';
+
+const en: Translations = {
   title: 'Academic Calendar',
   newEvent: 'New event',
   eventTitle: 'Title',
@@ -31,3 +33,5 @@ export default {
   burgundy: 'Burgundy',
   settings: 'Settings'
 };
+
+export default en;

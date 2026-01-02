@@ -22,8 +22,7 @@ export function getLocalizedWeekdays(lang: Language): string[] {
 export function addOnClickToWeekdays() {
   const startDateInput =
     document.querySelector<HTMLInputElement>('#startDate')!;
-    const endDateInput =
-    document.querySelector<HTMLInputElement>('#endDate')!;
+  const endDateInput = document.querySelector<HTMLInputElement>('#endDate')!;
   const titleInput = document.querySelector<HTMLInputElement>('#title')!;
   const weekDays = document.querySelectorAll<HTMLDivElement>('.weekday');
 

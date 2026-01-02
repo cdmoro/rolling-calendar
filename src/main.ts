@@ -8,10 +8,8 @@ import type { CalendarEvent } from './types/calendar';
 
 const startMonthInput =
   document.querySelector<HTMLInputElement>('#start-month')!;
-const startDateInput = 
-  document.querySelector<HTMLInputElement>('#startDate')!;
-const endDateInput = 
-  document.querySelector<HTMLInputElement>('#endDate')!;
+const startDateInput = document.querySelector<HTMLInputElement>('#startDate')!;
+const endDateInput = document.querySelector<HTMLInputElement>('#endDate')!;
 
 export function setTheme(theme: Theme, color: string = 'blue') {
   const html = document.documentElement;

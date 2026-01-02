@@ -1,4 +1,4 @@
-import { getStrings } from '../i18n';
+import { t } from '../i18n';
 import { calendarState } from '../state/calendar';
 import type { CalendarEvent } from '../types/calendar';
 import { renderCalendar } from './calendar';
@@ -50,7 +50,6 @@ function handleDelete(id: string) {
 }
 
 export function renderEventList() {
-  const strings = getStrings();
   const list = document.querySelector<HTMLDivElement>('#event-list')!;
   list.innerHTML = '';
 
@@ -60,7 +59,7 @@ export function renderEventList() {
 
     const dateText = formatEventDate(event, state.language);
     const halfDayText = event.halfDay
-      ? ` (${strings.halfDay.toLocaleLowerCase()})`
+      ? ` (${t('halfDay').toLocaleLowerCase()})`
       : '';
 
     div.innerHTML = `
