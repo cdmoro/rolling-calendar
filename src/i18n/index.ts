@@ -34,6 +34,7 @@ export function applyTranslations() {
   });
 
   document.documentElement.setAttribute('lang', state.language);
+  document.documentElement.title = dict.title;
 }
 
 export function t(key: keyof (typeof dicts)['en']) {
