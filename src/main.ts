@@ -5,6 +5,7 @@ import { renderEventList } from './render/events';
 import { applyTranslations } from './i18n';
 import type { Language, Theme } from './types/app';
 import type { CalendarEvent } from './types/calendar';
+import { initExport } from './export';
 
 const startMonthInput =
   document.querySelector<HTMLInputElement>('#start-month')!;
@@ -160,6 +161,7 @@ function main() {
   initState();
   applyTranslations();
   renderCalendar();
+  initExport();
 
   const color = state.color;
   const html = document.documentElement;
