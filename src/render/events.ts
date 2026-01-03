@@ -77,12 +77,12 @@ export function renderEventList() {
 
     const dateText = formatEventDate(event, state.language)
     const halfDayText = event.halfDay
-      ? ` (${t('halfDay').toLowerCase()})`
+      ? ` (½)`
       : ''
 
     div.innerHTML = `
-      <span class="event-date">${dateText}</span>
-      <span class="event-title">${event.title}${halfDayText}</span>
+      <span class="event-date">${dateText}${halfDayText}</span>
+      <span class="event-title" title="${event.title}">${event.title}</span>
       <span class="event-actions">
         <button class="event-delete" data-id="${event.id}">&times;</button>
       </span>
