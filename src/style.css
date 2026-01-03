@@ -7,6 +7,12 @@
     --accent-font-color: white;
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 [data-theme="dark"],
 [data-theme^="dark-"] {
     --bg-color: #1a1a1a;
@@ -69,7 +75,7 @@
 }
 
 * {
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    transition: background-color 0.3s, color 0.1s, border-color 0.3s;
 }
 
 body {
@@ -130,6 +136,7 @@ body {
 
 .main-section {
     margin: 0 auto;
+    width: 876px;
 }
 
 .calendar {
@@ -187,18 +194,27 @@ body {
 #event-list {
     display: grid;
     column-gap: 1rem;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
+}
+
+#event-list .event-column {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
 #event-list .event-item {
+    min-width: 0;
     font-size: 0.9em;
     padding: 4px 6px;
-    /* border-bottom: solid 1px var(--border-color); */
     border-bottom: solid 1px color-mix(in srgb, var(--accent-color) 40%, transparent 60%);
     display: flex;
+    min-height: 26px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
 }
 
-#event-list .event-item:hover {
+#event-list .event-item:not(.empty):hover {
     background: color-mix(in srgb, var(--accent-color) 20%, transparent 80%);
 }
 
@@ -208,7 +224,9 @@ body {
 }
 
 .event-title {
-    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .month-grid {
@@ -332,17 +350,16 @@ body {
 }
 
 .reference {
-    display: grid;
-    grid-template-columns: repeat(2, 160px);
-    gap: 12px;
+    display: flex;
+    gap: 1rem;
     font-size: .85rem;
+    flex-wrap: nowrap;
 }
 
-.reference > div {
+.reference>div {
     display: flex;
     align-items: center;
-    gap: 12px;
-    white-space: nowrap;
+    gap: .5rem;
 }
 
 .reference .day {
@@ -359,6 +376,7 @@ body {
 
 .event-actions button:hover {
     background: var(--accent-color);
+    color: var(--accent-font-color);
 }
 
 #calendar-header {
