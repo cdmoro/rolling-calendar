@@ -13,7 +13,7 @@
 <body>
 
   <header class="header">
-    <h1 data-label="title"></h1>
+    <h1 data-label="h1"></h1>
 
     <select id="language-select">
       <option value="en" data-label="english">English</option>
@@ -50,7 +50,20 @@
     <aside class="sidebar">
       <h2 data-label="settings"></h2>
 
-      <input type="month" id="start-month" />
+      <div class="form-control">
+        <label for="start-month" data-label="startMonth"></label>
+        <input type="month" id="start-month" />
+      </div>
+
+      <div class="form-control">
+        <label for="calendar-title-input" data-label="calendarTitle"></label>
+        <input type="text" id="calendar-title-input" placeholder="Institution" />
+      </div>
+
+      <div class="form-control">
+        <label for="calendar-subtitle-input" data-label="calendarSubtitle"></label>
+        <input type="text" id="calendar-subtitle-input" placeholder="2025-2026 Academic Calendar" />
+      </div>
 
       <h2 data-label="newEvent"></h2>
 
@@ -82,6 +95,8 @@
     </aside>
 
     <section class="main-section">
+      <div id="calendar-header"></div>
+
       <div class="calendar">
         <div id="calendar-grid"></div>
       </div>

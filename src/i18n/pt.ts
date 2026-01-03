@@ -25,7 +25,10 @@ const pt: Translations = {
   green: 'Verde',
   grey: 'Cinza',
   burgundy: 'Borgonha',
-  settings: 'Configurações'
+  settings: 'Configurações',
+  calendarTitle: 'Título do calendário',
+  calendarSubtitle: 'Legenda do calendário',
+  startMonth: 'Mês de início'
 };
 
 export default pt;

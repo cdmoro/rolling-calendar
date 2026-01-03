@@ -25,7 +25,10 @@ const it: Translations = {
   green: 'Verde',
   grey: 'Grigio',
   burgundy: 'Bordeaux',
-  settings: 'Impostazioni'
+  settings: 'Impostazioni',
+  calendarTitle: 'Titolo del calendario',
+  calendarSubtitle: 'Sottotitolo del calendario',
+  startMonth: 'Mese di inizio'
 };
 
 export default it;

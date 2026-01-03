@@ -25,7 +25,10 @@ const en: Translations = {
   green: 'Green',
   grey: 'Grey',
   burgundy: 'Burgundy',
-  settings: 'Settings'
+  settings: 'Settings',
+  calendarTitle: 'Calendar Title',
+  calendarSubtitle: 'Calendar Subtitle',
+  startMonth: 'Start Month'
 };
 
 export default en;

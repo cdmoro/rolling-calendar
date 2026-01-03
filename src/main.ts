@@ -8,6 +8,13 @@ import type { CalendarEvent } from './types/calendar';
 
 const startMonthInput =
   document.querySelector<HTMLInputElement>('#start-month')!;
+const calendarTitleInput = document.querySelector<HTMLInputElement>(
+  '#calendar-title-input'
+)!;
+const calendarSubtitleInput = document.querySelector<HTMLInputElement>(
+  '#calendar-subtitle-input'
+)!;
+
 const startDateInput = document.querySelector<HTMLInputElement>('#startDate')!;
 const endDateInput = document.querySelector<HTMLInputElement>('#endDate')!;
 
@@ -43,6 +50,37 @@ startMonthInput.addEventListener('change', (e) => {
   renderCalendar();
   resetForm();
 });
+
+calendarTitleInput.addEventListener('input', () => resolveCalendarHeader());
+calendarSubtitleInput.addEventListener('input', () => resolveCalendarHeader());
+
+function resolveCalendarHeader() {
+  const headerDiv = document.querySelector<HTMLDivElement>('#calendar-header')!;
+  const title = calendarTitleInput.value.trim();
+  const subtitle = calendarSubtitleInput.value.trim();
+
+  headerDiv.innerHTML = '';
+
+  if (title) {
+    const h1 = document.createElement('h1');
+    h1.id = 'calendar-title';
+    h1.textContent = title;
+    headerDiv.appendChild(h1);
+    localStorage.setItem('calendarTitle', title);
+  } else {
+    localStorage.removeItem('calendarTitle');
+  }
+
+  if (subtitle) {
+    const h2 = document.createElement('h2');
+    h2.id = 'calendar-subtitle';
+    h2.textContent = subtitle;
+    headerDiv.appendChild(h2);
+    localStorage.setItem('calendarSubtitle', subtitle);
+  } else {
+    localStorage.removeItem('calendarSubtitle');
+  }
+}
 
 function getCalendarStartDate(): Date {
   return new Date(calendarState.startYear, calendarState.startMonth, 1);
@@ -128,6 +166,10 @@ function main() {
   html.setAttribute('data-theme', `${state.theme}-${color}`);
 
   startMonthInput.value = `${calendarState.startYear}-${String(calendarState.startMonth + 1).padStart(2, '0')}`;
+  calendarTitleInput.value = localStorage.getItem('calendarTitle') || '';
+  calendarSubtitleInput.value = localStorage.getItem('calendarSubtitle') || '';
+
+  resolveCalendarHeader();
 
   document.querySelector<HTMLSelectElement>('#theme-select')!.value =
     state.theme;

@@ -4,18 +4,20 @@ import { calendarState } from './calendar';
 export const state: State = {
   language: 'en',
   theme: 'light',
-  color: 'blue'
+  color: 'blue',
+  calendarTitle: '',
+  calendarSubtitle: ''
 };
 
 export function initState() {
   const savedStartMonth = localStorage.getItem('startMonth');
+  const savedCalendarTitle = localStorage.getItem('calendarTitle');
+  const savedCalendarSubtitle = localStorage.getItem('calendarSubtitle');
+
   const savedLanguage = localStorage.getItem('language') as State['language'];
-  const savedTheme = localStorage.getItem('theme')?.split('-')[0] as
-    | State['theme']
-    | undefined;
-  const savedColor = localStorage.getItem('theme')?.split('-')[1] as
-    | State['color']
-    | undefined;
+  const [savedTheme, savedColor] = localStorage.getItem('theme')?.split('-') as
+    | [State['theme'], State['color']]
+    | ['light', 'blue'];
 
   if (savedStartMonth) {
     const [y, m] = savedStartMonth.split('-').map(Number);
@@ -23,17 +25,11 @@ export function initState() {
     calendarState.startYear = y;
   }
 
-  if (savedLanguage) {
-    state.language = savedLanguage;
-  }
-
-  if (savedTheme) {
-    state.theme = savedTheme;
-  }
-
-  if (savedColor) {
-    state.color = savedColor;
-  }
+  state.calendarTitle = savedCalendarTitle ?? state.calendarTitle;
+  state.calendarSubtitle = savedCalendarSubtitle ?? state.calendarSubtitle;
+  state.language = savedLanguage ?? state.language;
+  state.theme = savedTheme ?? state.theme;
+  state.color = savedColor ?? state.color;
 }
 
 export type WeekStart = 0 | 1;

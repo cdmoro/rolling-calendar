@@ -6,4 +6,6 @@ export type State = {
   language: Language;
   theme: Theme;
   color: string;
+  calendarTitle: string;
+  calendarSubtitle: string;
 };

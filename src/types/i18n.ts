@@ -32,7 +32,10 @@ export const translationKeys = [
   'green',
   'grey',
   'burgundy',
-  'settings'
+  'settings',
+  'calendarTitle',
+  'calendarSubtitle',
+  'startMonth'
 ] as const;
 
 export type TranslationKey = (typeof translationKeys)[number];

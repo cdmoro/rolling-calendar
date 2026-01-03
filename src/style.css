@@ -114,7 +114,7 @@ body {
     margin-top: 0;
 }
 
-.sidebar form label {
+.sidebar .form-control label {
     display: block;
     margin-bottom: 6px;
     font-size: 0.9em;
@@ -344,6 +344,10 @@ body {
     gap: 12px;
 }
 
+.reference .day {
+    border-width: 2px;
+}
+
 .event-actions button {
     height: 16px;
     background: none;
@@ -354,4 +358,24 @@ body {
 
 .event-actions button:hover {
     background: var(--accent-color);
+}
+
+#calendar-header {
+    text-align: center;
+    color: var(--accent-color);
+}
+
+#calendar-header h1 {
+    font-size: 1.5em;
+    border: solid 2px var(--accent-color);
+    font-weight: bold;
+    line-height: 1.5;
+    background: var(--accent-color);
+    color: var(--accent-font-color);
+}
+
+#calendar-header h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    line-height: 1.5;
 }
