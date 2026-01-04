@@ -1,15 +1,13 @@
 :root {
-    --bg-color: white;
+    --bg-color: #fff;
     --text-color: #333;
     --border-color: #ccc;
     --accent-color: 74, 144, 226;
     --weekend-bg: #f6f6f6;
-    --accent-font-color: white;
+    --accent-font-color: #fff;
 }
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
     box-sizing: border-box;
 }
 
@@ -171,7 +169,6 @@ body {
     height: 30px;
     border: 1px solid var(--border-color);
     padding: 2px;
-    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -186,7 +183,7 @@ body {
 
 .event {
     background: rgb(var(--accent-color));
-    color: white;
+    color: #fff;
     font-size: 0.65em;
     padding: 1px 2px;
     margin-top: 2px;
