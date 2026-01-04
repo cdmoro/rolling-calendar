@@ -54,8 +54,8 @@ function handleDelete(id: string) {
 }
 
 export function renderEventList() {
-  const list = document.querySelector<HTMLDivElement>('#event-list')!
-  list.innerHTML = ''
+  const list = document.querySelector<HTMLDivElement>('#event-list')!;
+  list.innerHTML = '';
 
   const events = calendarState.events;
 
@@ -63,19 +63,19 @@ export function renderEventList() {
     return;
   }
 
-  const [leftEvents, rightEvents] = splitInTwoColumns(events)
+  const [leftEvents, rightEvents] = splitInTwoColumns(events);
 
-  const colLeft = document.createElement('div')
-  const colRight = document.createElement('div')
-  colLeft.className = 'event-col'
-  colRight.className = 'event-col'
+  const colLeft = document.createElement('div');
+  const colRight = document.createElement('div');
+  colLeft.className = 'event-col';
+  colRight.className = 'event-col';
 
   const createEventItem = (event: CalendarEvent) => {
-    const div = document.createElement('div')
-    div.classList.add('event-item')
+    const div = document.createElement('div');
+    div.classList.add('event-item');
 
-    const dateText = formatEventDate(event, state.language)
-    const halfDayText = event.halfDay ? ` (½)` : ''
+    const dateText = formatEventDate(event, state.language);
+    const halfDayText = event.halfDay ? ' (½)' : '';
 
     div.innerHTML = `
       <span class="event-date">${dateText}${halfDayText}</span>
@@ -83,30 +83,29 @@ export function renderEventList() {
       <span class="event-actions">
         <button class="event-delete" data-id="${event.id}">&times;</button>
       </span>
-    `
-    return div
-  }
+    `;
+    return div;
+  };
 
-  leftEvents.forEach(e => colLeft.appendChild(createEventItem(e)))
-  rightEvents.forEach(e => colRight.appendChild(createEventItem(e)))
+  leftEvents.forEach((e) => colLeft.appendChild(createEventItem(e)));
+  rightEvents.forEach((e) => colRight.appendChild(createEventItem(e)));
 
   if (leftEvents.length > rightEvents.length) {
-    const empty = document.createElement('div')
-    empty.classList.add('event-item', 'empty')
-    colRight.appendChild(empty)
+    const empty = document.createElement('div');
+    empty.classList.add('event-item', 'empty');
+    colRight.appendChild(empty);
   }
 
-  list.appendChild(colLeft)
-  list.appendChild(colRight)
+  list.appendChild(colLeft);
+  list.appendChild(colRight);
 
   list.onclick = (e) => {
     const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
       '.event-delete'
-    )
-    if (!btn) return
-    handleDelete(btn.dataset.id!)
-  }
+    );
+    if (!btn) return;
+    handleDelete(btn.dataset.id!);
+  };
 
-  renderCalendar()
+  renderCalendar();
 }
-

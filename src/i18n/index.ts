@@ -5,7 +5,7 @@ import it from './it';
 import pt from './pt';
 import de from './de';
 import { state } from '../state/app';
-import type { LanguageKey } from '../types/i18n';
+import type { LanguageKey, TranslationKey } from '../types/i18n';
 
 const dicts = { en, es, fr, it, pt, de };
 
@@ -37,7 +37,7 @@ export function applyTranslations() {
   document.title = dict.title;
 }
 
-export function t(key: keyof (typeof dicts)['en']) {
+export function t(key: TranslationKey) {
   const dict = getTranslations();
   return dict[key];
 }

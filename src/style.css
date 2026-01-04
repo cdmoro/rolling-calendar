@@ -294,17 +294,8 @@ body {
             transparent 30%);
 }
 
-.day.selected::before {
-    content: '';
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: rgb(var(--accent-color));
-    pointer-events: none;
-    z-index: 1;
+.day.weekday.selected {
+    background: rgba(var(--accent-color), 0.5);
 }
 
 .month-title {

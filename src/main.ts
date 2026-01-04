@@ -1,4 +1,4 @@
-import { calendarState } from './state/calendar';
+import { calendarState, initCalendarState } from './state/calendar';
 import { initState, state } from './state/app';
 import { renderCalendar } from './render/calendar';
 import { renderEventList } from './render/events';
@@ -159,6 +159,7 @@ startDateInput.addEventListener('change', (e) => {
 
 function main() {
   initState();
+  initCalendarState();
   applyTranslations();
   renderCalendar();
   initExport();
