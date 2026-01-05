@@ -1,4 +1,4 @@
-import { calendarState } from '../state/calendar';
+import { calendarState, filterEventsInRange } from '../state/calendar';
 import type { CalendarEvent } from '../types/calendar';
 import { renderCalendar } from './calendar';
 import { state } from '../state/app';
@@ -57,6 +57,7 @@ export function renderEventList() {
   const list = document.querySelector<HTMLDivElement>('#event-list')!;
   list.innerHTML = '';
 
+  filterEventsInRange(calendarState.events);
   const events = calendarState.events;
 
   if (events.length === 0) {

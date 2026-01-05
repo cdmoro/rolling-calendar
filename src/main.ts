@@ -49,6 +49,7 @@ startMonthInput.addEventListener('change', (e) => {
   endDateInput.min = minDate;
 
   renderCalendar();
+  renderEventList();
   resetForm();
 });
 
@@ -124,6 +125,7 @@ document
 
     form.reset();
     sortEventsByStartDate(calendarState.events);
+    localStorage.setItem('events', JSON.stringify(calendarState.events));
     renderEventList();
   });
 
@@ -162,6 +164,7 @@ function main() {
   initCalendarState();
   applyTranslations();
   renderCalendar();
+  renderEventList();
   initExport();
 
   const color = state.color;
