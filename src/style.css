@@ -294,8 +294,12 @@ body {
             transparent 30%);
 }
 
-.day.weekday.selected {
-    background: rgba(var(--accent-color), 0.5);
+body:not(.exporting) .day.weekday.selected {
+	border: rgb(var(--accent-color)) solid 4px;
+	border-radius: 4px;
+	transform: scale(1.1);
+	z-index: 1;
+	background: rgba(var(--accent-color), 0.1);
 }
 
 .month-title {
