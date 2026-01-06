@@ -386,3 +386,7 @@ body:not(.exporting) .day.weekday.selected {
     font-weight: bold;
     line-height: 1.5;
 }
+
+.exporting #out-of-range-event-list {
+    display: none;
+}

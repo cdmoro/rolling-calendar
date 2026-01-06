@@ -53,7 +53,9 @@ function handleDelete(id: string) {
 
   if (index !== -1) {
     calendarState.events.splice(index, 1);
+    localStorage.setItem('events', JSON.stringify(calendarState.events));
     renderEventList();
+    renderCalendar();
   }
 }
 
@@ -130,6 +132,4 @@ export function renderEventList() {
 
   renderEventListSection(inRangeEvents, '#event-list', false);
   renderEventListSection(outOfRangeEvents, '#out-of-range-event-list', true, 'Out-of-range Events (not shown when exporting calendar)');
-
-  renderCalendar();
 }

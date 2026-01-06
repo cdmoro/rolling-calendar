@@ -48,8 +48,8 @@ startMonthInput.addEventListener('change', (e) => {
   startDateInput.min = minDate;
   endDateInput.min = minDate;
 
-  renderCalendar();
   renderEventList();
+  renderCalendar();
   resetForm();
 });
 
@@ -127,6 +127,7 @@ document
     sortEventsByStartDate(calendarState.events);
     localStorage.setItem('events', JSON.stringify(calendarState.events));
     renderEventList();
+    renderCalendar();
   });
 
 document
@@ -135,8 +136,8 @@ document
     state.language = (e.target as HTMLSelectElement).value as Language;
     localStorage.setItem('language', state.language);
     applyTranslations();
-    renderCalendar();
     renderEventList();
+    renderCalendar();
   });
 
 document
@@ -163,8 +164,8 @@ function main() {
   initState();
   initCalendarState();
   applyTranslations();
-  renderCalendar();
   renderEventList();
+  renderCalendar();
   initExport();
 
   const color = state.color;
