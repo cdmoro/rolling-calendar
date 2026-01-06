@@ -18,6 +18,7 @@ const calendarSubtitleInput = document.querySelector<HTMLInputElement>(
 
 const startDateInput = document.querySelector<HTMLInputElement>('#startDate')!;
 const endDateInput = document.querySelector<HTMLInputElement>('#endDate')!;
+const halfDayInput = document.querySelector<HTMLInputElement>('#halfDay')!;
 
 export function setTheme(theme: Theme, color: string = 'blue') {
   const html = document.documentElement;
@@ -158,6 +159,17 @@ document
 
 startDateInput.addEventListener('change', (e) => {
   endDateInput.min = (e.target as HTMLInputElement).value;
+});
+
+endDateInput.addEventListener('change', (e) => {
+  startDateInput.max = (e.target as HTMLInputElement).value;
+
+  if ((e.target as HTMLInputElement).value) {
+    halfDayInput.disabled = true;
+    halfDayInput.checked = false;
+  } else {
+    halfDayInput.disabled = false;
+  }    
 });
 
 function main() {

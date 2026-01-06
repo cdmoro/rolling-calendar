@@ -64,9 +64,11 @@ export function renderCalendar() {
         const event = getEvent(day);
 
         if (event) {
+          const isSingleDayEvent = event.start === event.end;
+
           cell.classList.add('marked');
-          cell.classList.add(event.start === event.end ? 'single' : 'range');
-          cell.classList.toggle('half', event.halfDay);
+          cell.classList.add(isSingleDayEvent ? 'single' : 'range');
+          cell.classList.toggle('half', isSingleDayEvent && event.halfDay);
 
           const pos = getRangePosition(
             toLocalISODate(day),
