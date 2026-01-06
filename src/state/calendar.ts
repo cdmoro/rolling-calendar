@@ -8,7 +8,7 @@ export const calendarState: CalendarState = {
   events: []
 };
 
-export function filterEventsInRange(events: CalendarEvent[]) {
+export function getFilteredEvents(events: CalendarEvent[]) {
   const startDate = new Date(
     calendarState.startYear,
     calendarState.startMonth
@@ -16,17 +16,27 @@ export function filterEventsInRange(events: CalendarEvent[]) {
 
   const endDate = new Date(
     calendarState.startYear,
-    calendarState.startMonth + 11,
+    calendarState.startMonth + 12,
   );
 
-  calendarState.events = events.filter((event: CalendarEvent) => {
+  const inRangeEvents = events.filter((event: CalendarEvent) => {
     const eventStartDate = new Date(event.start);
     const eventEndDate = new Date(event.end);
 
     return eventStartDate >= startDate && eventEndDate <= endDate;
   });
 
-  localStorage.setItem('events', JSON.stringify(calendarState.events));
+  const outOfRangeEvents = events.filter((event: CalendarEvent) => {
+    const eventStartDate = new Date(event.start);
+    const eventEndDate = new Date(event.end);
+
+    return eventStartDate < startDate || eventEndDate > endDate;
+  });
+  
+  return {
+    inRangeEvents,
+    outOfRangeEvents
+  }
 }
 
 export function initCalendarState() {
@@ -48,7 +58,7 @@ export function initCalendarState() {
 
   if (savedEvents) {
     try {
-      filterEventsInRange(JSON.parse(savedEvents));
+      calendarState.events = JSON.parse(savedEvents);
     } catch {
       calendarState.events = [];
     }

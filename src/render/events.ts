@@ -1,4 +1,4 @@
-import { calendarState, filterEventsInRange } from '../state/calendar';
+import { calendarState, getFilteredEvents } from '../state/calendar';
 import type { CalendarEvent } from '../types/calendar';
 import { renderCalendar } from './calendar';
 import { state } from '../state/app';
@@ -10,7 +10,8 @@ function splitInTwoColumns<T>(items: T[]): [T[], T[]] {
 
 function formatEventDate(
   event: CalendarEvent,
-  locale: string = state.language
+  locale: string = state.language,
+  showYear: boolean = false
 ): string {
   const start = new Date(event.start);
   const end = event.end ? new Date(event.end) : start;
@@ -25,21 +26,24 @@ function formatEventDate(
     start.getMonth() === end.getMonth();
 
   const monthFormatter = new Intl.DateTimeFormat(locale, {
-    month: 'short'
+    month: 'short',
   });
 
   const startMonth = monthFormatter.format(start);
   const endMonth = monthFormatter.format(end);
 
+  const startYear = showYear ? `, ${start.getFullYear()}` : '';
+  const endYear = showYear ? `, ${end.getFullYear()}` : '';
+
   if (sameDay) {
-    return `${startMonth} ${start.getDate()}`;
+    return `${startMonth} ${start.getDate()}${startYear}`;
   }
 
   if (sameMonth) {
-    return `${startMonth} ${start.getDate()}–${end.getDate()}`;
+    return `${startMonth} ${start.getDate()}–${end.getDate()}${startYear}`;
   }
 
-  return `${startMonth} ${start.getDate()} – ${endMonth} ${end.getDate()}`;
+  return `${startMonth} ${start.getDate()}${startYear} – ${endMonth} ${end.getDate()}${endYear}`;
 }
 
 function handleDelete(id: string) {
@@ -53,19 +57,28 @@ function handleDelete(id: string) {
   }
 }
 
-export function renderEventList() {
-  const list = document.querySelector<HTMLDivElement>('#event-list')!;
-  list.innerHTML = '';
+function renderEventListSection(
+  events: CalendarEvent[],
+  id: string,
+  showYear: boolean = false,
+  title?: string
+) {
+  const container = document.querySelector<HTMLDivElement>(id);
+  if (!container) return;
 
-  filterEventsInRange(calendarState.events);
-  const events = calendarState.events;
+  container.innerHTML = '';
 
   if (events.length === 0) {
     return;
   }
 
-  const [leftEvents, rightEvents] = splitInTwoColumns(events);
+  if (title) {
+    const titleEl = document.createElement('h3');
+    titleEl.textContent = title;
+    container.appendChild(titleEl);
+  }
 
+  const [leftEvents, rightEvents] = splitInTwoColumns(events);
   const colLeft = document.createElement('div');
   const colRight = document.createElement('div');
   colLeft.className = 'event-col';
@@ -75,7 +88,7 @@ export function renderEventList() {
     const div = document.createElement('div');
     div.classList.add('event-item');
 
-    const dateText = formatEventDate(event, state.language);
+    const dateText = formatEventDate(event, state.language, showYear);
     const halfDayText = event.halfDay ? ' (½)' : '';
 
     div.innerHTML = `
@@ -97,16 +110,26 @@ export function renderEventList() {
     colRight.appendChild(empty);
   }
 
-  list.appendChild(colLeft);
-  list.appendChild(colRight);
+  container.appendChild(colLeft);
+  container.appendChild(colRight);
 
-  list.onclick = (e) => {
+  container.onclick = (e) => {
     const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
       '.event-delete'
     );
     if (!btn) return;
     handleDelete(btn.dataset.id!);
   };
+}
+
+export function renderEventList() {
+  const list = document.querySelector<HTMLDivElement>('#event-list')!;
+  list.innerHTML = '';
+
+  const { inRangeEvents, outOfRangeEvents } = getFilteredEvents(calendarState.events);
+
+  renderEventListSection(inRangeEvents, '#event-list', false);
+  renderEventListSection(outOfRangeEvents, '#out-of-range-event-list', true, 'Out-of-range Events (not shown when exporting calendar)');
 
   renderCalendar();
 }
