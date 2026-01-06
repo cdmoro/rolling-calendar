@@ -162,8 +162,6 @@ startDateInput.addEventListener('change', (e) => {
 });
 
 endDateInput.addEventListener('change', (e) => {
-  startDateInput.max = (e.target as HTMLInputElement).value;
-
   if ((e.target as HTMLInputElement).value) {
     halfDayInput.disabled = true;
     halfDayInput.checked = false;
