@@ -2,14 +2,26 @@
     --bg-color: #fff;
     --text-color: 51, 51, 51;
     --border-color: #ccc;
-    --accent-color: 74, 144, 226;
+    --accent-color-rgb: 74, 144, 226;
+    --accent-color: rgb(var(--accent-color-rgb));
+    --accent-color-90: rgba(var(--accent-color-rgb), 0.9);
+    --accent-color-80: rgba(var(--accent-color-rgb), 0.8);
+    --accent-color-70: rgba(var(--accent-color-rgb), 0.7);
+    --accent-color-60: rgba(var(--accent-color-rgb), 0.6);
+    --accent-color-50: rgba(var(--accent-color-rgb), 0.5);
+    --accent-color-40: rgba(var(--accent-color-rgb), 0.4);
+    --accent-color-30: rgba(var(--accent-color-rgb), 0.3);
+    --accent-color-20: rgba(var(--accent-color-rgb), 0.2);
+    --accent-color-10: rgba(var(--accent-color-rgb), 0.1);
     --weekend-bg: #f6f6f6;
     --accent-font-color: #fff;
-    --muted-color: rgba(0, 0, 0, 0.4);
+    --muted-color: hsla(0, 0%, 0%, 0.4);
     --input-border-color: #dee2e6;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
@@ -25,56 +37,56 @@
 }
 
 [data-theme$="-blue"] {
-    --accent-color: 74, 144, 226;
+    --accent-color-rgb: 74, 144, 226;
 }
 
 [data-theme$="-olive"] {
-    --accent-color: 128, 128, 0;
+    --accent-color-rgb: 128, 128, 0;
 }
 
 [data-theme$="-red"] {
-    --accent-color: 231, 76, 60;
+    --accent-color-rgb: 231, 76, 60;
 }
 
 [data-theme$="-redgrape"] {
-    --accent-color: 142, 68, 173;
+    --accent-color-rgb: 142, 68, 173;
 }
 
 [data-theme$="-orange"] {
-    --accent-color: 230, 126, 34;
+    --accent-color-rgb: 230, 126, 34;
 }
 
 [data-theme$="-teal"] {
-    --accent-color: 26, 188, 156;
+    --accent-color-rgb: 26, 188, 156;
 }
 
 [data-theme$="-pink"] {
-    --accent-color: 232, 67, 147;
+    --accent-color-rgb: 232, 67, 147;
 }
 
 [data-theme$="-cyan"] {
-    --accent-color: 0, 188, 212;
+    --accent-color-rgb: 0, 188, 212;
 }
 
 [data-theme$="-lime"] {
-    --accent-color: 205, 220, 57;
+    --accent-color-rgb: 205, 220, 57;
     --accent-font-color: #333;
 }
 
 [data-theme$="-purple"] {
-    --accent-color: 156, 39, 176;
+    --accent-color-rgb: 156, 39, 176;
 }
 
 [data-theme$="-green"] {
-    --accent-color: 39, 174, 96;
+    --accent-color-rgb: 39, 174, 96;
 }
 
 [data-theme$="-burgundy"] {
-    --accent-color: 112, 18, 21;
+    --accent-color-rgb: 112, 18, 21;
 }
 
 [data-theme$="-grey"] {
-    --accent-color: 127, 140, 141;
+    --accent-color-rgb: 127, 140, 141;
 }
 
 * {
@@ -171,7 +183,7 @@ body {
 }
 
 .month {
-    border: 2px solid rgb(var(--accent-color));
+    border: 2px solid var(--accent-color);
 }
 
 .week {
@@ -193,11 +205,11 @@ body {
 
 
 .day.empty {
-    background: rgba(var(--accent-color), 0.15);
+    background: var(--accent-color-10);
 }
 
 .event {
-    background: rgb(var(--accent-color));
+    background: var(--accent-color);
     color: #fff;
     font-size: 0.65em;
     padding: 1px 2px;
@@ -227,7 +239,7 @@ body {
     min-width: 0;
     font-size: 0.9em;
     padding: 4px 6px;
-    border-bottom: solid 1px rgba(var(--accent-color), 0.4);
+    border-bottom: solid 1px var(--accent-color-40);
     display: flex;
     min-height: 26px;
     display: grid;
@@ -235,7 +247,7 @@ body {
 }
 
 .event-list-wrapper .event-item:not(.empty):hover {
-    background: rgba(var(--accent-color), 0.2);
+    background: var(--accent-color-20);
 }
 
 .event-list-wrapper h3 {
@@ -307,7 +319,7 @@ body {
 }
 
 .day.weekday.marked {
-    background: rgb(var(--accent-color));
+    background: var(--accent-color);
     color: var(--accent-font-color);
     cursor: help;
 }
@@ -315,18 +327,18 @@ body {
 .day.weekday.marked.half {
     cursor: help;
     background: linear-gradient(45deg,
-            rgb(var(--accent-color)) 80%,
-            transparent 30%);
+            var(--accent-color) 80%,
+            var(--border-color) 30%);
 }
 
 body:not(.exporting) .day.weekday.selected {
     border-radius: 4px;
     z-index: 1;
-    background: rgba(var(--accent-color), 0.1);
-    box-shadow: 0px 0 0px 3px rgb(var(--accent-color));
+    background: var(--accent-color-10);
+    box-shadow: 0px 0 0px 3px var(--accent-color);
 }
 
-.day.period::before {
+.day.weekday.period::before {
     content: '';
     position: absolute;
     top: 0;
@@ -339,10 +351,15 @@ body:not(.exporting) .day.weekday.selected {
     transform: scale(1.2);
 }
 
+.day.weekday.test {
+    background: linear-gradient(45deg, var(--accent-color) 25%, var(--accent-color-80) 25%, var(--accent-color-80) 50%, var(--accent-color) 50%, var(--accent-color) 75%, var(--accent-color-80) 75%, var(--accent-color-80) 100%);
+    background-size: 6.5px 6.5px;
+}
+
 .month-title {
     text-align: center;
     font-weight: bold;
-    background-color: rgb(var(--accent-color));
+    background-color: var(--accent-color);
     color: var(--accent-font-color);
     padding: 0.5rem 0;
 }
@@ -369,7 +386,7 @@ body:not(.exporting) .day.weekday.selected {
     font-size: .85rem;
 }
 
-.legend > div {
+.legend>div {
     display: flex;
     align-items: center;
     gap: .5rem;
@@ -392,21 +409,21 @@ body.exporting .event-actions {
 }
 
 .event-actions button:hover {
-    background: rgb(var(--accent-color));
+    background: var(--accent-color);
     color: var(--accent-font-color);
 }
 
 #calendar-header {
     text-align: center;
-    color: rgb(var(--accent-color));
+    color: var(--accent-color);
 }
 
 #calendar-header h1 {
     font-size: 1.5em;
-    border: solid 2px rgb(var(--accent-color));
+    border: solid 2px var(--accent-color);
     font-weight: bold;
     line-height: 1.5;
-    background: rgb(var(--accent-color));
+    background: var(--accent-color);
     color: var(--accent-font-color);
 }
 
