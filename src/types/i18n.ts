@@ -4,7 +4,8 @@ export const languagesKeys = [
   'italian',
   'french',
   'portuguese',
-  'german'
+  'german',
+  'greek',
 ] as const;
 
 export const translationKeys = [

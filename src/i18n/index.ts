@@ -4,10 +4,11 @@ import fr from './fr';
 import it from './it';
 import pt from './pt';
 import de from './de';
+import el from './el';
 import { state } from '../state/app';
 import type { LanguageKey, TranslationKey } from '../types/i18n';
 
-const dicts = { en, es, fr, it, pt, de };
+const dicts = { en, es, fr, it, pt, de, el };
 
 export const languageTranslation: Record<LanguageKey, string> = {
   english: 'English',
@@ -15,7 +16,8 @@ export const languageTranslation: Record<LanguageKey, string> = {
   italian: 'Italiano',
   french: 'Français',
   portuguese: 'Português',
-  german: 'Deutsch'
+  german: 'Deutsch',
+  greek: 'Ελληνικά'
 };
 
 export function getTranslations() {

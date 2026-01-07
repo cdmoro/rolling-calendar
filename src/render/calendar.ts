@@ -27,6 +27,7 @@ export function renderCalendar() {
       month: 'long',
       year: 'numeric'
     });
+
     monthEl.appendChild(title);
 
     /* ---- Weekday header ---- */

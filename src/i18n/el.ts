@@ -1,0 +1,37 @@
+import type { Translations } from '../types/i18n';
+
+const el: Translations = {
+  title: 'Ακαδημαϊκό ημερολόγιο',
+  newEvent: 'Νέο γεγονός',
+  eventTitle: 'Τίτλος',
+  startDate: 'Ημερομηνία έναρξης',
+  endDate: 'Ημερομηνία λήξης',
+  addEvent: 'Προσθήκη γεγονότος',
+  events: 'Γεγονότα',
+  noActivity: 'Καμία δραστηριότητα',
+  halfDay: 'Μισή μέρα',
+  light: 'Φωτεινό',
+  dark: 'Σκοτεινό',
+  blue: 'Μπλε',
+  olive: 'Ελιά',
+  red: 'Κόκκινο',
+  redgrape: 'Κόκκινο Σταφύλι',
+  orange: 'Πορτοκαλί',
+  teal: 'Τιρκουάζ',
+  pink: 'Ροζ',
+  cyan: 'Κυανό',
+  lime: 'Λαχανί',
+  purple: 'Μωβ',
+  green: 'Πράσινο',
+  grey: 'Γκρι',
+  burgundy: 'Βουργουνδί',
+  settings: 'Ρυθμίσεις',
+  calendarTitle: 'Τίτλος Ημερολογίου',
+  calendarSubtitle: 'Υπότιτλος Ημερολογίου',
+  startMonth: 'Μήνας Έναρξης',
+  auto: 'Αυτόματο',
+  outOfRangeTitle: 'Γεγονότα εκτός εύρους (δεν εμφανίζονται κατά την εξαγωγή ημερολογίου)',
+  periodStartEnd: 'Έναρξη/Λήξη Περιόδου',
+};
+
+export default el;

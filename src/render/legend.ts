@@ -1,17 +1,17 @@
 import { t } from "../i18n";
 import type { TranslationKey } from "../types/i18n";
 
+function createLegendItem(className: string, labelKey: TranslationKey) {
+    const div = document.createElement('div');
+    div.innerHTML = `<span class="day ${className}"></span> <span>${t(labelKey)}</span>`;
+    return div;
+}
+
 function existsMarkedDays(className: string): boolean {
     const calendarGrid = document.querySelector('#calendar-grid');
     if (!calendarGrid) return false;
 
     return calendarGrid.querySelector(`.day.${className}`) !== null;
-}
-
-function addLegendItem(legendElement: HTMLElement, className: string, labelKey: TranslationKey) {
-    const div = document.createElement('div');
-    div.innerHTML = `<span class="day ${className}"></span> <span>${t(labelKey)}</span>`;
-    legendElement.appendChild(div);
 }
 
 export function renderLegend() {
@@ -20,15 +20,15 @@ export function renderLegend() {
 
     legendElement.innerHTML = '';
 
-    if (existsMarkedDays('marked')) {
-        addLegendItem(legendElement, 'marked weekday', 'noActivity');
+    const legends = {
+        marked: createLegendItem('marked weekday', 'noActivity'),
+        half: createLegendItem('marked half weekday', 'halfDay'),
+        period: createLegendItem('period', 'periodStartEnd')
     }
 
-    if (existsMarkedDays('marked.half')) {
-        addLegendItem(legendElement, 'marked half weekday', 'halfDay');
-    }
-
-    if (existsMarkedDays('period')) {
-        addLegendItem(legendElement, 'period', 'periodStartEnd');
-    }
+    Object.entries(legends).forEach(([key, item]) => {
+        if (existsMarkedDays(key)) {
+            legendElement.appendChild(item);
+        }
+    });
 }

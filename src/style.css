@@ -1,6 +1,6 @@
 :root {
     --bg-color: #fff;
-    --text-color: #333;
+    --text-color: 51, 51, 51;
     --border-color: #ccc;
     --accent-color: 74, 144, 226;
     --weekend-bg: #f6f6f6;
@@ -16,8 +16,8 @@
 [data-theme="dark"],
 [data-theme^="dark-"] {
     --bg-color: #212529;
-    --text-color: #f0f0f0;
-    --border-color: #333;
+    --text-color: 240, 240, 240;
+    --border-color: #444;
     --weekend-bg: #232323;
     --muted-color: rgba(255, 255, 255, 0.4);
     --input-border-color: #495057;
@@ -88,7 +88,7 @@ body.exporting * {
 body {
     margin: 0;
     background: var(--bg-color);
-    color: var(--text-color);
+    color: rgb(var(--text-color));
     font-family: system-ui, sans-serif;
 }
 
@@ -141,7 +141,7 @@ body {
     width: 100%;
     border: 1px solid var(--input-border-color);
     background-color: rgb(var(--bg-color));
-    color: var(--text-color);
+    color: rgb(var(--text-color));
     padding: .375rem .75rem;
     border-radius: 0.375rem;
 }
@@ -334,7 +334,7 @@ body:not(.exporting) .day.weekday.selected {
     width: 100%;
     height: 100%;
     z-index: 1;
-    border: 3px solid var(--text-color);
+    border: 3px solid rgb(var(--text-color));
     border-radius: 50%;
     transform: scale(1.2);
 }
@@ -387,7 +387,7 @@ body.exporting .event-actions {
     height: 16px;
     background: none;
     border: none;
-    color: var(--text-color);
+    color: rgb(var(--text-color));
     cursor: pointer;
 }
 

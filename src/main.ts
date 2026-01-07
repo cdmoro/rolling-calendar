@@ -1,12 +1,10 @@
 import { calendarState, initCalendarState } from './state/calendar';
 import { initState, state } from './state/app';
-import { renderCalendar } from './render/calendar';
-import { renderEventList } from './render/events';
 import { applyTranslations } from './i18n';
 import type { Language, Theme } from './types/app';
 import type { CalendarEvent } from './types/calendar';
 import { initExport } from './export';
-import { renderLegend } from './render/legend';
+import { renderUI } from './render';
 
 const startMonthInput =
   document.querySelector<HTMLInputElement>('#start-month')!;
@@ -61,9 +59,7 @@ startMonthInput.addEventListener('change', (e) => {
   startDateInput.min = minDate;
   endDateInput.min = minDate;
 
-  renderEventList();
-  renderCalendar();
-  renderLegend();
+  renderUI();
   resetForm();
 });
 
@@ -140,9 +136,7 @@ document
     form.reset();
     sortEventsByStartDate(calendarState.events);
     localStorage.setItem('events', JSON.stringify(calendarState.events));
-    renderEventList();
-    renderCalendar();
-    renderLegend();
+    renderUI();
   });
 
 document
@@ -151,9 +145,7 @@ document
     state.language = (e.target as HTMLSelectElement).value as Language;
     localStorage.setItem('language', state.language);
     applyTranslations();
-    renderEventList();
-    renderCalendar();
-    renderLegend();
+    renderUI();
   });
 
 document
@@ -189,9 +181,7 @@ function main() {
   initState();
   initCalendarState();
   applyTranslations();
-  renderEventList();
-  renderCalendar();
-  renderLegend();
+  renderUI();
   initExport();
 
   const color = state.color;
