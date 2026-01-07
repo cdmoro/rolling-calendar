@@ -184,6 +184,15 @@ body {
 
 .month {
     border: 2px solid var(--accent-color);
+    border-radius: .2rem;
+}
+
+.month .day:nth-last-child(7) {
+    border-start-start-radius: .05rem;
+}
+
+.month .day:last-child {
+    border-end-end-radius: .05rem;
 }
 
 .week {
