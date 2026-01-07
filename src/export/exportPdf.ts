@@ -1,3 +1,5 @@
+import { calendarState } from '../state/calendar';
+
 export async function exportAsPdf(): Promise<void> {
   const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
     import('html2canvas'),
@@ -29,7 +31,27 @@ export async function exportAsPdf(): Promise<void> {
   const x = (pageWidth - imgWidth) / 2;
   const y = margin;
 
+  const title = calendarState.calendarTitle || 'Rolling Calendar';
+  const subtitle = calendarState.calendarSubtitle
+    ? ` - ${calendarState.calendarSubtitle}`
+    : '';
+
+  pdf.setProperties({ title: `${title}${subtitle}` });
   pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
 
-  pdf.save('rolling-calendar.pdf');
+  let fileName = title
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9\-]/g, '');
+
+  const year = calendarState.startYear;
+  const month = calendarState.startMonth + 1;
+
+  if (month === 1) {
+    fileName += `_${year}`;
+  } else {
+    fileName += `_${year}-${year + 1}`;
+  }
+
+  pdf.save(`${fileName}.pdf`);
 }

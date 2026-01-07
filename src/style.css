@@ -81,7 +81,7 @@
     transition: background-color 0.3s, color 0.1s, border-color 0.3s;
 }
 
-.exporting * {
+body.exporting * {
     transition: none !important;
 }
 
@@ -326,6 +326,19 @@ body:not(.exporting) .day.weekday.selected {
     box-shadow: 0px 0 0px 3px rgb(var(--accent-color));
 }
 
+.day.period::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border: 3px solid var(--text-color);
+    border-radius: 50%;
+    transform: scale(1.2);
+}
+
 .month-title {
     text-align: center;
     font-weight: bold;
@@ -349,21 +362,25 @@ body:not(.exporting) .day.weekday.selected {
     border-inline-end: 1px solid var(--border-color);
 }
 
-.reference {
-    display: flex;
-    gap: 1rem;
+.legend {
+    display: grid;
+    grid-template-columns: repeat(3, 284px);
+    gap: 12px;
     font-size: .85rem;
-    flex-wrap: nowrap;
 }
 
-.reference>div {
+.legend > div {
     display: flex;
     align-items: center;
     gap: .5rem;
 }
 
-.reference .day {
+.legend .day {
     border-width: 2px;
+}
+
+body.exporting .event-actions {
+    display: none;
 }
 
 .event-actions button {
@@ -399,6 +416,6 @@ body:not(.exporting) .day.weekday.selected {
     line-height: 1.5;
 }
 
-.exporting #out-of-range-event-list {
+body.exporting #out-of-range-event-list {
     display: none;
 }

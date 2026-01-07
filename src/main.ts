@@ -6,6 +6,7 @@ import { applyTranslations } from './i18n';
 import type { Language, Theme } from './types/app';
 import type { CalendarEvent } from './types/calendar';
 import { initExport } from './export';
+import { renderLegend } from './render/legend';
 
 const startMonthInput =
   document.querySelector<HTMLInputElement>('#start-month')!;
@@ -22,15 +23,26 @@ const halfDayInput = document.querySelector<HTMLInputElement>('#halfDay')!;
 
 export function setTheme(theme: Theme, color: string = 'blue') {
   const html = document.documentElement;
+  let resolvedTheme = theme;
 
-  if (color) {
-    html.setAttribute('data-theme', `${theme}-${color}`);
-  } else {
-    html.setAttribute('data-theme', theme);
+  if (theme === 'auto') {
+    const prefersDark = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches;
+    resolvedTheme = prefersDark ? 'dark' : 'light';
   }
 
-  localStorage.setItem('theme', html.getAttribute('data-theme')!);
+  html.setAttribute('data-theme', `${resolvedTheme}-${color}`);
+
+  localStorage.setItem('theme', `${theme}-${color}`);
 }
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+  if (state.theme === 'auto') {
+    const newColorScheme = e.matches ? 'dark' : 'light';
+    setTheme(newColorScheme, state.color);
+  }
+});
 
 function resetForm() {
   const form = document.querySelector<HTMLFormElement>('#event-form')!;
@@ -51,6 +63,7 @@ startMonthInput.addEventListener('change', (e) => {
 
   renderEventList();
   renderCalendar();
+  renderLegend();
   resetForm();
 });
 
@@ -129,6 +142,7 @@ document
     localStorage.setItem('events', JSON.stringify(calendarState.events));
     renderEventList();
     renderCalendar();
+    renderLegend();
   });
 
 document
@@ -139,6 +153,7 @@ document
     applyTranslations();
     renderEventList();
     renderCalendar();
+    renderLegend();
   });
 
 document
@@ -176,11 +191,21 @@ function main() {
   applyTranslations();
   renderEventList();
   renderCalendar();
+  renderLegend();
   initExport();
 
   const color = state.color;
   const html = document.documentElement;
-  html.setAttribute('data-theme', `${state.theme}-${color}`);
+  let resolvedTheme = state.theme;
+
+  if (state.theme === 'auto') {
+    const prefersDark = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches;
+    resolvedTheme = prefersDark ? 'dark' : 'light';
+  }
+
+  html.setAttribute('data-theme', `${resolvedTheme}-${color}`);
 
   startMonthInput.value = `${calendarState.startYear}-${String(calendarState.startMonth + 1).padStart(2, '0')}`;
   calendarTitleInput.value = localStorage.getItem('calendarTitle') || '';

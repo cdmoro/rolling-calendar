@@ -8,7 +8,7 @@ const es: Translations = {
   endDate: 'Fecha de fin',
   addEvent: 'Agregar evento',
   events: 'Eventos',
-  fullDay: 'Día completo',
+  noActivity: 'Sin actividad',
   halfDay: 'Medio día',
   light: 'Claro',
   dark: 'Oscuro',
@@ -28,7 +28,10 @@ const es: Translations = {
   settings: 'Configuraciones',
   calendarTitle: 'Título del calendario',
   calendarSubtitle: 'Subtítulo del calendario',
-  startMonth: 'Mes de inicio'
+  startMonth: 'Mes de inicio',
+  auto: 'Auto',
+  outOfRangeTitle: 'Eventos fuera de rango (no se muestran al exportar el calendario)',
+  periodStartEnd: 'Inicio/Fin del período',
 };
 
 export default es;

@@ -2,6 +2,8 @@ import { calendarState, getFilteredEvents } from '../state/calendar';
 import type { CalendarEvent } from '../types/calendar';
 import { renderCalendar } from './calendar';
 import { state } from '../state/app';
+import { t } from '../i18n';
+import { renderLegend } from './legend';
 
 function splitInTwoColumns<T>(items: T[]): [T[], T[]] {
   const mid = Math.ceil(items.length / 2);
@@ -56,6 +58,7 @@ function handleDelete(id: string) {
     localStorage.setItem('events', JSON.stringify(calendarState.events));
     renderEventList();
     renderCalendar();
+    renderLegend();
   }
 }
 
@@ -131,5 +134,5 @@ export function renderEventList() {
   const { inRangeEvents, outOfRangeEvents } = getFilteredEvents(calendarState.events);
 
   renderEventListSection(inRangeEvents, '#event-list', false);
-  renderEventListSection(outOfRangeEvents, '#out-of-range-event-list', true, 'Out-of-range Events (not shown when exporting calendar)');
+  renderEventListSection(outOfRangeEvents, '#out-of-range-event-list', true, t('outOfRangeTitle'));
 }

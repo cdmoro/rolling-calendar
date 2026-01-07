@@ -15,7 +15,7 @@ export const translationKeys = [
   'endDate',
   'addEvent',
   'events',
-  'fullDay',
+  'noActivity',
   'halfDay',
   'light',
   'dark',
@@ -35,7 +35,10 @@ export const translationKeys = [
   'settings',
   'calendarTitle',
   'calendarSubtitle',
-  'startMonth'
+  'startMonth',
+  'auto',
+  'outOfRangeTitle',
+  'periodStartEnd',
 ] as const;
 
 export type TranslationKey = (typeof translationKeys)[number];

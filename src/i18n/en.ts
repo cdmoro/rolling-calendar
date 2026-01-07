@@ -8,7 +8,7 @@ const en: Translations = {
   endDate: 'End date',
   addEvent: 'Add event',
   events: 'Events',
-  fullDay: 'Full day',
+  noActivity: 'No activity',
   halfDay: 'Half day',
   light: 'Light',
   dark: 'Dark',
@@ -28,7 +28,10 @@ const en: Translations = {
   settings: 'Settings',
   calendarTitle: 'Calendar Title',
   calendarSubtitle: 'Calendar Subtitle',
-  startMonth: 'Start Month'
+  startMonth: 'Start Month',
+  auto: 'Auto',
+  outOfRangeTitle: 'Out-of-range Events (not shown when exporting calendar)',
+  periodStartEnd: 'Period Start/End',
 };
 
 export default en;

@@ -1,5 +1,5 @@
-export type Language = 'en' | 'es';
-export type Theme = 'light' | 'dark';
+export type Language = 'en' | 'es' | 'it' | 'fr' | 'pt' | 'de';
+export type Theme = 'auto' |'light' | 'dark';
 
 export type State = {
   language: Language;

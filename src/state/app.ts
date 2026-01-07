@@ -2,7 +2,7 @@ import type { State } from '../types/app';
 
 export const state: State = {
   language: 'en',
-  theme: 'light',
+  theme: 'auto',
   color: 'blue'
 };
 
@@ -17,6 +17,7 @@ export function initState() {
       State['theme'],
       State['color']
     ];
+
     state.theme = theme ?? state.theme;
     state.color = color ?? state.color;
   }

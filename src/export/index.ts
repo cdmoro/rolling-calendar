@@ -15,7 +15,7 @@ function getExportTheme(current?: string): string {
 }
 
 async function withExportTheme(fn: () => Promise<void>) {
-  document.documentElement.classList.add('exporting');
+  document.body.classList.add('exporting');
   const html = document.documentElement;
   const prevTheme = html.dataset.theme;
 
@@ -30,7 +30,7 @@ async function withExportTheme(fn: () => Promise<void>) {
       delete html.dataset.theme;
     }
 
-    document.documentElement.classList.remove('exporting');
+    document.body.classList.remove('exporting');
   }
 }
 
