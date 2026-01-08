@@ -1,0 +1,41 @@
+import type { Translations } from '../types/i18n';
+
+const ar: Translations = {
+  title: 'التقويم الأكاديمي',
+  newEvent: 'حدث جديد',
+  eventTitle: 'العنوان',
+  startDate: 'تاريخ البدء',
+  endDate: 'تاريخ الانتهاء',
+  addEvent: 'إضافة حدث',
+  events: 'الأحداث',
+  noActivity: 'لا توجد نشاطات',
+  halfDay: 'نصف يوم',
+  light: 'فاتح',
+  dark: 'داكن',
+  blue: 'أزرق',
+  olive: 'زيتوني',
+  red: 'أحمر',
+  redgrape: 'عنب أحمر',
+  orange: 'برتقالي',
+  teal: 'أزرق مخضر',
+  pink: 'وردي',
+  cyan: 'سماوي',
+  lime: 'ليموني',
+  purple: 'أرجواني',
+  green: 'أخضر',
+  grey: 'رمادي',
+  burgundy: 'قرمزي',
+  settings: 'الإعدادات',
+  calendarTitle: 'عنوان التقويم',
+  calendarSubtitle: 'العنوان الفرعي للتقويم',
+  startMonth: 'شهر البدء',
+  auto: 'تلقائي',
+  outOfRangeTitle: 'الأحداث خارج النطاق (لا تظهر عند تصدير التقويم)',
+  dayType: 'نوع اليوم',
+  internalActivity: 'نشاط داخلي',
+  administrativeEvent: 'حدث إداري',
+  communityEvent: 'حدث مجتمعي',
+  startEndPeriod: 'بداية/نهاية الفترة'
+};
+
+export default ar;

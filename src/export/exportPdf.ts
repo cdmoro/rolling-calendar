@@ -42,7 +42,7 @@ export async function exportAsPdf(): Promise<void> {
   let fileName = title
     .toLowerCase()
     .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9\-]/g, '');
+    .replace(/[^a-z0-9-]/g, '');
 
   const year = calendarState.startYear;
   const month = calendarState.startMonth + 1;

@@ -31,7 +31,11 @@ const en: Translations = {
   startMonth: 'Start Month',
   auto: 'Auto',
   outOfRangeTitle: 'Out-of-range Events (not shown when exporting calendar)',
-  periodStartEnd: 'Period Start/End',
+  dayType: 'Day Type',
+  internalActivity: 'Internal Activity',
+  administrativeEvent: 'Administrative Event',
+  communityEvent: 'Community Event',
+  startEndPeriod: 'Start/End of Period'
 };
 
 export default en;

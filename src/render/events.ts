@@ -28,7 +28,7 @@ function formatEventDate(
     start.getMonth() === end.getMonth();
 
   const monthFormatter = new Intl.DateTimeFormat(locale, {
-    month: 'short',
+    month: 'short'
   });
 
   const startMonth = monthFormatter.format(start);
@@ -42,10 +42,10 @@ function formatEventDate(
   }
 
   if (sameMonth) {
-    return `${startMonth} ${start.getDate()}–${end.getDate()}${startYear}`;
+    return `${startMonth} ${start.getDate()}&ndash;${end.getDate()}${startYear}`;
   }
 
-  return `${startMonth} ${start.getDate()}${startYear} – ${endMonth} ${end.getDate()}${endYear}`;
+  return `${startMonth} ${start.getDate()}${startYear} &ndash; ${endMonth} ${end.getDate()}${endYear}`;
 }
 
 function handleDelete(id: string) {
@@ -131,8 +131,15 @@ export function renderEventList() {
   const list = document.querySelector<HTMLDivElement>('#event-list')!;
   list.innerHTML = '';
 
-  const { inRangeEvents, outOfRangeEvents } = getFilteredEvents(calendarState.events);
+  const { inRangeEvents, outOfRangeEvents } = getFilteredEvents(
+    calendarState.events
+  );
 
   renderEventListSection(inRangeEvents, '#event-list', false);
-  renderEventListSection(outOfRangeEvents, '#out-of-range-event-list', true, t('outOfRangeTitle'));
+  renderEventListSection(
+    outOfRangeEvents,
+    '#out-of-range-event-list',
+    true,
+    t('outOfRangeTitle')
+  );
 }

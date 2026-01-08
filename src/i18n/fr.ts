@@ -8,7 +8,7 @@ const fr: Translations = {
   endDate: 'Date de fin',
   addEvent: 'Ajouter un événement',
   events: 'Événements',
-  noActivity: 'Pas d\'activité',
+  noActivity: "Pas d'activité",
   halfDay: 'Demi-journée',
   light: 'Clair',
   dark: 'Sombre',
@@ -30,8 +30,13 @@ const fr: Translations = {
   calendarSubtitle: 'Sous-titre du calendrier',
   startMonth: 'Mois de début',
   auto: 'Auto',
-  outOfRangeTitle: 'Événements hors plage (non affichés lors de l\'exportation du calendrier)',
-  periodStartEnd: 'Début/Fin de la période',
+  outOfRangeTitle:
+    "Événements hors plage (non affichés lors de l'exportation du calendrier)",
+  dayType: 'Type de jour',
+  internalActivity: 'Activité interne',
+  administrativeEvent: 'Événement administratif',
+  communityEvent: 'Événement communautaire',
+  startEndPeriod: 'Début/Fin de la période'
 };
 
 export default fr;

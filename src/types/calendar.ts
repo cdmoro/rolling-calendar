@@ -13,6 +13,13 @@ export type CalendarEvent = {
   end: string;
   halfDay?: boolean;
   color?: string;
+  type:
+    | 'no-activity'
+    | 'half-day'
+    | 'internal-activity'
+    | 'administrative-event'
+    | 'community-event'
+    | 'start-end-period';
 };
 
 export type MonthGridCell = Date | null;

@@ -35,12 +35,14 @@ export function setTheme(theme: Theme, color: string = 'blue') {
   localStorage.setItem('theme', `${theme}-${color}`);
 }
 
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-  if (state.theme === 'auto') {
-    const newColorScheme = e.matches ? 'dark' : 'light';
-    setTheme(newColorScheme, state.color);
-  }
-});
+window
+  .matchMedia('(prefers-color-scheme: dark)')
+  .addEventListener('change', (e) => {
+    if (state.theme === 'auto') {
+      const newColorScheme = e.matches ? 'dark' : 'light';
+      setTheme(newColorScheme, state.color);
+    }
+  });
 
 function resetForm() {
   const form = document.querySelector<HTMLFormElement>('#event-form')!;
@@ -130,7 +132,8 @@ document
       title: data.get('title') as string,
       start: data.get('start') as string,
       end: data.get('end') as string,
-      halfDay: data.get('halfDay') === 'on'
+      halfDay: data.get('halfDay') === 'on',
+      type: data.get('dayType') as CalendarEvent['type']
     });
 
     form.reset();
@@ -174,7 +177,7 @@ endDateInput.addEventListener('change', (e) => {
     halfDayInput.checked = false;
   } else {
     halfDayInput.disabled = false;
-  }    
+  }
 });
 
 function main() {

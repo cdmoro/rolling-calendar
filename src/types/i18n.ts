@@ -6,6 +6,7 @@ export const languagesKeys = [
   'portuguese',
   'german',
   'greek',
+  'arabic'
 ] as const;
 
 export const translationKeys = [
@@ -39,7 +40,11 @@ export const translationKeys = [
   'startMonth',
   'auto',
   'outOfRangeTitle',
-  'periodStartEnd',
+  'startEndPeriod',
+  'dayType',
+  'internalActivity',
+  'administrativeEvent',
+  'communityEvent'
 ] as const;
 
 export type TranslationKey = (typeof translationKeys)[number];

@@ -30,8 +30,13 @@ const el: Translations = {
   calendarSubtitle: 'Υπότιτλος Ημερολογίου',
   startMonth: 'Μήνας Έναρξης',
   auto: 'Αυτόματο',
-  outOfRangeTitle: 'Γεγονότα εκτός εύρους (δεν εμφανίζονται κατά την εξαγωγή ημερολογίου)',
-  periodStartEnd: 'Έναρξη/Λήξη Περιόδου',
+  outOfRangeTitle:
+    'Γεγονότα εκτός εύρους (δεν εμφανίζονται κατά την εξαγωγή ημερολογίου)',
+  dayType: 'Τύπος Ημέρας',
+  internalActivity: 'Εσωτερική Δραστηριότητα',
+  administrativeEvent: 'Διοικητικό Γεγονός',
+  communityEvent: 'Κοινοτικό Γεγονός',
+  startEndPeriod: 'Έναρξη/Λήξη Περιόδου'
 };
 
 export default el;

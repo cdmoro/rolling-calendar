@@ -30,8 +30,13 @@ const de: Translations = {
   calendarSubtitle: 'Kalenderuntertitel',
   startMonth: 'Startmonat',
   auto: 'Auto',
-  outOfRangeTitle: 'Außerhalb des Bereichs liegende Ereignisse (werden beim Exportieren des Kalenders nicht angezeigt)',
-  periodStartEnd: 'Periodenbeginn/-ende',
+  outOfRangeTitle:
+    'Außerhalb des Bereichs liegende Ereignisse (werden beim Exportieren des Kalenders nicht angezeigt)',
+  dayType: 'Tagestyp',
+  internalActivity: 'Interne Aktivität',
+  administrativeEvent: 'Verwaltungsereignis',
+  communityEvent: 'Gemeinschaftsereignis',
+  startEndPeriod: 'Beginn/Ende des Zeitraums'
 };
 
 export default de;

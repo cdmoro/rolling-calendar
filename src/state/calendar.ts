@@ -9,14 +9,11 @@ export const calendarState: CalendarState = {
 };
 
 export function getFilteredEvents(events: CalendarEvent[]) {
-  const startDate = new Date(
-    calendarState.startYear,
-    calendarState.startMonth
-  );
+  const startDate = new Date(calendarState.startYear, calendarState.startMonth);
 
   const endDate = new Date(
     calendarState.startYear,
-    calendarState.startMonth + 12,
+    calendarState.startMonth + 12
   );
 
   const inRangeEvents = events.filter((event: CalendarEvent) => {
@@ -32,11 +29,11 @@ export function getFilteredEvents(events: CalendarEvent[]) {
 
     return eventStartDate < startDate || eventEndDate > endDate;
   });
-  
+
   return {
     inRangeEvents,
     outOfRangeEvents
-  }
+  };
 }
 
 export function initCalendarState() {

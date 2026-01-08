@@ -30,8 +30,13 @@ const es: Translations = {
   calendarSubtitle: 'Subtítulo del calendario',
   startMonth: 'Mes de inicio',
   auto: 'Auto',
-  outOfRangeTitle: 'Eventos fuera de rango (no se muestran al exportar el calendario)',
-  periodStartEnd: 'Inicio/Fin del período',
+  outOfRangeTitle:
+    'Eventos fuera de rango (no se muestran al exportar el calendario)',
+  dayType: 'Tipo de día',
+  internalActivity: 'Actividad interna',
+  administrativeEvent: 'Evento administrativo',
+  communityEvent: 'Evento comunitario',
+  startEndPeriod: 'Inicio/Fin del período'
 };
 
 export default es;

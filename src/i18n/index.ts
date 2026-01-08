@@ -5,10 +5,12 @@ import it from './it';
 import pt from './pt';
 import de from './de';
 import el from './el';
+import ar from './ar';
 import { state } from '../state/app';
 import type { LanguageKey, TranslationKey } from '../types/i18n';
 
-const dicts = { en, es, fr, it, pt, de, el };
+const DICTS = { en, es, fr, it, pt, de, el, ar };
+const RTL_LANGUAGES: string[] = ['ar'];
 
 export const languageTranslation: Record<LanguageKey, string> = {
   english: 'English',
@@ -17,12 +19,13 @@ export const languageTranslation: Record<LanguageKey, string> = {
   french: 'Français',
   portuguese: 'Português',
   german: 'Deutsch',
-  greek: 'Ελληνικά'
+  greek: 'Ελληνικά',
+  arabic: 'العربية'
 };
 
 export function getTranslations() {
   return {
-    ...dicts[state.language],
+    ...DICTS[state.language],
     ...languageTranslation
   };
 }
@@ -36,6 +39,10 @@ export function applyTranslations() {
   });
 
   document.documentElement.setAttribute('lang', state.language);
+  document.documentElement.setAttribute(
+    'dir',
+    RTL_LANGUAGES.includes(state.language as LanguageKey) ? 'rtl' : 'ltr'
+  );
   document.title = dict.title;
 }
 
