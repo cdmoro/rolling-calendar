@@ -34,6 +34,13 @@ export function addOnClickToWeekdays() {
         return;
       }
 
+      if (el.classList.contains('selected')) {
+        el.classList.remove('selected');
+        startDateInput.value = '';
+        endDateInput.removeAttribute('min');
+        return;
+      }
+
       weekDays.forEach((d) => d.classList.remove('selected'));
       el.classList.add('selected');
       startDateInput.value = el.dataset.date || '';
