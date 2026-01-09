@@ -1,9 +1,26 @@
-import { t } from '../i18n';
-import type { TranslationKey } from '../types/i18n';
+import type { EventType } from '../types/calendar';
+import { getEventLegendLabel } from './utils';
 
-function createLegendItem(className: string, labelKey: TranslationKey) {
+function createLegendItem(type: EventType) {
   const div = document.createElement('div');
-  div.innerHTML = `<span class="day weekday ${className}"></span> <span>${t(labelKey)}</span>`;
+  div.dataset.type = type;
+  div.innerHTML = `<span class="day weekday marked ${type}"></span> <span>${getEventLegendLabel(type)}</span>`;
+
+  div.addEventListener('mouseenter', () => {
+    document
+      .querySelectorAll('.event-list .event-item')
+      .forEach((item) => item.classList.remove('event-highlight'));
+    document
+      .querySelectorAll(`.event-list .event-item.${type}`)
+      .forEach((item) => item.classList.add('event-highlight'));
+  });
+
+  div.addEventListener('mouseleave', () => {
+    document
+      .querySelectorAll('.event-list .event-item')
+      .forEach((item) => item.classList.remove('event-highlight'));
+  });
+
   return div;
 }
 
@@ -21,18 +38,12 @@ export function renderLegend() {
   legendElement.innerHTML = '';
 
   const legends = {
-    'no-activity': createLegendItem('marked weekday no-activity', 'noActivity'),
-    'half-day': createLegendItem('marked half-day weekday', 'halfDay'),
-    'start-end-period': createLegendItem('start-end-period', 'startEndPeriod'),
-    'internal-activity': createLegendItem(
-      'internal-activity',
-      'internalActivity'
-    ),
-    'administrative-event': createLegendItem(
-      'administrative-event',
-      'administrativeEvent'
-    ),
-    'community-event': createLegendItem('community-event', 'communityEvent')
+    'no-activity': createLegendItem('no-activity'),
+    'half-day': createLegendItem('half-day'),
+    'start-end-period': createLegendItem('start-end-period'),
+    'internal-activity': createLegendItem('internal-activity'),
+    'administrative-event': createLegendItem('administrative-event'),
+    'community-event': createLegendItem('community-event')
   };
 
   Object.entries(legends).forEach(([key, item]) => {

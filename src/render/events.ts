@@ -4,6 +4,7 @@ import { renderCalendar } from './calendar';
 import { state } from '../state/app';
 import { t } from '../i18n';
 import { renderLegend } from './legend';
+import { getEventLegendLabel } from './utils';
 
 function splitInTwoColumns<T>(items: T[]): [T[], T[]] {
   const mid = Math.ceil(items.length / 2);
@@ -83,25 +84,18 @@ function renderEventListSection(
     container.appendChild(titleEl);
   }
 
-  const EVENT_LEGEND_TRANSLATION = {
-    'no-activity': t('noActivity'),
-    'half-day': t('halfDay'),
-    'internal-activity': t('internalActivity'),
-    'administrative-event': t('administrativeEvent'),
-    'community-event': t('communityEvent'),
-    'start-end-period': t('startEndPeriod')
-  }
   const [leftEvents, rightEvents] = splitInTwoColumns(events);
   const colLeft = document.createElement('div');
   const colRight = document.createElement('div');
   colLeft.className = 'event-col';
   colRight.className = 'event-col';
 
-  const createEventItem = (event: CalendarEvent) => {;
+  const createEventItem = (event: CalendarEvent) => {
     const div = document.createElement('div');
+    div.dataset.dateStart = event.start;
     div.classList.add('event-item');
     div.classList.add(event.type || 'no-activity');
-    div.title = EVENT_LEGEND_TRANSLATION[event.type] || t('noActivity');
+    div.title = getEventLegendLabel(event.type);
 
     const dateText = formatEventDate(event, state.language, showYear);
 

@@ -6,6 +6,7 @@ import {
   getLocalizedWeekdays
 } from '../calendar/weekdays';
 import { state } from '../state/app';
+import { getEventLegendLabel } from './utils';
 
 export function renderCalendar() {
   const grid = document.querySelector<HTMLDivElement>('#calendar-grid')!;
@@ -67,25 +68,47 @@ export function renderCalendar() {
         if (event) {
           const isSingleDayEvent = event.start === event.end;
 
+          cell.dataset.dateStart = event.start;
           cell.classList.add('marked');
           cell.classList.add(event.type || 'no-activity');
-          cell.classList.add(isSingleDayEvent ? 'single' : 'range');
+          cell.title = `${event.title} – ${getEventLegendLabel(event.type)}`;
 
-          const pos = getRangePosition(
-            toLocalISODate(day),
-            event.start,
-            event.end!
-          );
+          if (isSingleDayEvent) {
+            cell.classList.add('single');
+          } else {
+            cell.classList.add('range');
 
-          if (pos === 'start') {
-            cell.classList.add('range-start');
-          } else if (pos === 'end') {
-            cell.classList.add('range-end');
-          } else if (pos === 'middle') {
-            cell.classList.add('range-middle');
+            const pos = getRangePosition(
+              toLocalISODate(day),
+              event.start,
+              event.end!
+            );
+
+            if (pos === 'start') {
+              cell.classList.add('range-start');
+            } else if (pos === 'end') {
+              cell.classList.add('range-end');
+            } else if (pos === 'middle') {
+              cell.classList.add('range-middle');
+            }
           }
 
-          cell.title = event.title;
+          cell.addEventListener('mouseenter', () => {
+            document
+              .querySelectorAll('.event-list .event-item')
+              .forEach((item) => item.classList.remove('event-highlight'));
+            document
+              .querySelectorAll(
+                `.event-list .event-item[data-date-start="${event.start}"]`
+              )
+              .forEach((item) => item.classList.add('event-highlight'));
+          });
+
+          cell.addEventListener('mouseleave', () => {
+            document
+              .querySelectorAll('.event-list .event-item')
+              .forEach((item) => item.classList.remove('event-highlight'));
+          });
         }
       } else {
         cell.classList.add('empty');

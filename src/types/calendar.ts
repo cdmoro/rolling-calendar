@@ -23,5 +23,16 @@ export type CalendarEvent = {
   type: EventType;
 };
 
+export type CalendarDocument = {
+  id: string;
+  title: string;
+  subtitle: string;
+  createdAt: string;
+  updatedAt: string;
+  startYear: number;
+  startMonth: number;
+  events: CalendarEvent[];
+};
+
 export type MonthGridCell = Date | null;
 export type MonthGrid = MonthGridCell[][];
