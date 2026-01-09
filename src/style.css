@@ -326,7 +326,7 @@ body {
 }
 
 .day.weekday.marked {
-  cursor: help;
+  cursor: default;
   background-color: var(--bg-color);
 }
 
