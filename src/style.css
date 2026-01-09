@@ -533,8 +533,8 @@ body.exporting #out-of-range-event-list {
 .event-item.administrative-event .event-icon {
   background: linear-gradient(
     45deg,
-    var(--accent-color) 60%,
-    var(--accent-color-40) 60%
+    var(--accent-color) 50%,
+    var(--accent-color-40) 50%
   );
 }
 
