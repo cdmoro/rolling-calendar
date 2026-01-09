@@ -83,21 +83,31 @@ function renderEventListSection(
     container.appendChild(titleEl);
   }
 
+  const EVENT_LEGEND_TRANSLATION = {
+    'no-activity': t('noActivity'),
+    'half-day': t('halfDay'),
+    'internal-activity': t('internalActivity'),
+    'administrative-event': t('administrativeEvent'),
+    'community-event': t('communityEvent'),
+    'start-end-period': t('startEndPeriod')
+  }
   const [leftEvents, rightEvents] = splitInTwoColumns(events);
   const colLeft = document.createElement('div');
   const colRight = document.createElement('div');
   colLeft.className = 'event-col';
   colRight.className = 'event-col';
 
-  const createEventItem = (event: CalendarEvent) => {
+  const createEventItem = (event: CalendarEvent) => {;
     const div = document.createElement('div');
     div.classList.add('event-item');
+    div.classList.add(event.type || 'no-activity');
+    div.title = EVENT_LEGEND_TRANSLATION[event.type] || t('noActivity');
 
     const dateText = formatEventDate(event, state.language, showYear);
-    const halfDayText = event.type === 'half-day' ? ' (½)' : '';
 
     div.innerHTML = `
-      <span class="event-date">${dateText}${halfDayText}</span>
+      <span class="event-icon"></span>
+      <span class="event-date">${dateText}</span>
       <span class="event-title" title="${event.title}">${event.title}</span>
       <span class="event-actions">
         <button class="event-delete" data-id="${event.id}">&times;</button>

@@ -248,14 +248,15 @@ body {
 }
 
 .event-list-wrapper .event-item {
+  display: grid;
   min-width: 0;
   font-size: 0.8em;
   padding: 4px 6px;
   border-bottom: solid 1px var(--accent-color-40);
   min-height: 26px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 7px 150px 1fr auto;
   align-items: end;
+  gap: 7px;
 }
 
 .event-list-wrapper .event-item:not(.empty):hover {
@@ -267,11 +268,6 @@ body {
   font-size: 0.85rem;
   font-weight: normal;
   color: var(--muted-color);
-}
-
-.event-date {
-  min-width: 150px;
-  display: inline-block;
 }
 
 .event-title {
@@ -368,17 +364,16 @@ body:not(.exporting) .day.weekday.selected {
   transform: scale(1.2);
 }
 
-/* .day.weekday.community-event::before {
+.day.weekday.administrative-event::before {
   content: '';
   position: absolute;
   top: 2px;
   left: 2px;
   width: 8px;
   height: 8px;
-  z-index: 1;
-  background: var(--accent-color);
-  border-radius: 0.25rem;
-} */
+  background-color: var(--accent-color);
+  border-radius: 50%;
+}
 
 .day.weekday.community-event {
   background:
@@ -509,4 +504,54 @@ body.exporting .event-actions {
 
 body.exporting #out-of-range-event-list {
   display: none;
+}
+
+.event-icon {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-inline-end: 6px;
+  border-radius: 50%;
+  margin-bottom: 3px;
+}
+
+.event-item.no-activity .event-icon {
+  background-color: var(--accent-color);
+  border-radius: 50%;
+}
+
+.event-item.half-day .event-icon {
+  background: linear-gradient(
+    90deg,
+    var(--accent-color) 60%,
+    transparent 60%
+  );
+} 
+
+.event-item.internal-activity .event-icon {
+  background: linear-gradient(
+    45deg,
+    var(--accent-color) 60%,
+    var(--accent-color-40) 60%
+  );
+}
+
+.event-item.administrative-event .event-icon {
+  background: radial-gradient(circle,var(--accent-color-80) 40%, transparent 40%);
+}
+
+.event-item.community-event .event-icon {
+    background-color: var(--accent-color);
+    transform: rotate(45deg);
+    border-radius: 0;
+    width: 7px;
+    height: 7px;
+    margin-inline-end: 0px;
+    margin-bottom: 4px;
+    margin-inline-start: 1px;
+}
+
+.event-item.start-end-period .event-icon {
+  border: 2px solid var(--accent-color);
+  border-radius: 50%;
 }
