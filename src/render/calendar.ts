@@ -68,9 +68,8 @@ export function renderCalendar() {
           const isSingleDayEvent = event.start === event.end;
 
           cell.classList.add('marked');
-          cell.classList.add(event.type?.replace(/_/g, '-') || 'no-activity');
+          cell.classList.add(event.type || 'no-activity');
           cell.classList.add(isSingleDayEvent ? 'single' : 'range');
-          // cell.classList.toggle('half-day', event.halfDay);
 
           const pos = getRangePosition(
             toLocalISODate(day),

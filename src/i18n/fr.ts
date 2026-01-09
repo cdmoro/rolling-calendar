@@ -8,7 +8,7 @@ const fr: Translations = {
   endDate: 'Date de fin',
   addEvent: 'Ajouter un événement',
   events: 'Événements',
-  noActivity: "Pas d'activité",
+  noActivity: 'Pas d’activité',
   halfDay: 'Demi-journée',
   light: 'Clair',
   dark: 'Sombre',
@@ -31,7 +31,7 @@ const fr: Translations = {
   startMonth: 'Mois de début',
   auto: 'Auto',
   outOfRangeTitle:
-    "Événements hors plage (non affichés lors de l'exportation du calendrier)",
+    'Événements hors plage (non affichés lors de l’exportation du calendrier)',
   dayType: 'Type de jour',
   internalActivity: 'Activité interne',
   administrativeEvent: 'Événement administratif',

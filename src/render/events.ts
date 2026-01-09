@@ -94,7 +94,7 @@ function renderEventListSection(
     div.classList.add('event-item');
 
     const dateText = formatEventDate(event, state.language, showYear);
-    const halfDayText = event.halfDay ? ' (½)' : '';
+    const halfDayText = event.type === 'half-day' ? ' (½)' : '';
 
     div.innerHTML = `
       <span class="event-date">${dateText}${halfDayText}</span>

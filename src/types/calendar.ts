@@ -6,20 +6,21 @@ export type CalendarState = {
   events: CalendarEvent[];
 };
 
+export type EventType =
+  | 'no-activity'
+  | 'half-day'
+  | 'internal-activity'
+  | 'administrative-event'
+  | 'community-event'
+  | 'start-end-period';
+
 export type CalendarEvent = {
   id: string;
   title: string;
   start: string;
   end: string;
-  halfDay?: boolean;
   color?: string;
-  type:
-    | 'no-activity'
-    | 'half-day'
-    | 'internal-activity'
-    | 'administrative-event'
-    | 'community-event'
-    | 'start-end-period';
+  type: EventType;
 };
 
 export type MonthGridCell = Date | null;
