@@ -1,8 +1,6 @@
-declare global {
-  interface Window {
-    __INTERNAL__?: {
-      state: AppState;
-      calendarState: CalendarState;
-    };
-  }
+interface Window {
+  __INTERNAL__?: {
+    state: State;
+    calendarState: CalendarState;
+  };
 }

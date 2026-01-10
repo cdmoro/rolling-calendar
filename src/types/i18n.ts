@@ -51,7 +51,7 @@ export const translationKeys = [
   'delete',
   'cancel',
   'deleteEvent',
-  'deleteEventConfirmation',
+  'deleteEventConfirmation'
 ] as const;
 
 export type TranslationKey = (typeof translationKeys)[number];

@@ -42,7 +42,8 @@ const el: Translations = {
   delete: 'Διαγραφή',
   cancel: 'Ακύρωση',
   deleteEvent: 'Διαγραφή Γεγονότος',
-  deleteEventConfirmation: 'Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το γεγονός;',
+  deleteEventConfirmation:
+    'Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το γεγονός;',
   date: 'Ημερομηνία'
 };
 

@@ -1,10 +1,10 @@
-import { getFixedMonthGrid } from '../calendar/monthGrid';
 import { calendarState } from '../state/calendar';
-import { getEvent, getRangePosition, toLocalISODate } from '../events/events';
+import { getEvent, getRangePosition, toLocalISODate } from '../modules/events';
 import {
   addOnClickToWeekdays,
-  getLocalizedWeekdays
-} from '../calendar/weekdays';
+  getLocalizedWeekdays,
+  getFixedMonthGrid
+} from '../modules/calendar';
 import { state } from '../state/app';
 import { getEventLegendLabel } from './utils';
 

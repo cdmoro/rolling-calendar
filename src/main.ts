@@ -202,9 +202,9 @@ function main() {
     state.language;
 
   if (import.meta.env.DEV) {
-    (window as any).__INTERNAL__ = {
+    window.__INTERNAL__ = {
       state,
-      calendarState,
+      calendarState
     };
   }
 }

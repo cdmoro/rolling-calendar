@@ -16,10 +16,11 @@ deleteDialog.addEventListener('close', () => {
     handleDelete(pendingDeleteEventId);
   }
 
-  document.querySelector<HTMLDivElement>('#delete-event-dialog .dialog-description')!.innerHTML = '';
+  document.querySelector<HTMLDivElement>(
+    '#delete-event-dialog .dialog-description'
+  )!.innerHTML = '';
   pendingDeleteEventId = null;
 });
-
 
 function splitInTwoColumns<T>(items: T[]): [T[], T[]] {
   const mid = Math.ceil(items.length / 2);
@@ -143,7 +144,9 @@ function renderEventListSection(
     );
     if (!btn) return;
     // handleDelete(btn.dataset.id!);
-    openDeleteEventDialog(calendarState.events.find(e => e.id === btn.dataset.id!)!);
+    openDeleteEventDialog(
+      calendarState.events.find((e) => e.id === btn.dataset.id!)!
+    );
   };
 }
 
@@ -164,7 +167,10 @@ export function renderEventList() {
   );
 }
 
-function formatLongDate(dateStr: string, locale: string = state.language): string {
+function formatLongDate(
+  dateStr: string,
+  locale: string = state.language
+): string {
   const date = new Date(dateStr);
   const formatter = new Intl.DateTimeFormat(locale, {
     year: 'numeric',
@@ -177,12 +183,15 @@ function formatLongDate(dateStr: string, locale: string = state.language): strin
 export function openDeleteEventDialog(event: CalendarEvent) {
   pendingDeleteEventId = event.id;
 
-  const dates = event.start === event.end
-    ? `<p><strong>${t('date')}</strong>: ${formatLongDate(event.start, state.language)}</p>`
-    : `<p><strong>${t('startDate')}</strong>: ${formatLongDate(event.start, state.language)}</p>
+  const dates =
+    event.start === event.end
+      ? `<p><strong>${t('date')}</strong>: ${formatLongDate(event.start, state.language)}</p>`
+      : `<p><strong>${t('startDate')}</strong>: ${formatLongDate(event.start, state.language)}</p>
        <p><strong>${t('endDate')}</strong>: ${formatLongDate(event.end, state.language)}</p>`;
 
-  document.querySelector<HTMLDivElement>('#delete-event-dialog .dialog-description')!.innerHTML = `
+  document.querySelector<HTMLDivElement>(
+    '#delete-event-dialog .dialog-description'
+  )!.innerHTML = `
     <p><strong>${t('eventTitle')}</strong>: ${event.title}</p>
     ${dates}
     <p><strong>${t('dayType')}</strong>: ${getEventLegendLabel(event.type)}</p>
@@ -194,4 +203,3 @@ export function openDeleteEventDialog(event: CalendarEvent) {
 
   dialog.showModal();
 }
-

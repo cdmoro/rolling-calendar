@@ -42,7 +42,8 @@ const pt: Translations = {
   delete: 'Excluir',
   cancel: 'Cancelar',
   deleteEvent: 'Excluir evento',
-  deleteEventConfirmation: 'Você tem certeza de que deseja excluir este evento?',
+  deleteEventConfirmation:
+    'Você tem certeza de que deseja excluir este evento?',
   date: 'Data'
 };
 

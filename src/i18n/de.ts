@@ -42,7 +42,8 @@ const de: Translations = {
   delete: 'Löschen',
   cancel: 'Abbrechen',
   deleteEvent: 'Ereignis löschen',
-  deleteEventConfirmation: 'Sind Sie sicher, dass Sie dieses Ereignis löschen möchten?',
+  deleteEventConfirmation:
+    'Sind Sie sicher, dass Sie dieses Ereignis löschen möchten?',
   date: 'Datum'
 };
 

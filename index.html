@@ -15,7 +15,9 @@
 
       <div class="calendar-controls">
         <select id="calendar-select">
-          <option value="" data-label="untitledCalendar">Untitled Calendar</option>
+          <option value="" data-label="untitledCalendar">
+            Untitled Calendar
+          </option>
         </select>
         <button id="save-calendar" data-label="save"></button>
         <button id="delete-calendar" data-label="delete"></button>
@@ -157,24 +159,78 @@
       </section>
     </main>
 
-    <dialog id="save-calendar-dialog">
+    <dialog id="export-dialog">
+      <div class="dialog-header">
+        <h3 data-label="exportDialogTitle">Export</h3>
+      </div>
       <form method="dialog">
-        <label for="calendar-name-input" data-label="calendarName"></label>
-        <input type="text" id="calendar-name-input" required />
-        <menu>
-          <button id="cancel-save-calendar" data-label="cancel"></button>
-          <button id="confirm-save-calendar" data-label="save"></button>
-        </menu>
+        <div class="dialog-body">
+          <p data-label="exportDialogDescription"></p>
+          <textarea id="exported-dialog-textarea" readonly></textarea>
+        </div>
+        <div class="dialog-footer">
+          <button
+            id="close-export-dialog"
+            class="btn btn-primary"
+            data-label="close"
+          ></button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="save-calendar-dialog">
+      <div class="dialog-header">
+        <h3 data-label="createCalendar">Create calendar</h3>
+      </div>
+      <form method="dialog">
+        <div class="dialog-body">
+          <p data-label="createCalendarDescription"></p>
+          <div class="form-control">
+            <label for="calendar-name-input" data-label="calendarName"></label>
+            <input type="text" id="calendar-name-input" required />
+            <div
+              class="dialog-description"
+              data-label="calendarNameDescription"
+            ></div>
+          </div>
+          <div class="dialog-error"></div>
+        </div>
+        <div class="dialog-footer">
+          <button
+            id="cancel-save-calendar"
+            class="btn btn-secondary"
+            data-label="cancel"
+          ></button>
+          <button
+            id="confirm-save-calendar"
+            class="btn btn-primary"
+            data-label="save"
+          ></button>
+        </div>
       </form>
     </dialog>
 
     <dialog id="delete-calendar-dialog">
+      <div class="dialog-header">
+        <h3 data-label="deleteCalendar">Delete calendar</h3>
+      </div>
       <form method="dialog">
-        <p data-label="deleteCalendarConfirmation"></p>
-        <menu>
-          <button id="cancel-delete-calendar" data-label="cancel"></button>
-          <button id="confirm-delete-calendar" data-label="delete"></button>
-        </menu>
+        <div class="dialog-body">
+          <p data-label="deleteCalendarConfirmation"></p>
+          <div class="dialog-description"></div>
+        </div>
+        <div class="dialog-footer">
+          <button
+            id="cancel-delete-calendar"
+            class="btn btn-secondary"
+            data-label="cancel"
+          ></button>
+          <button
+            id="confirm-delete-calendar"
+            class="btn btn-danger"
+            data-label="delete"
+          ></button>
+        </div>
       </form>
     </dialog>
 
@@ -184,12 +240,22 @@
       </div>
       <form method="dialog">
         <div class="dialog-body">
-        <p data-label="deleteEventConfirmation"></p>
-        <div class="dialog-description"></div>
+          <p data-label="deleteEventConfirmation"></p>
+          <div class="dialog-description"></div>
         </div>
         <div class="dialog-footer">
-          <button id="cancel-delete-event" class="btn btn-secondary" value="cancel" data-label="cancel"></button>
-          <button id="confirm-delete-event" class="btn btn-danger" value="confirm" data-label="delete"></button>
+          <button
+            id="cancel-delete-event"
+            class="btn btn-secondary"
+            value="cancel"
+            data-label="cancel"
+          ></button>
+          <button
+            id="confirm-delete-event"
+            class="btn btn-danger"
+            value="confirm"
+            data-label="delete"
+          ></button>
         </div>
       </form>
     </dialog>

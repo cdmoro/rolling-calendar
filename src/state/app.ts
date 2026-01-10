@@ -5,7 +5,7 @@ export const state: State = {
   theme: 'auto',
   color: 'blue',
   documents: [],
-  currentDocumentId: null,
+  currentDocumentId: null
 };
 
 export function initState() {
@@ -30,11 +30,14 @@ export function initState() {
     if (savedDocuments) {
       state.documents = JSON.parse(savedDocuments) as State['documents'];
     }
-  } catch (e) {
+  } catch {
     state.documents = [];
   }
 
-  if (state.documents.length > 0 && state.documents.some(doc => doc.id === savedCurrentDocumentId)) {
+  if (
+    state.documents.length > 0 &&
+    state.documents.some((doc) => doc.id === savedCurrentDocumentId)
+  ) {
     state.currentDocumentId = savedCurrentDocumentId;
   }
 }
