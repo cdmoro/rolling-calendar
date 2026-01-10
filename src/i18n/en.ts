@@ -35,7 +35,14 @@ const en: Translations = {
   internalActivity: 'Internal Activity',
   administrativeEvent: 'Administrative Event',
   communityEvent: 'Community Event',
-  startEndPeriod: 'Start/End of Period'
+  startEndPeriod: 'Start/End of Period',
+  untitledCalendar: 'Untitled Calendar',
+  save: 'Save',
+  delete: 'Delete',
+  cancel: 'Cancel',
+  deleteEvent: 'Delete Event',
+  deleteEventConfirmation: 'Are you sure you want to delete this event?',
+  date: 'Date'
 };
 
 export default en;

@@ -6,6 +6,21 @@ import { t } from '../i18n';
 import { renderLegend } from './legend';
 import { getEventLegendLabel } from './utils';
 
+const deleteDialog = document.getElementById(
+  'delete-event-dialog'
+) as HTMLDialogElement;
+let pendingDeleteEventId: string | null = null;
+
+deleteDialog.addEventListener('close', () => {
+  if (deleteDialog.returnValue === 'confirm' && pendingDeleteEventId) {
+    handleDelete(pendingDeleteEventId);
+  }
+
+  document.querySelector<HTMLDivElement>('#delete-event-dialog .dialog-description')!.innerHTML = '';
+  pendingDeleteEventId = null;
+});
+
+
 function splitInTwoColumns<T>(items: T[]): [T[], T[]] {
   const mid = Math.ceil(items.length / 2);
   return [items.slice(0, mid), items.slice(mid)];
@@ -127,7 +142,8 @@ function renderEventListSection(
       '.event-delete'
     );
     if (!btn) return;
-    handleDelete(btn.dataset.id!);
+    // handleDelete(btn.dataset.id!);
+    openDeleteEventDialog(calendarState.events.find(e => e.id === btn.dataset.id!)!);
   };
 }
 
@@ -147,3 +163,35 @@ export function renderEventList() {
     t('outOfRangeTitle')
   );
 }
+
+function formatLongDate(dateStr: string, locale: string = state.language): string {
+  const date = new Date(dateStr);
+  const formatter = new Intl.DateTimeFormat(locale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+  return formatter.format(date);
+}
+
+export function openDeleteEventDialog(event: CalendarEvent) {
+  pendingDeleteEventId = event.id;
+
+  const dates = event.start === event.end
+    ? `<p><strong>${t('date')}</strong>: ${formatLongDate(event.start, state.language)}</p>`
+    : `<p><strong>${t('startDate')}</strong>: ${formatLongDate(event.start, state.language)}</p>
+       <p><strong>${t('endDate')}</strong>: ${formatLongDate(event.end, state.language)}</p>`;
+
+  document.querySelector<HTMLDivElement>('#delete-event-dialog .dialog-description')!.innerHTML = `
+    <p><strong>${t('eventTitle')}</strong>: ${event.title}</p>
+    ${dates}
+    <p><strong>${t('dayType')}</strong>: ${getEventLegendLabel(event.type)}</p>
+  `;
+
+  const dialog = document.getElementById(
+    'delete-event-dialog'
+  ) as HTMLDialogElement;
+
+  dialog.showModal();
+}
+

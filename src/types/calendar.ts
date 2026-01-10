@@ -26,11 +26,9 @@ export type CalendarEvent = {
 export type CalendarDocument = {
   id: string;
   title: string;
-  subtitle: string;
   createdAt: string;
   updatedAt: string;
-  startYear: number;
-  startMonth: number;
+  state: CalendarState;
   events: CalendarEvent[];
 };
 

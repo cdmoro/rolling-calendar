@@ -13,6 +13,14 @@
     <header class="header">
       <h1 data-label="title"></h1>
 
+      <div class="calendar-controls">
+        <select id="calendar-select">
+          <option value="" data-label="untitledCalendar">Untitled Calendar</option>
+        </select>
+        <button id="save-calendar" data-label="save"></button>
+        <button id="delete-calendar" data-label="delete"></button>
+      </div>
+
       <select id="language-select">
         <option value="en" data-label="english">English</option>
         <option value="es" data-label="spanish">Spanish</option>
@@ -148,6 +156,43 @@
         </div>
       </section>
     </main>
+
+    <dialog id="save-calendar-dialog">
+      <form method="dialog">
+        <label for="calendar-name-input" data-label="calendarName"></label>
+        <input type="text" id="calendar-name-input" required />
+        <menu>
+          <button id="cancel-save-calendar" data-label="cancel"></button>
+          <button id="confirm-save-calendar" data-label="save"></button>
+        </menu>
+      </form>
+    </dialog>
+
+    <dialog id="delete-calendar-dialog">
+      <form method="dialog">
+        <p data-label="deleteCalendarConfirmation"></p>
+        <menu>
+          <button id="cancel-delete-calendar" data-label="cancel"></button>
+          <button id="confirm-delete-calendar" data-label="delete"></button>
+        </menu>
+      </form>
+    </dialog>
+
+    <dialog id="delete-event-dialog" closedby="any">
+      <div class="dialog-header">
+        <h3 data-label="deleteEvent">Delete event</h3>
+      </div>
+      <form method="dialog">
+        <div class="dialog-body">
+        <p data-label="deleteEventConfirmation"></p>
+        <div class="dialog-description"></div>
+        </div>
+        <div class="dialog-footer">
+          <button id="cancel-delete-event" class="btn btn-secondary" value="cancel" data-label="cancel"></button>
+          <button id="confirm-delete-event" class="btn btn-danger" value="confirm" data-label="delete"></button>
+        </div>
+      </form>
+    </dialog>
 
     <script type="module" src="/src/main.ts"></script>
   </body>

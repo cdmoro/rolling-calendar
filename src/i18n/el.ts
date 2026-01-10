@@ -36,7 +36,14 @@ const el: Translations = {
   internalActivity: 'Εσωτερική Δραστηριότητα',
   administrativeEvent: 'Διοικητικό Γεγονός',
   communityEvent: 'Κοινοτικό Γεγονός',
-  startEndPeriod: 'Έναρξη/Λήξη Περιόδου'
+  startEndPeriod: 'Έναρξη/Λήξη Περιόδου',
+  untitledCalendar: 'Ημερολόγιο χωρίς τίτλο',
+  save: 'Αποθήκευση',
+  delete: 'Διαγραφή',
+  cancel: 'Ακύρωση',
+  deleteEvent: 'Διαγραφή Γεγονότος',
+  deleteEventConfirmation: 'Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το γεγονός;',
+  date: 'Ημερομηνία'
 };
 
 export default el;

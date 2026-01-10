@@ -200,6 +200,13 @@ function main() {
   document.querySelector<HTMLSelectElement>('#color-select')!.value = color;
   document.querySelector<HTMLSelectElement>('#language-select')!.value =
     state.language;
+
+  if (import.meta.env.DEV) {
+    (window as any).__INTERNAL__ = {
+      state,
+      calendarState,
+    };
+  }
 }
 
 main();

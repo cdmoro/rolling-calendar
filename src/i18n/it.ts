@@ -36,7 +36,14 @@ const it: Translations = {
   internalActivity: 'Attività interna',
   administrativeEvent: 'Evento amministrativo',
   communityEvent: 'Evento comunitario',
-  startEndPeriod: 'Inizio/Fine del periodo'
+  startEndPeriod: 'Inizio/Fine del periodo',
+  untitledCalendar: 'Calendario senza titolo',
+  save: 'Salva',
+  delete: 'Elimina',
+  cancel: 'Annulla',
+  deleteEvent: 'Elimina evento',
+  deleteEventConfirmation: 'Sei sicuro di voler eliminare questo evento?',
+  date: 'Data'
 };
 
 export default it;

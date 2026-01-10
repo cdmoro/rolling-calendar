@@ -27,7 +27,7 @@
 
 [data-theme='dark'],
 [data-theme^='dark-'] {
-  --bg-color: #212529;
+  --bg-color: #121212;
   --text-color: 240, 240, 240;
   --border-color: #444;
   --weekend-bg: #232323;
@@ -118,7 +118,6 @@ body {
 .header h1 {
   margin: 0;
   font-size: 1.8em;
-  flex: 1;
 }
 
 .layout {
@@ -564,4 +563,86 @@ body.exporting #out-of-range-event-list {
 
 .event-list .event-item.event-highlight {
   background: var(--accent-color-10);
+}
+
+.calendar-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+  flex: 1;
+}
+
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
+dialog {
+  box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+  border: none;
+  border-radius: .35rem;
+  background-color: var(--bg-color);
+  color: rgb(var(--text-color));
+}
+
+dialog .dialog-header h3 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+dialog::backdrop {
+  background-color: var(--accent-color-80);
+}
+
+.dialog-description {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: rgb(var(--text-color));
+}
+
+.dialog-description p {
+  margin: 0.25rem 0;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: .85rem;
+  font-weight: bold;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--accent-color);
+}
+
+.btn-secondary:hover {
+  background-color: var(--accent-color-20);
+}
+
+.btn-primary {
+  background-color: var(--accent-color);
+  color: var(--accent-font-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-color-80);
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
 }

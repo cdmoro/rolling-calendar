@@ -13,6 +13,7 @@ export const translationKeys = [
   'title',
   'newEvent',
   'eventTitle',
+  'date',
   'startDate',
   'endDate',
   'addEvent',
@@ -44,7 +45,13 @@ export const translationKeys = [
   'dayType',
   'internalActivity',
   'administrativeEvent',
-  'communityEvent'
+  'communityEvent',
+  'untitledCalendar',
+  'save',
+  'delete',
+  'cancel',
+  'deleteEvent',
+  'deleteEventConfirmation',
 ] as const;
 
 export type TranslationKey = (typeof translationKeys)[number];

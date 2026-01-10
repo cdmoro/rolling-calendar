@@ -35,7 +35,14 @@ const ar: Translations = {
   internalActivity: 'نشاط داخلي',
   administrativeEvent: 'حدث إداري',
   communityEvent: 'حدث مجتمعي',
-  startEndPeriod: 'بداية/نهاية الفترة'
+  startEndPeriod: 'بداية/نهاية الفترة',
+  untitledCalendar: 'تقويم بدون عنوان',
+  save: 'حفظ',
+  delete: 'حذف',
+  cancel: 'إلغاء',
+  deleteEvent: 'حذف الحدث',
+  deleteEventConfirmation: 'هل أنت متأكد أنك تريد حذف هذا الحدث؟',
+  date: 'التاريخ'
 };
 
 export default ar;
