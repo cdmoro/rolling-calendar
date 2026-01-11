@@ -26,8 +26,8 @@ const el: Translations = {
   grey: 'Γκρι',
   burgundy: 'Βουργουνδί',
   settings: 'Ρυθμίσεις',
-  calendarTitle: 'Τίτλος Ημερολογίου',
-  calendarSubtitle: 'Υπότιτλος Ημερολογίου',
+  calendarTitle: 'Τίτλος',
+  calendarSubtitle: 'Υπότιτλος',
   startMonth: 'Μήνας Έναρξης',
   auto: 'Αυτόματο',
   outOfRangeTitle:
@@ -44,7 +44,9 @@ const el: Translations = {
   deleteEvent: 'Διαγραφή Γεγονότος',
   deleteEventConfirmation:
     'Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το γεγονός;',
-  date: 'Ημερομηνία'
+  date: 'Ημερομηνία',
+  color: 'Χρώμα',
+  export: 'Εξαγωγή',
 };
 
 export default el;

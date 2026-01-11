@@ -5,6 +5,7 @@ import type { Language, Theme } from './types/app';
 import type { CalendarEvent } from './types/calendar';
 import { initExport } from './export';
 import { renderUI } from './render';
+import { autosaveCurrentDocument } from './modules/calendars';
 
 const startMonthInput =
   document.querySelector<HTMLInputElement>('#start-month')!;
@@ -31,7 +32,13 @@ export function setTheme(theme: Theme, color: string = 'blue') {
 
   html.setAttribute('data-theme', `${resolvedTheme}-${color}`);
 
-  localStorage.setItem('theme', `${theme}-${color}`);
+  localStorage.setItem('theme', `${theme}`);
+  localStorage.setItem('color', `${color}`);
+
+  if (state.calendar) {
+    state.calendar.color = color;
+    autosaveCurrentDocument();
+  }
 }
 
 window
@@ -39,7 +46,7 @@ window
   .addEventListener('change', (e) => {
     if (state.theme === 'auto') {
       const newColorScheme = e.matches ? 'dark' : 'light';
-      setTheme(newColorScheme, state.color);
+      setTheme(newColorScheme, calendarState.color);
     }
   });
 
@@ -59,6 +66,13 @@ startMonthInput.addEventListener('change', (e) => {
   const minDate = `${y}-${String(m).padStart(2, '0')}-01`;
   startDateInput.min = minDate;
   endDateInput.min = minDate;
+
+  if (state.calendar) {
+    state.calendar.startYear = y;
+    state.calendar.startMonth = m - 1;
+    autosaveCurrentDocument();
+  }
+
 
   renderUI();
   resetForm();
@@ -92,6 +106,12 @@ function resolveCalendarHeader() {
     localStorage.setItem('calendarSubtitle', subtitle);
   } else {
     localStorage.removeItem('calendarSubtitle');
+  }
+
+  if (state.calendar) {
+    state.calendar.calendarTitle = title;
+    state.calendar.calendarSubtitle = subtitle;
+    autosaveCurrentDocument();
   }
 }
 
@@ -153,7 +173,7 @@ document
   .querySelector<HTMLSelectElement>('#theme-select')!
   .addEventListener('change', (e) => {
     state.theme = (e.target as HTMLSelectElement).value as Theme;
-    setTheme(state.theme, state.color);
+    setTheme(state.theme, calendarState.color);
   });
 
 document
@@ -161,8 +181,8 @@ document
   .addEventListener('change', (e) => {
     const theme = document.querySelector<HTMLSelectElement>('#theme-select')!
       .value as Theme;
-    state.color = (e.target as HTMLSelectElement).value;
-    setTheme(theme, state.color);
+    calendarState.color = (e.target as HTMLSelectElement).value;
+    setTheme(theme, calendarState.color);
   });
 
 startDateInput.addEventListener('change', (e) => {
@@ -176,7 +196,7 @@ function main() {
   renderUI();
   initExport();
 
-  const color = state.color;
+  const color = calendarState.color;
   const html = document.documentElement;
   let resolvedTheme = state.theme;
 

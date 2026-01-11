@@ -7,6 +7,7 @@ import {
 } from '../modules/calendar';
 import { state } from '../state/app';
 import { getEventLegendLabel } from './utils';
+import { formatEventDate } from './events';
 
 export function renderCalendar() {
   const grid = document.querySelector<HTMLDivElement>('#calendar-grid')!;
@@ -68,10 +69,16 @@ export function renderCalendar() {
         if (event) {
           const isSingleDayEvent = event.start === event.end;
 
+          cell.innerHTML += `<div class="tooltip">
+            <div class="tooltip-title">${event.title}</div>
+            <div class="tooltip-date">${formatEventDate(event, true)}</div>
+            <div class="tooltip-type">${getEventLegendLabel(event.type)}</div>
+          </div>`;
+
           cell.dataset.dateStart = event.start;
           cell.classList.add('marked');
           cell.classList.add(event.type || 'no-activity');
-          cell.title = `${event.title} – ${getEventLegendLabel(event.type)}`;
+          // cell.title = `${event.title} – ${getEventLegendLabel(event.type)}`;
 
           if (isSingleDayEvent) {
             cell.classList.add('single');

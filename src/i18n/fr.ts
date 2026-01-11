@@ -26,8 +26,8 @@ const fr: Translations = {
   grey: 'Gris',
   burgundy: 'Bordeaux',
   settings: 'Paramètres',
-  calendarTitle: 'Titre du calendrier',
-  calendarSubtitle: 'Sous-titre du calendrier',
+  calendarTitle: 'Titre',
+  calendarSubtitle: 'Sous-titre',
   startMonth: 'Mois de début',
   auto: 'Auto',
   outOfRangeTitle:
@@ -43,7 +43,9 @@ const fr: Translations = {
   cancel: 'Annuler',
   deleteEvent: 'Supprimer l’événement',
   deleteEventConfirmation: 'Êtes-vous sûr de vouloir supprimer cet événement ?',
-  date: 'Date'
+  date: 'Date',
+  color: 'Couleur',
+  export: 'Exporter',
 };
 
 export default fr;

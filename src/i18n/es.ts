@@ -26,8 +26,8 @@ const es: Translations = {
   grey: 'Gris',
   burgundy: 'Burdeos',
   settings: 'Configuraciones',
-  calendarTitle: 'Título del calendario',
-  calendarSubtitle: 'Subtítulo del calendario',
+  calendarTitle: 'Título',
+  calendarSubtitle: 'Subtítulo',
   startMonth: 'Mes de inicio',
   auto: 'Auto',
   outOfRangeTitle:
@@ -43,7 +43,9 @@ const es: Translations = {
   cancel: 'Cancelar',
   deleteEvent: 'Eliminar evento',
   deleteEventConfirmation: '¿Estás seguro de que deseas eliminar este evento?',
-  date: 'Fecha'
+  date: 'Fecha',
+  color: 'Color',
+  export: 'Exportar',
 };
 
 export default es;

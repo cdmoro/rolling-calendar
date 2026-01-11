@@ -5,7 +5,8 @@ export const calendarState: CalendarState = {
   startMonth: new Date().getMonth(),
   calendarTitle: '',
   calendarSubtitle: '',
-  events: []
+  events: [],
+  color: 'blue',
 };
 
 export function getFilteredEvents(events: CalendarEvent[]) {
@@ -41,11 +42,16 @@ export function initCalendarState() {
   const savedCalendarTitle = localStorage.getItem('calendarTitle');
   const savedCalendarSubtitle = localStorage.getItem('calendarSubtitle');
   const savedEvents = localStorage.getItem('events');
+  const savedColor = localStorage.getItem('color');
 
   if (savedStartMonth) {
     const [y, m] = savedStartMonth.split('-').map(Number);
     calendarState.startMonth = m - 1;
     calendarState.startYear = y;
+  }
+
+  if (savedColor) {
+    calendarState.color = savedColor;
   }
 
   calendarState.calendarTitle =

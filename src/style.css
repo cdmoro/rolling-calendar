@@ -151,14 +151,17 @@ body {
   margin-bottom: 12px;
 }
 
-.sidebar input,
-.sidebar select {
-  width: 100%;
+input, select {
   border: 1px solid var(--input-border-color);
   background-color: rgb(var(--bg-color));
   color: rgb(var(--text-color));
   padding: 0.375rem 0.75rem;
   border-radius: 0.375rem;
+}
+
+.sidebar input,
+.sidebar select {
+  width: 100%;
 }
 
 .sidebar input[type='checkbox'] {
@@ -648,4 +651,50 @@ dialog::backdrop {
 
 .btn-danger:hover {
   background-color: #c0392b;
+}
+
+
+.tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(5px);
+  background-color: color-mix(in srgb, var(--accent-color) 50%, var(--bg-color) 50%);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  box-shadow:
+    0px 11px 15px -7px rgba(0, 0, 0, 0.2),
+    0px 24px 38px 3px rgba(0, 0, 0, 0.14),
+    0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+  z-index: 10;
+  display: none;
+  font-weight: normal;
+}
+
+.tooltip-title {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.day:hover .tooltip {
+  display: block;
+}
+
+.day[data-day="0"] .tooltip,
+.day[data-day="1"] .tooltip,
+.day[data-day="2"] .tooltip {
+  left: 0;
+  right: auto;
+  transform: translateX(0) translateY(5px);
+}
+
+.day[data-day="4"] .tooltip,
+.day[data-day="5"] .tooltip,
+.day[data-day="6"] .tooltip {
+  left: auto;
+  right: 0;
+  transform: translateX(0) translateY(5px);
 }

@@ -7,17 +7,17 @@ import { renderLegend } from './legend';
 import { getEventLegendLabel } from './utils';
 
 const deleteDialog = document.getElementById(
-  'delete-event-dialog'
+  'delete-dialog'
 ) as HTMLDialogElement;
 let pendingDeleteEventId: string | null = null;
 
 deleteDialog.addEventListener('close', () => {
-  if (deleteDialog.returnValue === 'confirm' && pendingDeleteEventId) {
+  if (deleteDialog.returnValue === 'delete' && pendingDeleteEventId) {
     handleDelete(pendingDeleteEventId);
   }
 
   document.querySelector<HTMLDivElement>(
-    '#delete-event-dialog .dialog-description'
+    '#delete-dialog .dialog-description'
   )!.innerHTML = '';
   pendingDeleteEventId = null;
 });
@@ -27,9 +27,8 @@ function splitInTwoColumns<T>(items: T[]): [T[], T[]] {
   return [items.slice(0, mid), items.slice(mid)];
 }
 
-function formatEventDate(
+export function formatEventDate(
   event: CalendarEvent,
-  locale: string = state.language,
   showYear: boolean = false
 ): string {
   const start = new Date(event.start);
@@ -44,7 +43,7 @@ function formatEventDate(
     start.getFullYear() === end.getFullYear() &&
     start.getMonth() === end.getMonth();
 
-  const monthFormatter = new Intl.DateTimeFormat(locale, {
+  const monthFormatter = new Intl.DateTimeFormat(state.language, {
     month: 'short'
   });
 
@@ -113,7 +112,7 @@ function renderEventListSection(
     div.classList.add(event.type || 'no-activity');
     div.title = getEventLegendLabel(event.type);
 
-    const dateText = formatEventDate(event, state.language, showYear);
+    const dateText = formatEventDate(event, showYear);
 
     div.innerHTML = `
       <span class="event-icon"></span>
@@ -181,7 +180,15 @@ function formatLongDate(
 }
 
 export function openDeleteEventDialog(event: CalendarEvent) {
+  const dialog = document.getElementById(
+    'delete-dialog'
+  ) as HTMLDialogElement;
   pendingDeleteEventId = event.id;
+
+  dialog.querySelector<HTMLHeadingElement>('.dialog-header h3')!.textContent = t(
+    'deleteEvent'
+  );
+  dialog.querySelector<HTMLParagraphElement>('.dialog-text')!.textContent = t('deleteEventConfirmation');
 
   const dates =
     event.start === event.end
@@ -190,16 +197,12 @@ export function openDeleteEventDialog(event: CalendarEvent) {
        <p><strong>${t('endDate')}</strong>: ${formatLongDate(event.end, state.language)}</p>`;
 
   document.querySelector<HTMLDivElement>(
-    '#delete-event-dialog .dialog-description'
+    '#delete-dialog .dialog-description'
   )!.innerHTML = `
     <p><strong>${t('eventTitle')}</strong>: ${event.title}</p>
     ${dates}
     <p><strong>${t('dayType')}</strong>: ${getEventLegendLabel(event.type)}</p>
   `;
-
-  const dialog = document.getElementById(
-    'delete-event-dialog'
-  ) as HTMLDialogElement;
 
   dialog.showModal();
 }

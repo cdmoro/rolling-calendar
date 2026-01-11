@@ -26,8 +26,8 @@ const pt: Translations = {
   grey: 'Cinza',
   burgundy: 'Borgonha',
   settings: 'Configurações',
-  calendarTitle: 'Título do calendário',
-  calendarSubtitle: 'Legenda do calendário',
+  calendarTitle: 'Título',
+  calendarSubtitle: 'Legenda',
   startMonth: 'Mês de início',
   auto: 'Auto',
   outOfRangeTitle:
@@ -44,7 +44,9 @@ const pt: Translations = {
   deleteEvent: 'Excluir evento',
   deleteEventConfirmation:
     'Você tem certeza de que deseja excluir este evento?',
-  date: 'Data'
+  date: 'Data',
+  color: 'Cor',
+  export: 'Exportar',
 };
 
 export default pt;

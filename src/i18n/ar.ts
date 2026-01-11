@@ -26,8 +26,8 @@ const ar: Translations = {
   grey: 'رمادي',
   burgundy: 'قرمزي',
   settings: 'الإعدادات',
-  calendarTitle: 'عنوان التقويم',
-  calendarSubtitle: 'العنوان الفرعي للتقويم',
+  calendarTitle: 'العنوان',
+  calendarSubtitle: 'العنوان الفرعي',
   startMonth: 'شهر البدء',
   auto: 'تلقائي',
   outOfRangeTitle: 'الأحداث خارج النطاق (لا تظهر عند تصدير التقويم)',
@@ -42,7 +42,9 @@ const ar: Translations = {
   cancel: 'إلغاء',
   deleteEvent: 'حذف الحدث',
   deleteEventConfirmation: 'هل أنت متأكد أنك تريد حذف هذا الحدث؟',
-  date: 'التاريخ'
+  date: 'التاريخ',
+  color: 'اللون',
+  export: 'تصدير',
 };
 
 export default ar;

@@ -26,8 +26,8 @@ const en: Translations = {
   grey: 'Grey',
   burgundy: 'Burgundy',
   settings: 'Settings',
-  calendarTitle: 'Calendar Title',
-  calendarSubtitle: 'Calendar Subtitle',
+  calendarTitle: 'Title',
+  calendarSubtitle: 'Subtitle',
   startMonth: 'Start Month',
   auto: 'Auto',
   outOfRangeTitle: 'Out-of-range Events (not shown when exporting calendar)',
@@ -42,7 +42,9 @@ const en: Translations = {
   cancel: 'Cancel',
   deleteEvent: 'Delete Event',
   deleteEventConfirmation: 'Are you sure you want to delete this event?',
-  date: 'Date'
+  date: 'Date',
+  color: 'Color',
+  export: 'Export',
 };
 
 export default en;
