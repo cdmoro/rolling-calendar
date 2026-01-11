@@ -1,15 +1,16 @@
 import { t } from '../i18n';
 import type { EventType } from '../types/calendar';
+import type { TranslationKey } from '../types/i18n';
 
-export const EVENT_LEGEND_TRANSLATION: Record<EventType, string> = {
-  'no-activity': t('noActivity'),
-  'half-day': t('halfDay'),
-  'internal-activity': t('internalActivity'),
-  'administrative-event': t('administrativeEvent'),
-  'community-event': t('communityEvent'),
-  'start-end-period': t('startEndPeriod')
+export const EVENT_LEGEND: Record<EventType, TranslationKey> = {
+  'no-activity': 'noActivity',
+  'half-day': 'halfDay',
+  'internal-activity': 'internalActivity',
+  'administrative-event': 'administrativeEvent',
+  'community-event': 'communityEvent',
+  'start-end-period': 'startEndPeriod'
 };
 
 export function getEventLegendLabel(type: EventType): string {
-  return EVENT_LEGEND_TRANSLATION[type] || t('noActivity');
+  return t(EVENT_LEGEND[type]) || t('noActivity');
 }
