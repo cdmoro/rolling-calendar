@@ -47,6 +47,7 @@ const pt: Translations = {
   date: 'Data',
   color: 'Cor',
   export: 'Exportar',
+  newCalendar: 'Novo calendário'
 };
 
 export default pt;

@@ -45,6 +45,7 @@ const ar: Translations = {
   date: 'التاريخ',
   color: 'اللون',
   export: 'تصدير',
+  newCalendar: 'تقويم جديد'
 };
 
 export default ar;

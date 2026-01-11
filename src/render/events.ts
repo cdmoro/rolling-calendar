@@ -180,15 +180,14 @@ function formatLongDate(
 }
 
 export function openDeleteEventDialog(event: CalendarEvent) {
-  const dialog = document.getElementById(
-    'delete-dialog'
-  ) as HTMLDialogElement;
+  const dialog = document.getElementById('delete-dialog') as HTMLDialogElement;
   pendingDeleteEventId = event.id;
 
-  dialog.querySelector<HTMLHeadingElement>('.dialog-header h3')!.textContent = t(
-    'deleteEvent'
+  dialog.querySelector<HTMLHeadingElement>('.dialog-header h3')!.textContent =
+    t('deleteEvent');
+  dialog.querySelector<HTMLParagraphElement>('.dialog-text')!.textContent = t(
+    'deleteEventConfirmation'
   );
-  dialog.querySelector<HTMLParagraphElement>('.dialog-text')!.textContent = t('deleteEventConfirmation');
 
   const dates =
     event.start === event.end

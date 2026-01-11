@@ -47,6 +47,7 @@ const el: Translations = {
   date: 'Ημερομηνία',
   color: 'Χρώμα',
   export: 'Εξαγωγή',
+  newCalendar: 'Νέο Ημερολόγιο'
 };
 
 export default el;

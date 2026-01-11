@@ -14,14 +14,35 @@
       <h1 data-label="title"></h1>
 
       <div class="calendar-controls">
-        <select id="calendar-select">
-        </select>
-        <button class="btn btn-secondary" id="settings-btn" data-label="settings"></button>
-        <button class="btn btn-secondary" id="new-event-btn" data-label="newEvent"></button>
-        <button class="btn btn-secondary" id="delete-calendar-btn" disabled data-label="delete"></button>
+        <select id="calendar-select"></select>
+        <button
+          class="btn btn-secondary"
+          id="new-calendar-btn"
+          data-label="newCalendar"
+        ></button>
+        <button
+          class="btn btn-secondary"
+          id="delete-calendar-btn"
+          disabled
+          data-label="delete"
+        ></button>
+        <button
+          class="btn btn-secondary"
+          id="settings-btn"
+          data-label="settings"
+        ></button>
+        <button
+          class="btn btn-secondary"
+          id="new-event-btn"
+          data-label="newEvent"
+        ></button>
       </div>
 
-      <button class="btn btn-secondary" id="export-btn" data-label="export"></button>
+      <button
+        class="btn btn-secondary"
+        id="export-btn"
+        data-label="export"
+      ></button>
 
       <select id="language-select">
         <option value="en" data-label="english">English</option>
@@ -136,7 +157,11 @@
             </select>
           </div>
 
-          <button type="submit" class="btn btn-primary" data-label="addEvent"></button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            data-label="addEvent"
+          ></button>
         </form>
 
         <h2 data-label="export">Export</h2>
@@ -241,14 +266,8 @@
           <textarea id="import-dialog-textarea"></textarea>
         </div>
         <div class="dialog-footer">
-          <button
-            class="btn btn-secondary"
-            data-label="cancel"
-          ></button>
-          <button
-            class="btn btn-primary"
-            data-label="import"
-          ></button>
+          <button class="btn btn-secondary" data-label="cancel"></button>
+          <button class="btn btn-primary" data-label="import"></button>
         </div>
       </form>
     </dialog>
@@ -272,16 +291,22 @@
       </form>
     </dialog>
 
-    <dialog id="create-calendar-dialog" closedby="any">
+    <dialog id="new-calendar-dialog" closedby="any">
       <div class="dialog-header">
-        <h3 data-label="createCalendar">Create calendar</h3>
+        <h3></h3>
       </div>
       <form method="dialog">
         <div class="dialog-body">
           <p data-label="createCalendarDescription"></p>
           <div class="form-control">
             <label for="calendar-name-input" data-label="calendarName"></label>
-            <input type="text" id="calendar-name-input" required />
+            <input
+              type="text"
+              name="calendar-name-input"
+              id="calendar-name-input"
+              autofocus
+              required
+            />
             <div
               class="dialog-description"
               data-label="calendarNameDescription"
@@ -292,13 +317,10 @@
         <div class="dialog-footer">
           <button
             class="btn btn-secondary"
-            data-label="cancel"
+            value="cancel"
+            formnovalidate
           ></button>
-          <button
-            value="create"
-            class="btn btn-primary"
-            data-label="create"
-          ></button>
+          <button class="btn btn-primary" value="create"></button>
         </div>
       </form>
     </dialog>

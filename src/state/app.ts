@@ -7,10 +7,11 @@ export const state: State = {
   theme: 'auto',
   calendars: [],
   currentCalendarId: null,
-  calendar: null,
+  calendar: null
 };
 
-  const calendadrSelect = document.querySelector<HTMLSelectElement>('#calendar-select')!;
+const calendadrSelect =
+  document.querySelector<HTMLSelectElement>('#calendar-select')!;
 
 export function initState() {
   const savedLanguage = localStorage.getItem('language') as State['language'];
@@ -35,7 +36,7 @@ export function initState() {
   if (state.calendars.length === 0) {
     const draftCalendar = createDraftCalendar();
     state.calendars.push(draftCalendar);
-    
+
     calendadrSelect.value = draftCalendar.id!;
 
     const untitledCalendarOption = document.createElement('option');
@@ -57,9 +58,7 @@ export function initState() {
     untitledCalendarOption.dataset.label = 'untitledCalendar';
 
     calendadrSelect.appendChild(untitledCalendarOption);
-  } else if (
-    state.calendars.some((doc) => doc.id === savedCurrentCalendarId)
-  ) {
+  } else if (state.calendars.some((doc) => doc.id === savedCurrentCalendarId)) {
     state.currentCalendarId = savedCurrentCalendarId;
     state.calendar = structuredClone(
       state.calendars.find((doc) => doc.id === savedCurrentCalendarId)!.state

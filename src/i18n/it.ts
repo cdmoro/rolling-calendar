@@ -46,6 +46,7 @@ const it: Translations = {
   date: 'Data',
   color: 'Colore',
   export: 'Esporta',
+  newCalendar: 'Nuovo calendario'
 };
 
 export default it;

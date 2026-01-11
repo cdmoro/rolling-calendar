@@ -5,7 +5,10 @@ import type { Language, Theme } from './types/app';
 import type { CalendarEvent } from './types/calendar';
 import { initExport } from './export';
 import { renderUI } from './render';
-import { autosaveCurrentDocument } from './modules/calendars';
+import {
+  autosaveCurrentDocument,
+  openNewCalendarDialog
+} from './modules/calendars';
 
 const startMonthInput =
   document.querySelector<HTMLInputElement>('#start-month')!;
@@ -72,7 +75,6 @@ startMonthInput.addEventListener('change', (e) => {
     state.calendar.startMonth = m - 1;
     autosaveCurrentDocument();
   }
-
 
   renderUI();
   resetForm();
@@ -188,6 +190,12 @@ document
 startDateInput.addEventListener('change', (e) => {
   endDateInput.min = (e.target as HTMLInputElement).value;
 });
+
+document
+  .querySelector<HTMLButtonElement>('#new-calendar-btn')!
+  .addEventListener('click', () => {
+    openNewCalendarDialog();
+  });
 
 function main() {
   initState();

@@ -6,7 +6,7 @@ export const calendarState: CalendarState = {
   calendarTitle: '',
   calendarSubtitle: '',
   events: [],
-  color: 'blue',
+  color: 'blue'
 };
 
 export function getFilteredEvents(events: CalendarEvent[]) {
