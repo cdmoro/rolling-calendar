@@ -108,6 +108,10 @@
             <option value="green" data-label="green">Green</option>
             <option value="burgundy" data-label="burgundy">Burgundy</option>
             <option value="grey" data-label="grey">Grey</option>
+            <option value="brown" data-label="brown">Brown</option>
+            <option value="navy" data-label="navy">Navy</option>
+            <option value="gold" data-label="gold">Gold</option>
+            <option value="indigo" data-label="indigo">Indigo</option>
           </select>
         </div>
 
@@ -246,6 +250,7 @@
             id="cancel-add-edit-event"
             class="btn btn-secondary"
             data-label="cancel"
+            formnovalidate
           ></button>
           <button
             id="confirm-add-edit-event"
@@ -274,7 +279,7 @@
 
     <dialog id="export-dialog" closedby="any">
       <div class="dialog-header">
-        <h3 data-label="exportDialogTitle">Export</h3>
+        <h3 data-label="exportDialogTitle"></h3>
       </div>
       <form method="dialog">
         <div class="dialog-body">
@@ -293,7 +298,7 @@
 
     <dialog id="new-calendar-dialog" closedby="any">
       <div class="dialog-header">
-        <h3></h3>
+        <h3 data-label="newCalendar"></h3>
       </div>
       <form method="dialog">
         <div class="dialog-body">
@@ -318,20 +323,25 @@
           <button
             class="btn btn-secondary"
             value="cancel"
+            data-label="cancel"
             formnovalidate
           ></button>
-          <button class="btn btn-primary" value="create"></button>
+          <button
+            class="btn btn-primary"
+            value="create"
+            data-label="save"
+          ></button>
         </div>
       </form>
     </dialog>
 
     <dialog id="delete-dialog" closedby="any">
       <div class="dialog-header">
-        <h3></h3>
+        <h3 data-label="deleteEvent"></h3>
       </div>
       <form method="dialog">
         <div class="dialog-body">
-          <p class="dialog-text"></p>
+          <p class="dialog-text" data-label="deleteEventConfirmation"></p>
           <div class="dialog-description"></div>
         </div>
         <div class="dialog-footer">

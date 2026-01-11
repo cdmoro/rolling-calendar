@@ -90,6 +90,23 @@
   --accent-color-rgb: 127, 140, 141;
 }
 
+[data-theme$='-brown'] {
+  --accent-color-rgb: 121, 85, 72;
+}
+
+[data-theme$='-navy'] {
+  --accent-color-rgb: 71, 102, 132;
+}
+
+[data-theme$='-gold'] {
+  --accent-color-rgb: 212, 175, 55;
+  --accent-text-color: #333;
+}
+
+[data-theme$='-indigo'] {
+  --accent-color-rgb: 63, 81, 181;
+}
+
 * {
   transition:
     background-color 0.3s,
@@ -258,7 +275,7 @@ select {
   padding: 4px 6px;
   border-bottom: solid 1px var(--accent-color-40);
   min-height: 26px;
-  grid-template-columns: 7px 150px 1fr auto;
+  grid-template-columns: 9px 150px 1fr auto;
   align-items: end;
   gap: 7px;
 }
@@ -521,7 +538,6 @@ body.exporting #out-of-range-event-list {
   display: inline-block;
   width: 9px;
   height: 9px;
-  margin-inline-end: 6px;
   border-radius: 50%;
   margin-bottom: 3px;
 }
@@ -554,7 +570,6 @@ body.exporting #out-of-range-event-list {
 .event-item.community-event .event-icon {
   background-color: var(--accent-color);
   transform: rotate(45deg);
-  border-radius: 0;
   width: 7px;
   height: 7px;
   margin-inline-end: 0px;

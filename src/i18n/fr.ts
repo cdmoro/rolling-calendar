@@ -46,7 +46,11 @@ const fr: Translations = {
   date: 'Date',
   color: 'Couleur',
   export: 'Exporter',
-  newCalendar: 'Nouveau calendrier'
+  newCalendar: 'Nouveau calendrier',
+  brown: 'Marron',
+  navy: 'Marine',
+  gold: 'Or',
+  indigo: 'Indigo'
 };
 
 export default fr;

@@ -33,10 +33,7 @@ export function getTranslations() {
 export function applyTranslations() {
   const dict = getTranslations();
 
-  document.querySelectorAll<HTMLElement>('[data-label]').forEach((el) => {
-    const key = el.dataset.label as keyof typeof dict;
-    el.textContent = dict[key];
-  });
+  translateElement();
 
   document.documentElement.setAttribute('lang', state.language);
   document.documentElement.setAttribute(
@@ -44,6 +41,15 @@ export function applyTranslations() {
     RTL_LANGUAGES.includes(state.language as LanguageKey) ? 'rtl' : 'ltr'
   );
   document.title = dict.title;
+}
+
+export function translateElement(el = document.body as HTMLElement) {
+  const dict = getTranslations();
+
+  el.querySelectorAll<HTMLElement>('[data-label]').forEach((el) => {
+    const key = el.dataset.label as keyof typeof dict;
+    el.textContent = dict[key];
+  });
 }
 
 export function t(key: TranslationKey) {

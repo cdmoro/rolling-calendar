@@ -2,7 +2,7 @@ import { calendarState, getFilteredEvents } from '../state/calendar';
 import type { CalendarEvent } from '../types/calendar';
 import { renderCalendar } from './calendar';
 import { state } from '../state/app';
-import { t } from '../i18n';
+import { t, translateElement } from '../i18n';
 import { renderLegend } from './legend';
 import { getEventLegendLabel } from './utils';
 
@@ -142,7 +142,7 @@ function renderEventListSection(
       '.event-delete'
     );
     if (!btn) return;
-    // handleDelete(btn.dataset.id!);
+
     openDeleteEventDialog(
       calendarState.events.find((e) => e.id === btn.dataset.id!)!
     );
@@ -183,25 +183,20 @@ export function openDeleteEventDialog(event: CalendarEvent) {
   const dialog = document.getElementById('delete-dialog') as HTMLDialogElement;
   pendingDeleteEventId = event.id;
 
-  dialog.querySelector<HTMLHeadingElement>('.dialog-header h3')!.textContent =
-    t('deleteEvent');
-  dialog.querySelector<HTMLParagraphElement>('.dialog-text')!.textContent = t(
-    'deleteEventConfirmation'
-  );
-
   const dates =
     event.start === event.end
-      ? `<p><strong>${t('date')}</strong>: ${formatLongDate(event.start, state.language)}</p>`
-      : `<p><strong>${t('startDate')}</strong>: ${formatLongDate(event.start, state.language)}</p>
-       <p><strong>${t('endDate')}</strong>: ${formatLongDate(event.end, state.language)}</p>`;
+      ? `<p><strong data-label="date"></strong>: ${formatLongDate(event.start, state.language)}</p>`
+      : `<p><strong data-label="startDate"></strong>: ${formatLongDate(event.start, state.language)}</p>
+       <p><strong data-label="endDate"></strong>: ${formatLongDate(event.end, state.language)}</p>`;
 
   document.querySelector<HTMLDivElement>(
     '#delete-dialog .dialog-description'
   )!.innerHTML = `
-    <p><strong>${t('eventTitle')}</strong>: ${event.title}</p>
+    <p><strong data-label="eventTitle"></strong>: ${event.title}</p>
     ${dates}
-    <p><strong>${t('dayType')}</strong>: ${getEventLegendLabel(event.type)}</p>
+    <p><strong data-label="dayType"></strong>: ${getEventLegendLabel(event.type)}</p>
   `;
 
+  translateElement(dialog);
   dialog.showModal();
 }

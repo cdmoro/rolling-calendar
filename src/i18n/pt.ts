@@ -47,7 +47,11 @@ const pt: Translations = {
   date: 'Data',
   color: 'Cor',
   export: 'Exportar',
-  newCalendar: 'Novo calendário'
+  newCalendar: 'Novo calendário',
+  brown: 'Marrom',
+  navy: 'Azul marinho',
+  gold: 'Ouro',
+  indigo: 'Índigo'
 };
 
 export default pt;

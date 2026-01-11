@@ -45,7 +45,11 @@ const en: Translations = {
   date: 'Date',
   color: 'Color',
   export: 'Export',
-  newCalendar: 'New Calendar'
+  newCalendar: 'New Calendar',
+  brown: 'Brown',
+  navy: 'Navy',
+  gold: 'Gold',
+  indigo: 'Indigo'
 };
 
 export default en;

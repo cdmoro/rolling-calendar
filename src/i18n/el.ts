@@ -47,7 +47,11 @@ const el: Translations = {
   date: 'Ημερομηνία',
   color: 'Χρώμα',
   export: 'Εξαγωγή',
-  newCalendar: 'Νέο Ημερολόγιο'
+  newCalendar: 'Νέο Ημερολόγιο',
+  brown: 'Καφέ',
+  navy: 'Ναυτικό Μπλε',
+  gold: 'Χρυσό',
+  indigo: 'Ίντιγκο'
 };
 
 export default el;

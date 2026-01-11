@@ -45,7 +45,11 @@ const ar: Translations = {
   date: 'التاريخ',
   color: 'اللون',
   export: 'تصدير',
-  newCalendar: 'تقويم جديد'
+  newCalendar: 'تقويم جديد',
+  brown: 'بني',
+  navy: 'كحلي',
+  gold: 'ذهبي',
+  indigo: 'نيلي'
 };
 
 export default ar;

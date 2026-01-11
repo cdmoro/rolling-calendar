@@ -1,4 +1,4 @@
-import { t } from '../i18n';
+import { translateElement } from '../i18n';
 import { state } from '../state/app';
 import type { CalendarDocument } from '../types/calendar';
 
@@ -65,9 +65,7 @@ export function openNewCalendarDialog() {
   )!;
   const form = dialog.querySelector<HTMLFormElement>('form')!;
 
-  dialog.querySelector('h3')!.textContent = t('newCalendar');
-  dialog.querySelector('button[value="create"]')!.textContent = t('save');
-  dialog.querySelector('button.btn-secondary')!.textContent = t('cancel');
+  translateElement(dialog);
 
   form.reset();
   dialog.showModal();
