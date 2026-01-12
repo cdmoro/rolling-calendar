@@ -1,5 +1,6 @@
 import type { MonthGrid } from '../types/calendar';
 import type { Language } from '../types/app';
+import { openDeleteEventDialog } from '../render/events';
 
 export function getFixedMonthGrid(year: number, month: number): MonthGrid {
   const firstDay = new Date(year, month, 1);
@@ -44,6 +45,15 @@ export function addOnClickToWeekdays() {
   weekDays.forEach((day) => {
     day.addEventListener('click', (e) => {
       const el = e.currentTarget as HTMLDivElement;
+
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
+        '.tooltip-delete-event-btn'
+      );
+
+      if (btn?.dataset.eventId) {
+        openDeleteEventDialog(btn.dataset.eventId);
+        return;
+      }
 
       if (el.classList.contains('marked')) {
         return;

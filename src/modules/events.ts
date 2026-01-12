@@ -1,9 +1,9 @@
 import type { CalendarEvent } from '../types/calendar';
-import { calendarState } from '../state/calendar';
+import { state } from '../state/app';
 
 export function isDayMarked(day: Date): CalendarEvent | null {
   return (
-    calendarState.events.find(
+    state.calendar!.events.find(
       (e) => new Date(e.start) <= day && new Date(e.end) >= day
     ) ?? null
   );
@@ -19,7 +19,7 @@ export function toLocalISODate(date: Date): string {
 export function getEvent(day: Date): CalendarEvent | null {
   const dayIso = toLocalISODate(day);
 
-  const event = calendarState.events.find((e) => {
+  const event = state.calendar!.events.find((e) => {
     const start = e.start;
     const end = e.end ?? e.start;
 

@@ -49,7 +49,7 @@ export function initState() {
     state.calendar = structuredClone(draftCalendar.state);
 
     localStorage.setItem('calendars', JSON.stringify(state.calendars));
-    localStorage.setItem('currentCalendarId', draftCalendar.id!);
+    localStorage.setItem('currentCalendarId', draftCalendar.id);
   } else if (state.calendars.length === 1 && state.calendars[0].isDraft) {
     const untitledCalendarOption = document.createElement('option');
 
@@ -58,6 +58,9 @@ export function initState() {
     untitledCalendarOption.dataset.label = 'untitledCalendar';
 
     calendadrSelect.appendChild(untitledCalendarOption);
+
+    state.calendar = structuredClone(state.calendars[0].state);
+    state.currentCalendarId = state.calendars[0].id;
   } else if (state.calendars.some((doc) => doc.id === savedCurrentCalendarId)) {
     state.currentCalendarId = savedCurrentCalendarId;
     state.calendar = structuredClone(

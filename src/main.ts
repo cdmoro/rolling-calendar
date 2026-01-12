@@ -1,4 +1,3 @@
-import { calendarState, initCalendarState } from './state/calendar';
 import { initState, state } from './state/app';
 import { applyTranslations } from './i18n';
 import type { Language, Theme } from './types/app';
@@ -6,7 +5,7 @@ import type { CalendarEvent } from './types/calendar';
 import { initExport } from './export';
 import { renderUI } from './render';
 import {
-  autosaveCurrentDocument,
+  autosaveCurrentCalendar,
   openNewCalendarDialog
 } from './modules/calendars';
 
@@ -40,7 +39,7 @@ export function setTheme(theme: Theme, color: string = 'blue') {
 
   if (state.calendar) {
     state.calendar.color = color;
-    autosaveCurrentDocument();
+    autosaveCurrentCalendar();
   }
 }
 
@@ -49,7 +48,7 @@ window
   .addEventListener('change', (e) => {
     if (state.theme === 'auto') {
       const newColorScheme = e.matches ? 'dark' : 'light';
-      setTheme(newColorScheme, calendarState.color);
+      setTheme(newColorScheme, state.calendar!.color);
     }
   });
 
@@ -63,9 +62,6 @@ startMonthInput.addEventListener('change', (e) => {
 
   localStorage.setItem('startMonth', (e.target as HTMLInputElement).value);
 
-  calendarState.startYear = y;
-  calendarState.startMonth = m - 1;
-
   const minDate = `${y}-${String(m).padStart(2, '0')}-01`;
   startDateInput.min = minDate;
   endDateInput.min = minDate;
@@ -73,7 +69,7 @@ startMonthInput.addEventListener('change', (e) => {
   if (state.calendar) {
     state.calendar.startYear = y;
     state.calendar.startMonth = m - 1;
-    autosaveCurrentDocument();
+    autosaveCurrentCalendar();
   }
 
   renderUI();
@@ -113,12 +109,13 @@ function resolveCalendarHeader() {
   if (state.calendar) {
     state.calendar.calendarTitle = title;
     state.calendar.calendarSubtitle = subtitle;
-    autosaveCurrentDocument();
+    autosaveCurrentCalendar();
   }
 }
 
 function getCalendarStartDate(): Date {
-  return new Date(calendarState.startYear, calendarState.startMonth, 1);
+  // const calendar = getCurrentCalendar();
+  return new Date(state.calendar!.startYear, state.calendar!.startMonth, 1);
 }
 
 export function sortEventsByStartDate(events: CalendarEvent[]) {
@@ -148,7 +145,7 @@ document
       return false;
     }
 
-    calendarState.events.push({
+    state.calendar!.events.push({
       id: crypto.randomUUID(),
       title: data.get('title') as string,
       start: data.get('start') as string,
@@ -157,8 +154,9 @@ document
     });
 
     form.reset();
-    sortEventsByStartDate(calendarState.events);
-    localStorage.setItem('events', JSON.stringify(calendarState.events));
+    sortEventsByStartDate(state.calendar!.events);
+    // localStorage.setItem('events', JSON.stringify(state.calendar!.events));
+    autosaveCurrentCalendar();
     renderUI();
   });
 
@@ -175,7 +173,7 @@ document
   .querySelector<HTMLSelectElement>('#theme-select')!
   .addEventListener('change', (e) => {
     state.theme = (e.target as HTMLSelectElement).value as Theme;
-    setTheme(state.theme, calendarState.color);
+    setTheme(state.theme, state.calendar!.color);
   });
 
 document
@@ -183,8 +181,8 @@ document
   .addEventListener('change', (e) => {
     const theme = document.querySelector<HTMLSelectElement>('#theme-select')!
       .value as Theme;
-    calendarState.color = (e.target as HTMLSelectElement).value;
-    setTheme(theme, calendarState.color);
+    state.calendar!.color = (e.target as HTMLSelectElement).value;
+    setTheme(theme, state.calendar!.color);
   });
 
 startDateInput.addEventListener('change', (e) => {
@@ -199,12 +197,11 @@ document
 
 function main() {
   initState();
-  initCalendarState();
   applyTranslations();
   renderUI();
   initExport();
 
-  const color = calendarState.color;
+  const color = state.calendar!.color;
   const html = document.documentElement;
   let resolvedTheme = state.theme;
 
@@ -217,7 +214,7 @@ function main() {
 
   html.setAttribute('data-theme', `${resolvedTheme}-${color}`);
 
-  startMonthInput.value = `${calendarState.startYear}-${String(calendarState.startMonth + 1).padStart(2, '0')}`;
+  startMonthInput.value = `${state.calendar!.startYear}-${String(state.calendar!.startMonth + 1).padStart(2, '0')}`;
   calendarTitleInput.value = localStorage.getItem('calendarTitle') || '';
   calendarSubtitleInput.value = localStorage.getItem('calendarSubtitle') || '';
 
@@ -231,8 +228,7 @@ function main() {
 
   if (import.meta.env.DEV) {
     window.__INTERNAL__ = {
-      state,
-      calendarState
+      state
     };
   }
 }

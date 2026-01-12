@@ -41,7 +41,7 @@ export function saveCalendar(calendar: CalendarDocument) {
   localStorage.setItem('calendars', JSON.stringify(state.calendars));
 }
 
-export function autosaveCurrentDocument() {
+export function autosaveCurrentCalendar() {
   if (!state.currentCalendarId) return;
 
   const index = state.calendars.findIndex(

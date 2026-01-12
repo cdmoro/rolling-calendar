@@ -1,4 +1,4 @@
-import { calendarState } from '../state/calendar';
+import { state } from '../state/app';
 
 function formatIcsDate(iso: string): string {
   return iso.replace(/-/g, '') + 'T000000';
@@ -23,7 +23,7 @@ function download(content: string, filename: string, type: string) {
 }
 
 export function exportAsIcs(): void {
-  const events = calendarState.events;
+  const events = state.calendar!.events;
 
   let ics = [
     'BEGIN:VCALENDAR',

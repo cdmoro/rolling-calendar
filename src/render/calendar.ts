@@ -1,4 +1,3 @@
-import { calendarState } from '../state/calendar';
 import { getEvent, getRangePosition, toLocalISODate } from '../modules/events';
 import {
   addOnClickToWeekdays,
@@ -8,6 +7,7 @@ import {
 import { state } from '../state/app';
 import { getEventLegendLabel } from './utils';
 import { formatEventDate } from './events';
+// import { getCurrentCalendar } from '../modules/calendars';
 
 export function renderCalendar() {
   const grid = document.querySelector<HTMLDivElement>('#calendar-grid')!;
@@ -15,8 +15,8 @@ export function renderCalendar() {
 
   for (let i = 0; i < 12; i++) {
     const date = new Date(
-      calendarState.startYear,
-      calendarState.startMonth + i
+      state.calendar!.startYear,
+      state.calendar!.startMonth + i
     );
 
     const monthEl = document.createElement('div');
@@ -72,6 +72,9 @@ export function renderCalendar() {
           cell.innerHTML += `<div class="tooltip">
             <div class="tooltip-title">${event.title}</div>
             <div class="tooltip-date">${formatEventDate(event, true)}</div>
+            <div class="tooltip-actions">
+              <button class="btn btn-danger btn-sm tooltip-delete-event-btn" data-event-id="${event.id}">Delete</button>
+            </div>
             <div class="tooltip-type">${getEventLegendLabel(event.type)}</div>
           </div>`;
 

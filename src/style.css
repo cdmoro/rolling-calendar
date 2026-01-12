@@ -645,6 +645,11 @@ dialog::backdrop {
   font-weight: bold;
 }
 
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
 .btn-secondary {
   background-color: transparent;
   color: var(--accent-color);
@@ -676,7 +681,7 @@ dialog::backdrop {
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%) translateY(5px);
+  transform: translateX(-50%);
   background-color: var(--accent-color);
   border-radius: 0.25rem;
   white-space: nowrap;
@@ -710,6 +715,10 @@ dialog::backdrop {
   text-align: center;
 }
 
+.tooltip-actions {
+  padding: 0.5rem 0.5rem 0;
+}
+
 .day:hover .tooltip {
   display: block;
 }
@@ -719,7 +728,7 @@ dialog::backdrop {
 .day[data-day='2'] .tooltip {
   left: 0;
   right: auto;
-  transform: translateX(0) translateY(5px);
+  transform: translateX(0);
 }
 
 .day[data-day='4'] .tooltip,
@@ -727,5 +736,5 @@ dialog::backdrop {
 .day[data-day='6'] .tooltip {
   left: auto;
   right: 0;
-  transform: translateX(0) translateY(5px);
+  transform: translateX(0);
 }

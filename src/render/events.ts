@@ -1,10 +1,11 @@
-import { calendarState, getFilteredEvents } from '../state/calendar';
+import { getFilteredEvents } from '../state/calendar';
 import type { CalendarEvent } from '../types/calendar';
 import { renderCalendar } from './calendar';
 import { state } from '../state/app';
 import { t, translateElement } from '../i18n';
 import { renderLegend } from './legend';
 import { getEventLegendLabel } from './utils';
+import { autosaveCurrentCalendar } from '../modules/calendars';
 
 const deleteDialog = document.getElementById(
   'delete-dialog'
@@ -67,11 +68,11 @@ export function formatEventDate(
 function handleDelete(id: string) {
   if (!id) return;
 
-  const index = calendarState.events.findIndex((event) => event.id === id);
+  const index = state.calendar!.events.findIndex((event) => event.id === id);
 
   if (index !== -1) {
-    calendarState.events.splice(index, 1);
-    localStorage.setItem('events', JSON.stringify(calendarState.events));
+    state.calendar!.events.splice(index, 1);
+    autosaveCurrentCalendar();
     renderEventList();
     renderCalendar();
     renderLegend();
@@ -141,11 +142,9 @@ function renderEventListSection(
     const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
       '.event-delete'
     );
-    if (!btn) return;
+    if (!btn?.dataset.id) return;
 
-    openDeleteEventDialog(
-      calendarState.events.find((e) => e.id === btn.dataset.id!)!
-    );
+    openDeleteEventDialog(btn.dataset.id);
   };
 }
 
@@ -154,7 +153,7 @@ export function renderEventList() {
   list.innerHTML = '';
 
   const { inRangeEvents, outOfRangeEvents } = getFilteredEvents(
-    calendarState.events
+    state.calendar!.events
   );
 
   renderEventListSection(inRangeEvents, '#event-list', false);
@@ -179,9 +178,12 @@ function formatLongDate(
   return formatter.format(date);
 }
 
-export function openDeleteEventDialog(event: CalendarEvent) {
+export function openDeleteEventDialog(eventId: string) {
+  const event = state.calendar!.events.find((e) => e.id === eventId);
+  if (!event) return;
+
   const dialog = document.getElementById('delete-dialog') as HTMLDialogElement;
-  pendingDeleteEventId = event.id;
+  pendingDeleteEventId = eventId;
 
   const dates =
     event.start === event.end
