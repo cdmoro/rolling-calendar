@@ -50,9 +50,19 @@ export function translateElement(el = document.body as HTMLElement) {
     const key = el.dataset.label as keyof typeof dict;
     el.textContent = dict[key];
   });
+
+  el.querySelectorAll<HTMLElement>('[data-title]').forEach((el) => {
+    const key = el.dataset.title as keyof typeof dict;
+    el.setAttribute('title', dict[key]);
+  });
+
+  el.querySelectorAll<HTMLElement>('[data-placeholder]').forEach((el) => {
+    const key = el.dataset.placeholder as keyof typeof dict;
+    el.setAttribute('placeholder', dict[key]);
+  });
 }
 
 export function t(key: TranslationKey) {
   const dict = getTranslations();
-  return dict[key];
+  return dict[key] || `[${key}]`;
 }

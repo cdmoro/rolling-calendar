@@ -1,6 +1,5 @@
 import type { MonthGrid } from '../types/calendar';
 import type { Language } from '../types/app';
-import { openDeleteEventDialog } from '../render/events';
 
 export function getFixedMonthGrid(year: number, month: number): MonthGrid {
   const firstDay = new Date(year, month, 1);
@@ -33,44 +32,4 @@ export function getLocalizedWeekdays(lang: Language): string[] {
       )
     )
   );
-}
-
-export function addOnClickToWeekdays() {
-  const startDateInput =
-    document.querySelector<HTMLInputElement>('#startDate')!;
-  const endDateInput = document.querySelector<HTMLInputElement>('#endDate')!;
-  const titleInput = document.querySelector<HTMLInputElement>('#title')!;
-  const weekDays = document.querySelectorAll<HTMLDivElement>('.weekday');
-
-  weekDays.forEach((day) => {
-    day.addEventListener('click', (e) => {
-      const el = e.currentTarget as HTMLDivElement;
-
-      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
-        '.tooltip-delete-event-btn'
-      );
-
-      if (btn?.dataset.eventId) {
-        openDeleteEventDialog(btn.dataset.eventId);
-        return;
-      }
-
-      if (el.classList.contains('marked')) {
-        return;
-      }
-
-      if (el.classList.contains('selected')) {
-        el.classList.remove('selected');
-        startDateInput.value = '';
-        endDateInput.removeAttribute('min');
-        return;
-      }
-
-      weekDays.forEach((d) => d.classList.remove('selected'));
-      el.classList.add('selected');
-      startDateInput.value = el.dataset.date || '';
-      endDateInput.min = el.dataset.date || '';
-      titleInput.focus();
-    });
-  });
 }

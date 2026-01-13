@@ -12,7 +12,8 @@ export const languagesKeys = [
 export const translationKeys = [
   'title',
   'newEvent',
-  'eventTitle',
+  'editEvent',
+  'titleLabel',
   'date',
   'startDate',
   'endDate',
@@ -42,7 +43,7 @@ export const translationKeys = [
   'auto',
   'outOfRangeTitle',
   'startEndPeriod',
-  'dayType',
+  'type',
   'internalActivity',
   'administrativeEvent',
   'communityEvent',
@@ -58,7 +59,9 @@ export const translationKeys = [
   'brown',
   'navy',
   'gold',
-  'indigo'
+  'indigo',
+  'preview',
+  'edit'
 ] as const;
 
 export type TranslationKey = (typeof translationKeys)[number];

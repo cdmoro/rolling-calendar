@@ -3,7 +3,8 @@ import type { Translations } from '../types/i18n';
 const el: Translations = {
   title: 'Ακαδημαϊκό ημερολόγιο',
   newEvent: 'Νέο γεγονός',
-  eventTitle: 'Τίτλος',
+  editEvent: 'Επεξεργασία γεγονότος',
+  titleLabel: 'Τίτλος',
   startDate: 'Ημερομηνία έναρξης',
   endDate: 'Ημερομηνία λήξης',
   addEvent: 'Προσθήκη γεγονότος',
@@ -32,7 +33,7 @@ const el: Translations = {
   auto: 'Αυτόματο',
   outOfRangeTitle:
     'Γεγονότα εκτός εύρους (δεν εμφανίζονται κατά την εξαγωγή ημερολογίου)',
-  dayType: 'Τύπος Ημέρας',
+  type: 'Τύπος',
   internalActivity: 'Εσωτερική Δραστηριότητα',
   administrativeEvent: 'Διοικητικό Γεγονός',
   communityEvent: 'Κοινοτικό Γεγονός',
@@ -51,7 +52,9 @@ const el: Translations = {
   brown: 'Καφέ',
   navy: 'Ναυτικό Μπλε',
   gold: 'Χρυσό',
-  indigo: 'Ίντιγκο'
+  indigo: 'Ίντιγκο',
+  preview: 'Προεπισκόπηση',
+  edit: 'Επεξεργασία'
 };
 
 export default el;

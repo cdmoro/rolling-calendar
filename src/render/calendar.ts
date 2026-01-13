@@ -1,17 +1,18 @@
-import { getEvent, getRangePosition, toLocalISODate } from '../modules/events';
-import {
-  addOnClickToWeekdays,
-  getLocalizedWeekdays,
-  getFixedMonthGrid
-} from '../modules/calendar';
+import { getEvent, getRangePosition, openEditEventDialog, openNewEventDialog, toLocalISODate } from '../modules/events';
+import { getLocalizedWeekdays, getFixedMonthGrid } from '../modules/calendar';
 import { state } from '../state/app';
-import { getEventLegendLabel } from './utils';
-import { formatEventDate } from './events';
-// import { getCurrentCalendar } from '../modules/calendars';
+import { EVENT_LEGEND } from './utils';
+import {
+  formatEventDate,
+  openDeleteEventDialog
+} from './events';
+import { translateElement } from '../i18n';
 
 export function renderCalendar() {
   const grid = document.querySelector<HTMLDivElement>('#calendar-grid')!;
   grid.innerHTML = '';
+
+  const weekdays = getLocalizedWeekdays(state.language);
 
   for (let i = 0; i < 12; i++) {
     const date = new Date(
@@ -35,12 +36,9 @@ export function renderCalendar() {
     /* ---- Weekday header ---- */
     const header = document.createElement('div');
     header.className = 'week-header';
-
-    getLocalizedWeekdays(state.language).forEach((label) => {
-      const h = document.createElement('div');
-      h.textContent = label;
-      header.appendChild(h);
-    });
+    header.innerHTML = weekdays
+      .map(wd => `<div>${wd}</div>`)
+      .join('');
 
     monthEl.appendChild(header);
 
@@ -58,9 +56,9 @@ export function renderCalendar() {
         cell.textContent = day.getDate().toString();
 
         const weekday = day.getDay();
-        cell.classList.add(
-          weekday === 0 || weekday === 6 ? 'weekend' : 'weekday'
-        );
+        const isWeekend = weekday === 0 || weekday === 6;
+
+        cell.classList.add(isWeekend ? 'weekend' : 'weekday');
         cell.dataset.date = toLocalISODate(day);
         cell.dataset.day = weekday.toString();
 
@@ -70,18 +68,24 @@ export function renderCalendar() {
           const isSingleDayEvent = event.start === event.end;
 
           cell.innerHTML += `<div class="tooltip">
-            <div class="tooltip-title">${event.title}</div>
-            <div class="tooltip-date">${formatEventDate(event, true)}</div>
-            <div class="tooltip-actions">
-              <button class="btn btn-danger btn-sm tooltip-delete-event-btn" data-event-id="${event.id}">Delete</button>
+            <div class="tooltip-body">
+              <div class="tooltip-title">${event.title}</div>
+              <div class="tooltip-date">${formatEventDate(event, true)}</div>
+              <div class="tooltip-actions">
+                <button class="btn btn-primary btn-icon" value="edit" data-event-id="${event.id}" data-title="edit">
+                  <app-icon name="edit"></app-icon>
+                </button>
+                <button class="btn btn-danger btn-icon" value="delete" data-event-id="${event.id}" data-title="delete">
+                  <app-icon name="trash"></app-icon>
+                </button>
+              </div>
             </div>
-            <div class="tooltip-type">${getEventLegendLabel(event.type)}</div>
+            <div class="tooltip-type" data-label="${EVENT_LEGEND[event.type || 'no-activity']}"></div>
           </div>`;
 
           cell.dataset.dateStart = event.start;
           cell.classList.add('marked');
           cell.classList.add(event.type || 'no-activity');
-          // cell.title = `${event.title} – ${getEventLegendLabel(event.type)}`;
 
           if (isSingleDayEvent) {
             cell.classList.add('single');
@@ -129,7 +133,37 @@ export function renderCalendar() {
 
     monthEl.appendChild(monthGrid);
     grid.appendChild(monthEl);
+
+    translateElement(grid);
   }
 
-  addOnClickToWeekdays();
+  grid.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLButtonElement).closest<HTMLButtonElement>(
+      '.btn'
+    );
+
+    if (btn?.dataset.eventId) {
+      switch (btn.value) {
+        case 'delete':
+          openDeleteEventDialog(btn.dataset.eventId);
+          break;
+        case 'edit':
+          const event = state.calendar!.events.find(
+            (ev) => ev.id === btn.dataset.eventId
+          );
+          if (event) {
+            openEditEventDialog(event);
+          }
+      }
+      return;
+    }
+
+    const weekday = (e.target as HTMLButtonElement).closest<HTMLButtonElement>(
+      '.day.weekday:not(.marked)'
+    );
+
+    if (!weekday?.dataset.date) return;
+
+    openNewEventDialog(weekday.dataset.date);
+  });
 }

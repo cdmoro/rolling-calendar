@@ -3,7 +3,8 @@ import type { Translations } from '../types/i18n';
 const ar: Translations = {
   title: 'التقويم الأكاديمي',
   newEvent: 'حدث جديد',
-  eventTitle: 'العنوان',
+  editEvent: 'تعديل الحدث',
+  titleLabel: 'العنوان',
   startDate: 'تاريخ البدء',
   endDate: 'تاريخ الانتهاء',
   addEvent: 'إضافة حدث',
@@ -31,7 +32,7 @@ const ar: Translations = {
   startMonth: 'شهر البدء',
   auto: 'تلقائي',
   outOfRangeTitle: 'الأحداث خارج النطاق (لا تظهر عند تصدير التقويم)',
-  dayType: 'نوع اليوم',
+  type: 'النوع',
   internalActivity: 'نشاط داخلي',
   administrativeEvent: 'حدث إداري',
   communityEvent: 'حدث مجتمعي',
@@ -49,7 +50,9 @@ const ar: Translations = {
   brown: 'بني',
   navy: 'كحلي',
   gold: 'ذهبي',
-  indigo: 'نيلي'
+  indigo: 'نيلي',
+  preview: 'معاينة',
+  edit: 'تعديل'
 };
 
 export default ar;

@@ -3,7 +3,8 @@ import type { Translations } from '../types/i18n';
 const es: Translations = {
   title: 'Calendario académico',
   newEvent: 'Nuevo evento',
-  eventTitle: 'Título',
+  editEvent: 'Editar evento',
+  titleLabel: 'Título',
   startDate: 'Fecha de inicio',
   endDate: 'Fecha de fin',
   addEvent: 'Agregar evento',
@@ -32,7 +33,7 @@ const es: Translations = {
   auto: 'Auto',
   outOfRangeTitle:
     'Eventos fuera de rango (no se muestran al exportar el calendario)',
-  dayType: 'Tipo de día',
+  type: 'Tipo',
   internalActivity: 'Actividad interna',
   administrativeEvent: 'Evento administrativo',
   communityEvent: 'Evento comunitario',
@@ -50,7 +51,9 @@ const es: Translations = {
   brown: 'Marrón',
   navy: 'Azul marino',
   gold: 'Oro',
-  indigo: 'Índigo'
+  indigo: 'Índigo',
+  preview: 'Vista previa',
+  edit: 'Editar'
 };
 
 export default es;

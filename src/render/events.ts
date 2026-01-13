@@ -28,6 +28,15 @@ function splitInTwoColumns<T>(items: T[]): [T[], T[]] {
   return [items.slice(0, mid), items.slice(mid)];
 }
 
+export function toHumanReadableDate(date: Date): string {
+  const formatter = new Intl.DateTimeFormat(state.language, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+  return formatter.format(date);
+}
+
 export function formatEventDate(
   event: CalendarEvent,
   showYear: boolean = false
@@ -194,9 +203,9 @@ export function openDeleteEventDialog(eventId: string) {
   document.querySelector<HTMLDivElement>(
     '#delete-dialog .dialog-description'
   )!.innerHTML = `
-    <p><strong data-label="eventTitle"></strong>: ${event.title}</p>
+    <p><strong data-label="titleLabel"></strong>: ${event.title}</p>
     ${dates}
-    <p><strong data-label="dayType"></strong>: ${getEventLegendLabel(event.type)}</p>
+    <p><strong data-label="type"></strong>: ${getEventLegendLabel(event.type)}</p>
   `;
 
   translateElement(dialog);

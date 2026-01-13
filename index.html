@@ -1,364 +1,257 @@
 <!doctype html>
 <html lang="en" data-theme="light">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Rolling Calendar</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 
-    <link rel="stylesheet" href="/src/style.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <title>Rolling Calendar</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 
-  <body>
-    <header class="header">
-      <h1 data-label="title"></h1>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
 
-      <div class="calendar-controls">
-        <select id="calendar-select"></select>
-        <button
-          class="btn btn-secondary"
-          id="new-calendar-btn"
-          data-label="newCalendar"
-        ></button>
-        <button
-          class="btn btn-secondary"
-          id="delete-calendar-btn"
-          disabled
-          data-label="delete"
-        ></button>
-        <button
-          class="btn btn-secondary"
-          id="settings-btn"
-          data-label="settings"
-        ></button>
-        <button
-          class="btn btn-secondary"
-          id="new-event-btn"
-          data-label="newEvent"
-        ></button>
+<body>
+  <header class="header">
+    <h1 data-label="title"></h1>
+
+    <div class="calendar-controls">
+      <select id="calendar-select"></select>
+      <button class="btn btn-secondary btn-icon" id="new-calendar-btn" data-title="newCalendar">
+        <app-icon name="new-calendar"></app-icon>
+      </button>
+      <button class="btn btn-secondary btn-icon btn-danger" id="delete-calendar-btn" disabled data-title="delete">
+        <app-icon name="trash"></app-icon>
+      </button>
+      <button class="btn btn-secondary" id="settings-btn" data-label="settings"></button>
+      <button class="btn btn-secondary" id="new-event-btn" data-label="newEvent"></button>
+    </div>
+
+    <button class="btn btn-secondary" id="export-btn" data-label="export"></button>
+
+    <select id="language-select">
+      <option value="en" data-label="english">English</option>
+      <option value="es" data-label="spanish">Spanish</option>
+      <option value="it" data-label="italian">Italian</option>
+      <option value="fr" data-label="french">French</option>
+      <option value="pt" data-label="portuguese">Portuguese</option>
+      <option value="de" data-label="german">German</option>
+      <option value="el" data-label="greek">Greek</option>
+      <option value="ar" data-label="arabic">Arabic</option>
+    </select>
+
+    <select id="theme-select">
+      <option value="auto" data-label="auto">Auto</option>
+      <option value="light" data-label="light">Light</option>
+      <option value="dark" data-label="dark">Dark</option>
+    </select>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <h2 data-label="settings"></h2>
+
+      <div class="form-control">
+        <label for="start-month" data-label="startMonth"></label>
+        <input type="month" id="start-month" />
       </div>
 
-      <button
-        class="btn btn-secondary"
-        id="export-btn"
-        data-label="export"
-      ></button>
+      <div class="form-control">
+        <label for="calendar-title-input" data-label="calendarTitle"></label>
+        <input type="text" id="calendar-title-input" placeholder="Institution" />
+      </div>
 
-      <select id="language-select">
-        <option value="en" data-label="english">English</option>
-        <option value="es" data-label="spanish">Spanish</option>
-        <option value="it" data-label="italian">Italian</option>
-        <option value="fr" data-label="french">French</option>
-        <option value="pt" data-label="portuguese">Portuguese</option>
-        <option value="de" data-label="german">German</option>
-        <option value="el" data-label="greek">Greek</option>
-        <option value="ar" data-label="arabic">Arabic</option>
-      </select>
+      <div class="form-control">
+        <label for="calendar-subtitle-input" data-label="calendarSubtitle"></label>
+        <input type="text" id="calendar-subtitle-input" placeholder="2025-2026 Academic Calendar" />
+      </div>
 
-      <select id="theme-select">
-        <option value="auto" data-label="auto">Auto</option>
-        <option value="light" data-label="light">Light</option>
-        <option value="dark" data-label="dark">Dark</option>
-      </select>
-    </header>
+      <div class="form-control">
+        <label for="color-select" data-label="color"></label>
+        <select id="color-select">
+          <option value="blue" data-label="blue">Blue</option>
+          <option value="olive" data-label="olive">Olive</option>
+          <option value="red" data-label="red">Red</option>
+          <option value="redgrape" data-label="redgrape">Red Grape</option>
+          <option value="orange" data-label="orange">Orange</option>
+          <option value="teal" data-label="teal">Teal</option>
+          <option value="pink" data-label="pink">Pink</option>
+          <option value="cyan" data-label="cyan">Cyan</option>
+          <option value="lime" data-label="lime">Lime</option>
+          <option value="purple" data-label="purple">Purple</option>
+          <option value="green" data-label="green">Green</option>
+          <option value="burgundy" data-label="burgundy">Burgundy</option>
+          <option value="grey" data-label="grey">Grey</option>
+          <option value="brown" data-label="brown">Brown</option>
+          <option value="navy" data-label="navy">Navy</option>
+          <option value="gold" data-label="gold">Gold</option>
+          <option value="indigo" data-label="indigo">Indigo</option>
+        </select>
+      </div>
 
-    <main class="layout">
-      <aside class="sidebar">
-        <h2 data-label="settings"></h2>
+      <h2 data-label="export">Export</h2>
+
+      <button id="export-image" class="btn btn-secondary">PNG</button>
+      <button id="export-pdf" class="btn btn-secondary">PDF</button>
+      <button id="export-ics" class="btn btn-secondary">ICS</button>
+    </aside>
+
+    <section class="main-section">
+      <div id="calendar-header"></div>
+
+      <div class="calendar">
+        <div id="calendar-grid"></div>
+      </div>
+
+      <div class="legend"></div>
+
+      <div class="event-list">
+        <div id="event-list" class="event-list-wrapper"></div>
+        <div id="out-of-range-event-list" class="event-list-wrapper"></div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="add-edit-event-dialog" closedby="any">
+    <div class="dialog-header">
+      <h3 data-label="addEditEvent"></h3>
+    </div>
+    <form id="add-edit-event-form">
+      <div class="dialog-body">
+        <input type="hidden" id="event-id-input" name="id" />
 
         <div class="form-control">
-          <label for="start-month" data-label="startMonth"></label>
-          <input type="month" id="start-month" />
+          <label for="event-title-input" data-label="titleLabel"></label>
+          <input type="text" id="event-title-input" name="title" required />
         </div>
 
         <div class="form-control">
-          <label for="calendar-title-input" data-label="calendarTitle"></label>
-          <input
-            type="text"
-            id="calendar-title-input"
-            placeholder="Institution"
-          />
+          <label for="event-start-date-input" data-label="startDate"></label>
+          <input type="date" id="event-start-date-input" name="start" required />
         </div>
 
         <div class="form-control">
-          <label
-            for="calendar-subtitle-input"
-            data-label="calendarSubtitle"
-          ></label>
-          <input
-            type="text"
-            id="calendar-subtitle-input"
-            placeholder="2025-2026 Academic Calendar"
-          />
+          <label for="event-end-date-input" data-label="endDate"></label>
+          <input type="date" id="event-end-date-input" name="end" />
         </div>
 
         <div class="form-control">
-          <label for="color-select" data-label="color"></label>
-          <select id="color-select">
-            <option value="blue" data-label="blue">Blue</option>
-            <option value="olive" data-label="olive">Olive</option>
-            <option value="red" data-label="red">Red</option>
-            <option value="redgrape" data-label="redgrape">Red Grape</option>
-            <option value="orange" data-label="orange">Orange</option>
-            <option value="teal" data-label="teal">Teal</option>
-            <option value="pink" data-label="pink">Pink</option>
-            <option value="cyan" data-label="cyan">Cyan</option>
-            <option value="lime" data-label="lime">Lime</option>
-            <option value="purple" data-label="purple">Purple</option>
-            <option value="green" data-label="green">Green</option>
-            <option value="burgundy" data-label="burgundy">Burgundy</option>
-            <option value="grey" data-label="grey">Grey</option>
-            <option value="brown" data-label="brown">Brown</option>
-            <option value="navy" data-label="navy">Navy</option>
-            <option value="gold" data-label="gold">Gold</option>
-            <option value="indigo" data-label="indigo">Indigo</option>
+          <label for="event-day-type-select" data-label="type"></label>
+          <select id="event-day-type-select" name="type">
+            <option value="no-activity" data-label="noActivity" selected></option>
+            <option value="half-day" data-label="halfDay"></option>
+            <option value="start-end-period" data-label="startEndPeriod"></option>
+            <option value="internal-activity" data-label="internalActivity"></option>
+            <option value="administrative-event" data-label="administrativeEvent"></option>
+            <option value="community-event" data-label="communityEvent"></option>
           </select>
         </div>
-
-        <h2 data-label="newEvent"></h2>
-
-        <form id="event-form">
-          <div class="form-control">
-            <label for="title" data-label="eventTitle"></label>
-            <input id="title" name="title" required />
-          </div>
-
-          <div class="form-control">
-            <label for="startDate" data-label="startDate"></label>
-            <input type="date" id="startDate" name="start" required />
-          </div>
-
-          <div class="form-control">
-            <label for="endDate" data-label="endDate"></label>
-            <input type="date" id="endDate" name="end" />
-          </div>
-
-          <div class="form-control">
-            <label for="dayType" data-label="dayType"></label>
-            <select id="dayType" name="dayType">
-              <option
-                value="no-activity"
-                data-label="noActivity"
-                selected
-              ></option>
-              <option value="half-day" data-label="halfDay"></option>
-              <option
-                value="start-end-period"
-                data-label="startEndPeriod"
-              ></option>
-              <option
-                value="internal-activity"
-                data-label="internalActivity"
-              ></option>
-              <option
-                value="administrative-event"
-                data-label="administrativeEvent"
-              ></option>
-              <option
-                value="community-event"
-                data-label="communityEvent"
-              ></option>
-            </select>
-          </div>
-
-          <button
-            type="submit"
-            class="btn btn-primary"
-            data-label="addEvent"
-          ></button>
-        </form>
-
-        <h2 data-label="export">Export</h2>
-
-        <button id="export-image" class="btn btn-secondary">PNG</button>
-        <button id="export-pdf" class="btn btn-secondary">PDF</button>
-        <button id="export-ics" class="btn btn-secondary">ICS</button>
-      </aside>
-
-      <section class="main-section">
-        <div id="calendar-header"></div>
-
-        <div class="calendar">
-          <div id="calendar-grid"></div>
+        <div class="form-control">
+          <div class="label" data-label="preview"></div>
+          <div id="legend-preview"></div>
         </div>
-
-        <div class="legend"></div>
-
-        <div class="event-list">
-          <div id="event-list" class="event-list-wrapper"></div>
-          <div id="out-of-range-event-list" class="event-list-wrapper"></div>
-        </div>
-      </section>
-    </main>
-
-    <dialog id="add-edit-event-dialog" closedby="any">
-      <div class="dialog-header">
-        <h3 data-label="addEditEvent"></h3>
       </div>
-      <form id="add-edit-event-form" method="dialog">
-        <div class="dialog-body">
-          <div class="form-control">
-            <label for="event-title-input" data-label="eventTitle"></label>
-            <input type="text" id="event-title-input" name="title" required />
-          </div>
-
-          <div class="form-control">
-            <label for="event-start-date-input" data-label="startDate"></label>
-            <input
-              type="date"
-              id="event-start-date-input"
-              name="start"
-              required
-            />
-          </div>
-
-          <div class="form-control">
-            <label for="event-end-date-input" data-label="endDate"></label>
-            <input type="date" id="event-end-date-input" name="end" />
-          </div>
-
-          <div class="form-control">
-            <label for="event-day-type-select" data-label="dayType"></label>
-            <select id="event-day-type-select" name="dayType">
-              <option
-                value="no-activity"
-                data-label="noActivity"
-                selected
-              ></option>
-              <option value="half-day" data-label="halfDay"></option>
-              <option
-                value="start-end-period"
-                data-label="startEndPeriod"
-              ></option>
-              <option
-                value="internal-activity"
-                data-label="internalActivity"
-              ></option>
-              <option
-                value="administrative-event"
-                data-label="administrativeEvent"
-              ></option>
-              <option
-                value="community-event"
-                data-label="communityEvent"
-              ></option>
-            </select>
-          </div>
-        </div>
-        <div class="dialog-footer">
-          <button
-            id="cancel-add-edit-event"
-            class="btn btn-secondary"
-            data-label="cancel"
-            formnovalidate
-          ></button>
-          <button
-            id="confirm-add-edit-event"
-            class="btn btn-primary"
-            data-label="save"
-          ></button>
-        </div>
-      </form>
-    </dialog>
-
-    <dialog id="import-dialog" closedby="any">
-      <div class="dialog-header">
-        <h3 data-label="importDialogTitle">Import</h3>
+      <div class="dialog-footer">
+        <button id="cancel-add-edit-event" class="btn btn-secondary" data-label="cancel" formnovalidate value="cancel"
+          type="button"></button>
+        <button id="confirm-add-edit-event" class="btn btn-primary" value="add" type="submit"></button>
       </div>
-      <form method="dialog">
-        <div class="dialog-body">
-          <p data-label="importDialogDescription"></p>
-          <textarea id="import-dialog-textarea"></textarea>
-        </div>
-        <div class="dialog-footer">
-          <button class="btn btn-secondary" data-label="cancel"></button>
-          <button class="btn btn-primary" data-label="import"></button>
-        </div>
-      </form>
-    </dialog>
+    </form>
+  </dialog>
 
-    <dialog id="export-dialog" closedby="any">
-      <div class="dialog-header">
-        <h3 data-label="exportDialogTitle"></h3>
+  <dialog id="import-dialog" closedby="any">
+    <div class="dialog-header">
+      <h3 data-label="importDialogTitle">Import</h3>
+    </div>
+    <form method="dialog">
+      <div class="dialog-body">
+        <p data-label="importDialogDescription"></p>
+        <textarea id="import-dialog-textarea"></textarea>
       </div>
-      <form method="dialog">
-        <div class="dialog-body">
-          <p data-label="exportDialogDescription"></p>
-          <textarea id="exported-dialog-textarea" readonly></textarea>
-        </div>
-        <div class="dialog-footer">
-          <button
-            id="close-export-dialog"
-            class="btn btn-primary"
-            data-label="close"
-          ></button>
-        </div>
-      </form>
-    </dialog>
-
-    <dialog id="new-calendar-dialog" closedby="any">
-      <div class="dialog-header">
-        <h3 data-label="newCalendar"></h3>
+      <div class="dialog-footer">
+        <button class="btn btn-secondary" data-label="cancel"></button>
+        <button class="btn btn-primary" data-label="import"></button>
       </div>
-      <form method="dialog">
-        <div class="dialog-body">
-          <p data-label="createCalendarDescription"></p>
-          <div class="form-control">
-            <label for="calendar-name-input" data-label="calendarName"></label>
-            <input
-              type="text"
-              name="calendar-name-input"
-              id="calendar-name-input"
-              autofocus
-              required
-            />
-            <div
-              class="dialog-description"
-              data-label="calendarNameDescription"
-            ></div>
-          </div>
-          <div class="dialog-error"></div>
-        </div>
-        <div class="dialog-footer">
-          <button
-            class="btn btn-secondary"
-            value="cancel"
-            data-label="cancel"
-            formnovalidate
-          ></button>
-          <button
-            class="btn btn-primary"
-            value="create"
-            data-label="save"
-          ></button>
-        </div>
-      </form>
-    </dialog>
+    </form>
+  </dialog>
 
-    <dialog id="delete-dialog" closedby="any">
-      <div class="dialog-header">
-        <h3 data-label="deleteEvent"></h3>
+  <dialog id="export-dialog" closedby="any">
+    <div class="dialog-header">
+      <h3 data-label="exportDialogTitle"></h3>
+    </div>
+    <form method="dialog">
+      <div class="dialog-body">
+        <p data-label="exportDialogDescription"></p>
+        <textarea id="exported-dialog-textarea" readonly></textarea>
       </div>
-      <form method="dialog">
-        <div class="dialog-body">
-          <p class="dialog-text" data-label="deleteEventConfirmation"></p>
-          <div class="dialog-description"></div>
-        </div>
-        <div class="dialog-footer">
-          <button
-            class="btn btn-secondary"
-            value="cancel"
-            data-label="cancel"
-          ></button>
-          <button
-            class="btn btn-danger"
-            value="delete"
-            data-label="delete"
-          ></button>
-        </div>
-      </form>
-    </dialog>
+      <div class="dialog-footer">
+        <button id="close-export-dialog" class="btn btn-primary" data-label="close"></button>
+      </div>
+    </form>
+  </dialog>
 
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+  <dialog id="new-calendar-dialog" closedby="any">
+    <div class="dialog-header">
+      <h3>
+        <app-icon name="new-calendar"></app-icon>
+        <span data-label="newCalendar"></span>
+      </h3>
+    </div>
+    <form method="dialog">
+      <div class="dialog-body">
+        <p data-label="createCalendarDescription"></p>
+        <div class="form-control">
+          <label for="calendar-name-input" data-label="titleLabel"></label>
+          <input type="text" name="calendar-name-input" id="calendar-name-input" autofocus required />
+          <div class="dialog-description" data-label="calendarNameDescription"></div>
+        </div>
+        <div class="dialog-error"></div>
+      </div>
+      <div class="dialog-footer">
+        <button class="btn btn-secondary" value="cancel" data-label="cancel" formnovalidate></button>
+        <button class="btn btn-primary" value="create" data-label="save"></button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="delete-dialog" closedby="any">
+    <div class="dialog-header">
+      <h3>
+        <app-icon name="trash"></app-icon>
+        <span data-label="deleteEvent"></span>
+      </h3>
+    </div>
+    <form method="dialog">
+      <div class="dialog-body">
+        <p class="dialog-text" data-label="deleteEventConfirmation"></p>
+        <div class="dialog-description"></div>
+      </div>
+      <div class="dialog-footer">
+        <button class="btn btn-secondary" value="cancel" data-label="cancel"></button>
+        <button class="btn btn-danger" value="delete" data-label="delete"></button>
+      </div>
+    </form>
+  </dialog>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol viewBox="260 205 27 32" id="icon-trash">
+      <path fill="currentColor"
+        d="M268,220 C268,219.448 268.448,219 269,219 C269.552,219 270,219.448 270,220 L270,232 C270,232.553 269.552,233 269,233 C268.448,233 268,232.553 268,232 L268,220 L268,220 Z M273,220 C273,219.448 273.448,219 274,219 C274.552,219 275,219.448 275,220 L275,232 C275,232.553 274.552,233 274,233 C273.448,233 273,232.553 273,232 L273,220 L273,220 Z M278,220 C278,219.448 278.448,219 279,219 C279.552,219 280,219.448 280,220 L280,232 C280,232.553 279.552,233 279,233 C278.448,233 278,232.553 278,232 L278,220 L278,220 Z M263,233 C263,235.209 264.791,237 267,237 L281,237 C283.209,237 285,235.209 285,233 L285,217 L263,217 L263,233 L263,233 Z M277,209 L271,209 L271,208 C271,207.447 271.448,207 272,207 L276,207 C276.552,207 277,207.447 277,208 L277,209 L277,209 Z M285,209 L279,209 L279,207 C279,205.896 278.104,205 277,205 L271,205 C269.896,205 269,205.896 269,207 L269,209 L263,209 C261.896,209 261,209.896 261,211 L261,213 C261,214.104 261.895,214.999 262.999,215 L285.002,215 C286.105,214.999 287,214.104 287,213 L287,211 C287,209.896 286.104,209 285,209 L285,209 Z">
+      </path>
+    </symbol>
+
+    <symbol viewBox="0 0 24 24" id="icon-new-calendar">
+      <path fill="currentColor" d="M7 1C6.44772 1 6 1.44772 6 2V3H5C3.34315 3 2 4.34315 2 6V20C2 21.6569 3.34315 23 5 23H13.101C12.5151 22.4259 12.0297 21.7496 11.6736 21H5C4.44772 21 4 20.5523 4 20V11H20V11.2899C20.7224 11.5049 21.396 11.8334 22 12.2547V6C22 4.34315 20.6569 3 19 3H18V2C18 1.44772 17.5523 1 17 1C16.4477 1 16 1.44772 16 2V3H8V2C8 1.44772 7.55228 1 7 1ZM16 6V5H8V6C8 6.55228 7.55228 7 7 7C6.44772 7 6 6.55228 6 6V5H5C4.44772 5 4 5.44772 4 6V9H20V6C20 5.44772 19.5523 5 19 5H18V6C18 6.55228 17.5523 7 17 7C16.4477 7 16 6.55228 16 6Z" fill="#0F0F0F"></path>
+      <path fill="currentColor" d="M17 16C17 15.4477 17.4477 15 18 15C18.5523 15 19 15.4477 19 16V17H20C20.5523 17 21 17.4477 21 18C21 18.5523 20.5523 19 20 19H19V20C19 20.5523 18.5523 21 18 21C17.4477 21 17 20.5523 17 20V19H16C15.4477 19 15 18.5523 15 18C15 17.4477 15.4477 17 16 17H17V16Z" fill="#0F0F0F"></path>
+      <path fill="currentColor" d="M24 18C24 21.3137 21.3137 24 18 24C14.6863 24 12 21.3137 12 18C12 14.6863 14.6863 12 18 12C21.3137 12 24 14.6863 24 18ZM13.9819 18C13.9819 20.2191 15.7809 22.0181 18 22.0181C20.2191 22.0181 22.0181 20.2191 22.0181 18C22.0181 15.7809 20.2191 13.9819 18 13.9819C15.7809 13.9819 13.9819 15.7809 13.9819 18Z"></path>
+    </symbol>
+
+    <symbol viewBox="0 0 24 24" id="icon-edit">
+      <path fill="currentColor" d="M12 21C12 20.4477 12.4477 20 13 20H21C21.5523 20 22 20.4477 22 21C22 21.5523 21.5523 22 21 22H13C12.4477 22 12 21.5523 12 21Z"></path>
+      <path fill="currentColor" d="M20.7736 8.09994C22.3834 6.48381 22.315 4.36152 21.113 3.06183C20.5268 2.4281 19.6926 2.0233 18.7477 2.00098C17.7993 1.97858 16.8167 2.34127 15.91 3.09985C15.8868 3.11925 15.8645 3.13969 15.8432 3.16111L2.87446 16.1816C2.31443 16.7438 2 17.5051 2 18.2987V19.9922C2 21.0937 2.89197 22 4.00383 22H5.68265C6.48037 22 7.24524 21.6823 7.80819 21.1171L20.7736 8.09994ZM17.2071 5.79295C16.8166 5.40243 16.1834 5.40243 15.7929 5.79295C15.4024 6.18348 15.4024 6.81664 15.7929 7.20717L16.7929 8.20717C17.1834 8.59769 17.8166 8.59769 18.2071 8.20717C18.5976 7.81664 18.5976 7.18348 18.2071 6.79295L17.2071 5.79295Z"></path>
+    </symbol>
+  </svg>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>

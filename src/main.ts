@@ -8,6 +8,7 @@ import {
   autosaveCurrentCalendar,
   openNewCalendarDialog
 } from './modules/calendars';
+import './components/app-icon';
 
 const startMonthInput =
   document.querySelector<HTMLInputElement>('#start-month')!;
@@ -18,8 +19,8 @@ const calendarSubtitleInput = document.querySelector<HTMLInputElement>(
   '#calendar-subtitle-input'
 )!;
 
-const startDateInput = document.querySelector<HTMLInputElement>('#startDate')!;
-const endDateInput = document.querySelector<HTMLInputElement>('#endDate')!;
+const startDateInput = document.querySelector<HTMLInputElement>('#add-edit-event-dialog #event-start-date-input')!;
+const endDateInput = document.querySelector<HTMLInputElement>('#add-edit-event-dialog #event-end-date-input')!;
 
 export function setTheme(theme: Theme, color: string = 'blue') {
   const html = document.documentElement;
@@ -113,11 +114,6 @@ function resolveCalendarHeader() {
   }
 }
 
-function getCalendarStartDate(): Date {
-  // const calendar = getCurrentCalendar();
-  return new Date(state.calendar!.startYear, state.calendar!.startMonth, 1);
-}
-
 export function sortEventsByStartDate(events: CalendarEvent[]) {
   events.sort((a, b) => {
     const aTime = new Date(a.start).getTime();
@@ -125,40 +121,6 @@ export function sortEventsByStartDate(events: CalendarEvent[]) {
     return aTime - bTime;
   });
 }
-
-document
-  .querySelector<HTMLFormElement>('#event-form')!
-  .addEventListener('submit', (e) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const data = new FormData(form);
-
-    const calendarStart = getCalendarStartDate();
-    const eventStart = new Date(data.get('start') as string);
-
-    if (!data.get('end')) {
-      data.set('end', data.get('start') as string);
-    }
-
-    if (eventStart < calendarStart) {
-      alert('Event start date must be within the visible calendar range.');
-      return false;
-    }
-
-    state.calendar!.events.push({
-      id: crypto.randomUUID(),
-      title: data.get('title') as string,
-      start: data.get('start') as string,
-      end: data.get('end') as string,
-      type: data.get('dayType') as CalendarEvent['type']
-    });
-
-    form.reset();
-    sortEventsByStartDate(state.calendar!.events);
-    // localStorage.setItem('events', JSON.stringify(state.calendar!.events));
-    autosaveCurrentCalendar();
-    renderUI();
-  });
 
 document
   .querySelector<HTMLSelectElement>('#language-select')!
