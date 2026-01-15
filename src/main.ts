@@ -22,7 +22,20 @@ const calendarSubtitleInput = document.querySelector<HTMLInputElement>(
 const startDateInput = document.querySelector<HTMLInputElement>('#add-edit-event-dialog #event-start-date-input')!;
 const endDateInput = document.querySelector<HTMLInputElement>('#add-edit-event-dialog #event-end-date-input')!;
 
-export function setTheme(theme: Theme, color: string = 'blue') {
+function hexToRgb(hex: string) {
+  const bigint = parseInt(hex.replace('#', ''), 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return `${r}, ${g}, ${b}`;
+}
+
+function getForegroundColor(hex: string) {
+  const [r, g, b] = hexToRgb(hex).split(', ').map(Number);
+  return (r * 0.299 + g * 0.587 + b * 0.114) > 135 ? '#000000' : '#FFFFFF';
+}
+
+export function setTheme(theme: Theme, color: string = '#4a90e2') {
   const html = document.documentElement;
   let resolvedTheme = theme;
 
@@ -33,7 +46,10 @@ export function setTheme(theme: Theme, color: string = 'blue') {
     resolvedTheme = prefersDark ? 'dark' : 'light';
   }
 
-  html.setAttribute('data-theme', `${resolvedTheme}-${color}`);
+  // html.setAttribute('data-theme', `${resolvedTheme}-${color}`);
+  html.setAttribute('data-theme', `${resolvedTheme}`);
+  html.style.setProperty('--accent-color-rgb', hexToRgb(color));
+  html.style.setProperty('--accent-text-color', getForegroundColor(color));
 
   localStorage.setItem('theme', `${theme}`);
   localStorage.setItem('color', `${color}`);
@@ -140,7 +156,7 @@ document
 
 document
   .querySelector<HTMLSelectElement>('#color-select')!
-  .addEventListener('change', (e) => {
+  .addEventListener('input', (e) => {
     const theme = document.querySelector<HTMLSelectElement>('#theme-select')!
       .value as Theme;
     state.calendar!.color = (e.target as HTMLSelectElement).value;
@@ -174,7 +190,9 @@ function main() {
     resolvedTheme = prefersDark ? 'dark' : 'light';
   }
 
-  html.setAttribute('data-theme', `${resolvedTheme}-${color}`);
+  html.setAttribute('data-theme', `${resolvedTheme}`);
+  html.style.setProperty('--accent-color-rgb', hexToRgb(color));
+  html.style.setProperty('--accent-text-color', getForegroundColor(color));
 
   startMonthInput.value = `${state.calendar!.startYear}-${String(state.calendar!.startMonth + 1).padStart(2, '0')}`;
   calendarTitleInput.value = localStorage.getItem('calendarTitle') || '';

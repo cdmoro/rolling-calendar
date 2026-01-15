@@ -13,7 +13,7 @@ export function createDraftCalendar(): CalendarDocument {
       startYear: new Date().getFullYear(),
       startMonth: new Date().getMonth(),
       events: [],
-      color: 'blue'
+      color: '#4a90e2'
     }
   };
 }

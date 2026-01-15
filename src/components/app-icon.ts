@@ -14,7 +14,7 @@ class AppIcon extends HTMLElement {
     if (!name) return;
 
     this.innerHTML = `
-      <svg class="icon" aria-hidden="true">
+      <svg class="icon icon-${name}" aria-hidden="true">
         <use href="#icon-${name}"></use>
       </svg>
     `;

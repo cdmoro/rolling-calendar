@@ -32,12 +32,12 @@
   --text-color-rgb: 240, 240, 240;
   --border-color: #444;
   --weekend-bg: #232323;
-  --muted-color: rgba(255, 255, 255, 0.4);
+  --muted-color: #ffffff66;
   --input-border-color: #495057;
   color-scheme: dark;
 }
 
-[data-theme$='-blue'] {
+/* [data-theme$='-blue'] {
   --accent-color-rgb: 74, 144, 226;
 }
 
@@ -105,7 +105,7 @@
 
 [data-theme$='-indigo'] {
   --accent-color-rgb: 63, 81, 181;
-}
+} */
 
 * {
   transition:
@@ -189,9 +189,18 @@ select {
   width: auto;
 }
 
+input[type='color'] {
+  padding: 0rem .1rem;
+  cursor: pointer;
+}
+
 .main-section {
   margin: 0 auto;
   width: 876px;
+}
+
+.exporting .main-section {
+  width: auto;
   background: var(--bg-color);
 }
 
@@ -350,6 +359,10 @@ select {
 .day.weekday.marked {
   cursor: default;
   background-color: var(--bg-color);
+}
+
+.day.weekday:not(.marked):hover {
+    background: var(--accent-color-50);
 }
 
 .day.weekday.marked.no-activity {
@@ -773,4 +786,13 @@ svg.icon {
 .btn-icon.btn-sm svg.icon {
   width: 14px;
   height: 14px;
+}
+
+svg.icon-new-event {
+  height: 18px;
+  width: 18px;
+}
+
+.d-none {
+  display: none !important;
 }
