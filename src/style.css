@@ -730,13 +730,12 @@ dialog::backdrop {
 }
 
 .tooltip-date {
-  font-size: 0.8rem;
   font-style: italic;
 }
 
 .tooltip-body {
   padding: 0.5rem;
-  background: var(--accent-color-30);
+  background: var(--accent-color-20);
 }
 
 .tooltip-type {
@@ -795,4 +794,17 @@ svg.icon-new-event {
 
 .d-none {
   display: none !important;
+}
+
+header .github-link {
+  margin-left: auto;
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: bold;
+  height: 24px;
+}
+
+header .github-link svg.icon {
+  height: 24px;
+  width: 24px;
 }

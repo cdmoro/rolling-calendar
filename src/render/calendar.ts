@@ -72,10 +72,10 @@ export function renderCalendar() {
               <div class="tooltip-title">${event.title}</div>
               <div class="tooltip-date">${formatEventDate(event, true)}</div>
               <div class="tooltip-actions">
-                <button class="btn btn-primary btn-icon" value="edit" data-event-id="${event.id}" data-title="edit">
+                <button class="btn btn-primary btn-sm" value="edit" data-event-id="${event.id}" data-title="edit">
                   <app-icon name="edit"></app-icon>
                 </button>
-                <button class="btn btn-danger btn-icon" value="delete" data-event-id="${event.id}" data-title="delete">
+                <button class="btn btn-danger btn-sm" value="delete" data-event-id="${event.id}" data-title="delete">
                   <app-icon name="trash"></app-icon>
                 </button>
               </div>
