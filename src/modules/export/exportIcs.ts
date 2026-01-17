@@ -1,4 +1,5 @@
-import { state } from '../state/app';
+import { state } from '../../state/app';
+import { getFileName } from './utils';
 
 function formatIcsDate(iso: string): string {
   return iso.replace(/-/g, '') + 'T000000';
@@ -44,5 +45,5 @@ END:VEVENT`;
 
   ics += '\nEND:VCALENDAR';
 
-  download(ics, 'rolling-calendar.ics', 'text/calendar');
+  download(ics, `${getFileName()}.ics`, 'text/calendar');
 }

@@ -2,7 +2,7 @@ import { initState, state } from './state/app';
 import { applyTranslations } from './i18n';
 import type { Language, Theme } from './types/app';
 import type { CalendarEvent } from './types/calendar';
-import { initExport } from './export';
+import { initExport } from './modules/export';
 import { renderUI } from './render';
 import {
   autosaveCurrentCalendar,
@@ -19,8 +19,12 @@ const calendarSubtitleInput = document.querySelector<HTMLInputElement>(
   '#calendar-subtitle-input'
 )!;
 
-const startDateInput = document.querySelector<HTMLInputElement>('#add-edit-event-dialog #event-start-date-input')!;
-const endDateInput = document.querySelector<HTMLInputElement>('#add-edit-event-dialog #event-end-date-input')!;
+const startDateInput = document.querySelector<HTMLInputElement>(
+  '#add-edit-event-dialog #event-start-date-input'
+)!;
+const endDateInput = document.querySelector<HTMLInputElement>(
+  '#add-edit-event-dialog #event-end-date-input'
+)!;
 
 function hexToRgb(hex: string) {
   const bigint = parseInt(hex.replace('#', ''), 16);
@@ -32,7 +36,7 @@ function hexToRgb(hex: string) {
 
 function getForegroundColor(hex: string) {
   const [r, g, b] = hexToRgb(hex).split(', ').map(Number);
-  return (r * 0.299 + g * 0.587 + b * 0.114) > 135 ? '#000000' : '#FFFFFF';
+  return r * 0.299 + g * 0.587 + b * 0.114 > 135 ? '#000000' : '#FFFFFF';
 }
 
 export function setTheme(theme: Theme, color: string = '#4a90e2') {
@@ -69,10 +73,10 @@ window
     }
   });
 
-function resetForm() {
-  const form = document.querySelector<HTMLFormElement>('#event-form')!;
-  form.reset();
-}
+// function resetForm() {
+//   const form = document.querySelector<HTMLFormElement>('#event-form')!;
+//   form.reset();
+// }
 
 startMonthInput.addEventListener('change', (e) => {
   const [y, m] = (e.target as HTMLInputElement).value.split('-').map(Number);
@@ -90,7 +94,7 @@ startMonthInput.addEventListener('change', (e) => {
   }
 
   renderUI();
-  resetForm();
+  // resetForm();
 });
 
 calendarTitleInput.addEventListener('input', () => resolveCalendarHeader());

@@ -1,11 +1,14 @@
-import { getEvent, getRangePosition, openEditEventDialog, openNewEventDialog, toLocalISODate } from '../modules/events';
+import {
+  getEvent,
+  getRangePosition,
+  openEditEventDialog,
+  openNewEventDialog,
+  toLocalISODate
+} from '../modules/events';
 import { getLocalizedWeekdays, getFixedMonthGrid } from '../modules/calendar';
 import { state } from '../state/app';
 import { EVENT_LEGEND } from './utils';
-import {
-  formatEventDate,
-  openDeleteEventDialog
-} from './events';
+import { formatEventDate, openDeleteEventDialog } from './events';
 import { translateElement } from '../i18n';
 
 export function renderCalendar() {
@@ -36,9 +39,7 @@ export function renderCalendar() {
     /* ---- Weekday header ---- */
     const header = document.createElement('div');
     header.className = 'week-header';
-    header.innerHTML = weekdays
-      .map(wd => `<div>${wd}</div>`)
-      .join('');
+    header.innerHTML = weekdays.map((wd) => `<div>${wd}</div>`).join('');
 
     monthEl.appendChild(header);
 
@@ -147,13 +148,14 @@ export function renderCalendar() {
         case 'delete':
           openDeleteEventDialog(btn.dataset.eventId);
           break;
-        case 'edit':
+        case 'edit': {
           const event = state.calendar!.events.find(
             (ev) => ev.id === btn.dataset.eventId
           );
           if (event) {
             openEditEventDialog(event);
           }
+        }
       }
       return;
     }

@@ -1,4 +1,5 @@
-import { state } from '../state/app';
+import { state } from '../../state/app';
+import { getFileName } from './utils';
 
 export async function exportAsPdf(): Promise<void> {
   const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
@@ -38,20 +39,5 @@ export async function exportAsPdf(): Promise<void> {
 
   pdf.setProperties({ title: `${title}${subtitle}` });
   pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
-
-  let fileName = title
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9-]/g, '');
-
-  const year = state.calendar!.startYear;
-  const month = state.calendar!.startMonth + 1;
-
-  if (month === 1) {
-    fileName += `_${year}`;
-  } else {
-    fileName += `_${year}-${year + 1}`;
-  }
-
-  pdf.save(`${fileName}.pdf`);
+  pdf.save(`${getFileName()}.pdf`);
 }

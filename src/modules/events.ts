@@ -5,35 +5,45 @@ import { sortEventsByStartDate } from '../main';
 import { autosaveCurrentCalendar } from './calendars';
 import { renderUI } from '../render';
 import { t } from '../i18n';
-import { getEventLegendLabel } from '../render/utils';
 
 const addEditEventDialog = document.querySelector<HTMLDialogElement>(
   '#add-edit-event-dialog'
 )!;
 
-const addEditEventForm = getTypedForm<AddEditEventFormElements>('#add-edit-event-dialog form#add-edit-event-form')!;
-const preview = addEditEventForm.querySelector<HTMLDivElement>('#legend-preview')!;
+const addEditEventForm = getTypedForm<AddEditEventFormElements>(
+  '#add-edit-event-dialog form#add-edit-event-form'
+)!;
+const preview =
+  addEditEventForm.querySelector<HTMLDivElement>('#legend-preview')!;
 
 function getCalendarStartDate(): Date {
   return new Date(state.calendar!.startYear, state.calendar!.startMonth, 1);
 }
 
-document.querySelector<HTMLButtonElement>("#new-event-btn")!.onclick = () => {
+document.querySelector<HTMLButtonElement>('#new-event-btn')!.onclick = () => {
   openNewEventDialog(toLocalISODate(getCalendarStartDate()));
-}
+};
 
-addEditEventDialog.querySelector<HTMLButtonElement>('#cancel-add-edit-event')!.onclick = () => {
+addEditEventDialog.querySelector<HTMLButtonElement>(
+  '#cancel-add-edit-event'
+)!.onclick = () => {
   addEditEventDialog.close();
-}
+};
 
 function updateLegendPreview() {
-  const day = addEditEventForm.elements.start.value.substring(8, 10).replace(/^0/, '');
+  const day = addEditEventForm.elements.start.value
+    .substring(8, 10)
+    .replace(/^0/, '');
   const type = addEditEventForm.elements.type.value as EventType;
   preview.innerHTML = `<span class="day weekday marked ${type}">${day}</span>`;
 }
 
-addEditEventForm.elements.start.addEventListener('change', () => updateLegendPreview());
-addEditEventForm.elements.type.addEventListener('change', () => updateLegendPreview());
+addEditEventForm.elements.start.addEventListener('change', () =>
+  updateLegendPreview()
+);
+addEditEventForm.elements.type.addEventListener('change', () =>
+  updateLegendPreview()
+);
 
 addEditEventForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -59,13 +69,13 @@ addEditEventForm.addEventListener('submit', (e) => {
     if (eventIndex !== -1) {
       state.calendar!.events[eventIndex] = {
         ...eventData,
-        id: data.get('id') as string,
+        id: data.get('id') as string
       };
     }
   } else {
     state.calendar!.events.push({
       ...eventData,
-      id: crypto.randomUUID(),
+      id: crypto.randomUUID()
     });
   }
 
@@ -76,12 +86,17 @@ addEditEventForm.addEventListener('submit', (e) => {
   addEditEventDialog.close();
 });
 
-
 addEditEventDialog.onclose = () => {
   addEditEventForm.reset();
 };
 
-function setAditEventFormValues({ id = '', title = '', start = '', end = '', type = 'no-activity' }: Partial<CalendarEvent>) {
+function setAditEventFormValues({
+  id = '',
+  title = '',
+  start = '',
+  end = '',
+  type = 'no-activity'
+}: Partial<CalendarEvent>) {
   addEditEventForm.elements.id.value = id;
   addEditEventForm.elements.title.value = title;
   addEditEventForm.elements.start.value = start;
@@ -91,20 +106,28 @@ function setAditEventFormValues({ id = '', title = '', start = '', end = '', typ
 }
 
 export function openNewEventDialog(dateIso: string) {
-  addEditEventDialog.querySelector("h3")!.textContent = t('newEvent');
+  addEditEventDialog.querySelector('h3')!.innerHTML = `
+    <app-icon name="new-event"></app-icon>
+    <span>${t('newEvent')}</span>
+  `;
   setAditEventFormValues({ start: dateIso });
   addEditEventForm.elements.end.setAttribute('min', dateIso);
   updateLegendPreview();
-  addEditEventDialog.querySelector("#confirm-add-edit-event")!.textContent = t('addEvent');
+  addEditEventDialog.querySelector('#confirm-add-edit-event')!.textContent =
+    t('addEvent');
   addEditEventDialog.showModal();
 }
 
 export function openEditEventDialog(event: CalendarEvent) {
-  addEditEventDialog.querySelector("h3")!.textContent = t('editEvent');
+  addEditEventDialog.querySelector('h3')!.innerHTML = `
+    <app-icon name="edit"></app-icon>
+    <span>${t('editEvent')}</span>
+  `;
   setAditEventFormValues(event);
   addEditEventForm.elements.end.setAttribute('min', event.start);
   updateLegendPreview();
-  addEditEventDialog.querySelector("#confirm-add-edit-event")!.textContent = t('save');
+  addEditEventDialog.querySelector('#confirm-add-edit-event')!.textContent =
+    t('save');
   addEditEventDialog.showModal();
 }
 
