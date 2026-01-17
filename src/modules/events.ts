@@ -101,7 +101,6 @@ function setAditEventFormValues({
   addEditEventForm.elements.title.value = title;
   addEditEventForm.elements.start.value = start;
   addEditEventForm.elements.end.value = end;
-  console.log('type', type);
   addEditEventForm.elements.type.value = type;
 }
 

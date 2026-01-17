@@ -47,13 +47,23 @@ const fr: Translations = {
   date: 'Date',
   color: 'Couleur',
   export: 'Exporter',
+  import: 'Importer',
   newCalendar: 'Nouveau calendrier',
   brown: 'Marron',
   navy: 'Marine',
   gold: 'Or',
   indigo: 'Indigo',
   preview: 'Aperçu',
-  edit: 'Modifier'
+  edit: 'Modifier',
+  deleteCalendar: 'Supprimer le calendrier',
+  deleteCalendarConfirmation:
+    'Êtes-vous sûr de vouloir supprimer ce calendrier ?',
+  accept: 'Accepter',
+  yes: 'Oui',
+  no: 'Non',
+  error: 'Erreur',
+  eventNotFound: 'Événement non trouvé',
+  eventDeleted: 'Événement supprimé avec succès'
 };
 
 export default fr;

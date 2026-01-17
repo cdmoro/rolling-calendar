@@ -55,13 +55,22 @@ export const translationKeys = [
   'deleteEventConfirmation',
   'color',
   'export',
+  'import',
   'newCalendar',
   'brown',
   'navy',
   'gold',
   'indigo',
   'preview',
-  'edit'
+  'edit',
+  'deleteCalendar',
+  'deleteCalendarConfirmation',
+  'accept',
+  'yes',
+  'no',
+  'error',
+  'eventNotFound',
+  'eventDeleted',
 ] as const;
 
 export type TranslationKey = (typeof translationKeys)[number];

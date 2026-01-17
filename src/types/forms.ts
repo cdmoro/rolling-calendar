@@ -6,6 +6,10 @@ export function getTypedForm<T extends HTMLFormControlsCollection>(
   return form as HTMLFormElement & { elements: T };
 }
 
+export interface NewCalendarFormElements extends HTMLFormControlsCollection {
+  label: HTMLInputElement;
+}
+
 export interface AddEditEventFormElements extends HTMLFormControlsCollection {
   id: HTMLInputElement;
   title: HTMLInputElement;

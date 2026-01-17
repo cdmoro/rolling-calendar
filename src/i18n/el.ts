@@ -48,13 +48,23 @@ const el: Translations = {
   date: 'Ημερομηνία',
   color: 'Χρώμα',
   export: 'Εξαγωγή',
+  import: 'Εισαγωγή',
   newCalendar: 'Νέο Ημερολόγιο',
   brown: 'Καφέ',
   navy: 'Ναυτικό Μπλε',
   gold: 'Χρυσό',
   indigo: 'Ίντιγκο',
   preview: 'Προεπισκόπηση',
-  edit: 'Επεξεργασία'
+  edit: 'Επεξεργασία',
+  deleteCalendar: 'Διαγραφή Ημερολογίου',
+  deleteCalendarConfirmation:
+    'Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το ημερολόγιο;',
+  accept: 'Αποδοχή',
+  yes: 'Ναι',
+  no: 'Όχι',
+  error: 'Σφάλμα',
+  eventNotFound: 'Το γεγονός δεν βρέθηκε',
+  eventDeleted: 'Το γεγονός διαγράφηκε με επιτυχία'
 };
 
 export default el;

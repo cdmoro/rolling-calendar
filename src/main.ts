@@ -1,5 +1,5 @@
 import { initState, state } from './state/app';
-import { applyTranslations } from './i18n';
+import { applyTranslations, t } from './i18n';
 import type { Language, Theme } from './types/app';
 import type { CalendarEvent } from './types/calendar';
 import { initExport } from './modules/export';
@@ -9,6 +9,7 @@ import {
   openNewCalendarDialog
 } from './modules/calendars';
 import './components/app-icon';
+import { confirmDialog } from './modules/dialogs';
 
 const startMonthInput =
   document.querySelector<HTMLInputElement>('#start-month')!;
@@ -18,6 +19,8 @@ const calendarTitleInput = document.querySelector<HTMLInputElement>(
 const calendarSubtitleInput = document.querySelector<HTMLInputElement>(
   '#calendar-subtitle-input'
 )!;
+const calendarSelect =
+  document.querySelector<HTMLSelectElement>('#calendar-select')!;
 
 const startDateInput = document.querySelector<HTMLInputElement>(
   '#add-edit-event-dialog #event-start-date-input'
@@ -25,6 +28,9 @@ const startDateInput = document.querySelector<HTMLInputElement>(
 const endDateInput = document.querySelector<HTMLInputElement>(
   '#add-edit-event-dialog #event-end-date-input'
 )!;
+
+const colorSelect = document
+  .querySelector<HTMLSelectElement>('#color-select')!;
 
 function hexToRgb(hex: string) {
   const bigint = parseInt(hex.replace('#', ''), 16);
@@ -77,6 +83,72 @@ window
 //   const form = document.querySelector<HTMLFormElement>('#event-form')!;
 //   form.reset();
 // }
+
+document.querySelector<HTMLButtonElement>('#delete-calendar-btn')!.addEventListener('click', async () => {
+  const calendarId = state.currentCalendarId;
+  if (!calendarId) return;
+  
+  const index = state.calendars.findIndex((cal) => cal.id === calendarId);
+  if (index === -1) return;
+
+  const confirmDelete = await confirmDialog({
+    title: t('deleteCalendar'),
+    message: t('deleteCalendarConfirmation'),
+    confirmButtonText: t('delete'),
+    cancelButtonText: t('cancel'),
+    confirmButtonClass: 'btn-danger'
+  });
+
+  if (confirmDelete) {
+    console.log('Deleting calendar with ID:', calendarId);
+    // state.calendars.splice(index, 1);
+    // localStorage.setItem('calendars', JSON.stringify(state.calendars));
+
+    // if (state.calendars.length > 0) {
+    //   const newCurrentCalendar = state.calendars[0];
+    //   state.currentCalendarId = newCurrentCalendar.id!;
+    //   state.calendar = structuredClone(newCurrentCalendar.state);
+    //   localStorage.setItem('currentCalendarId', newCurrentCalendar.id!);
+    // } else {
+    //   state.currentCalendarId = null;
+    //   state.calendar = null;
+    //   localStorage.removeItem('currentCalendarId');
+    // }
+
+    // renderUI();
+  }
+});
+
+calendarSelect.addEventListener('change', (e) => {
+  const selectedCalendarId = (e.target as HTMLSelectElement).value;
+  const selectedCalendar = state.calendars.find(
+    (cal) => cal.id === selectedCalendarId
+  );
+
+  if (selectedCalendar) {
+    state.currentCalendarId = selectedCalendar.id!;
+    state.calendar = structuredClone(selectedCalendar.state);
+    localStorage.setItem('currentCalendarId', selectedCalendar.id!);
+    calendarTitleInput.value = state.calendar.calendarTitle || '';
+    calendarSubtitleInput.value = state.calendar.calendarSubtitle || '';
+    startMonthInput.value = `${state.calendar.startYear}-${String(
+      state.calendar.startMonth + 1
+    ).padStart(2, '0')}`;
+    colorSelect.value = state.calendar.color;
+    document.documentElement.style.setProperty(
+      '--accent-color-rgb',
+      hexToRgb(state.calendar.color)
+    );
+    document.documentElement.style.setProperty(
+      '--accent-text-color',
+      getForegroundColor(state.calendar.color)
+    );
+
+    resolveCalendarHeader();
+    autosaveCurrentCalendar();
+    renderUI();
+  }
+});
 
 startMonthInput.addEventListener('change', (e) => {
   const [y, m] = (e.target as HTMLInputElement).value.split('-').map(Number);
@@ -158,9 +230,8 @@ document
     setTheme(state.theme, state.calendar!.color);
   });
 
-document
-  .querySelector<HTMLSelectElement>('#color-select')!
-  .addEventListener('input', (e) => {
+
+  colorSelect.addEventListener('input', (e) => {
     const theme = document.querySelector<HTMLSelectElement>('#theme-select')!
       .value as Theme;
     state.calendar!.color = (e.target as HTMLSelectElement).value;
@@ -206,7 +277,7 @@ function main() {
 
   document.querySelector<HTMLSelectElement>('#theme-select')!.value =
     state.theme;
-  document.querySelector<HTMLSelectElement>('#color-select')!.value = color;
+  colorSelect.value = color;
   document.querySelector<HTMLSelectElement>('#language-select')!.value =
     state.language;
 

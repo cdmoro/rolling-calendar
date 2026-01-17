@@ -7,12 +7,96 @@ import {
 } from '../modules/events';
 import { getLocalizedWeekdays, getFixedMonthGrid } from '../modules/calendar';
 import { state } from '../state/app';
-import { EVENT_LEGEND } from './utils';
-import { formatEventDate, openDeleteEventDialog } from './events';
-import { translateElement } from '../i18n';
+import { EVENT_LEGEND, formatLongDate, getEventLegendLabel } from './utils';
+import { formatEventDate, renderEventList } from './events';
+import { t, translateElement } from '../i18n';
+import { confirmDialog } from '../modules/dialogs';
+import { renderLegend } from './legend';
+import { autosaveCurrentCalendar } from '../modules/calendars';
+import { notify } from '../modules/notifications';
+
+const grid = document.querySelector<HTMLDivElement>('#calendar-grid')!;
+
+grid.addEventListener('click', async (e) => {
+  const btn = (e.target as HTMLButtonElement).closest<HTMLButtonElement>(
+    '.btn'
+  );
+
+  if (btn?.dataset.eventId) {
+    const event = state.calendar!.events.find(
+      (ev) => ev.id === btn.dataset.eventId
+    );
+
+    if (!event) return;
+
+    switch (btn.value) {
+      case 'delete': {
+        // openDeleteEventDialog(btn.dataset.eventId);
+        const dates =
+          event.start === event.end
+            ? `<p><strong>${t('date')}</strong>: ${formatLongDate(event.start, state.language)}</p>`
+            : `<p><strong>${t('startDate')}</strong>: ${formatLongDate(event.start, state.language)}</p>
+                 <p><strong>${t('endDate')}</strong>: ${formatLongDate(event.end, state.language)}</p>`;
+        const detail = `
+              <p><strong>${t('titleLabel')}</strong>: ${event.title}</p>
+              ${dates}
+              <p><strong>${t('type')}</strong>: ${getEventLegendLabel(event.type)}</p>
+            `;
+
+        const doDelete = await confirmDialog({
+          title: t('deleteEvent'),
+          message: t('deleteEventConfirmation'),
+          detail,
+          confirmButtonText: t('delete'),
+          cancelButtonText: t('cancel'),
+          confirmButtonClass: 'btn-danger'
+        });
+
+        if (doDelete) {
+          const index = state.calendar!.events.findIndex(
+            (event) => event.id === btn.dataset.eventId
+          );
+
+          if (index !== -1) {
+            state.calendar!.events.splice(index, 1);
+            autosaveCurrentCalendar();
+            renderEventList();
+            renderCalendar();
+            renderLegend();
+
+            notify(t('eventDeleted'), {
+              type: 'success',
+              id: 'event-deleted'
+            });
+          } else {
+            notify(t('eventNotFound'), {
+              type: 'error',
+              id: 'event-not-found'
+            });
+          }
+        }
+        break;
+      }
+      case 'edit': {
+        if (event) {
+          openEditEventDialog(event);
+        }
+        break;
+      }
+    }
+    return;
+  }
+
+  const weekday = (e.target as HTMLButtonElement).closest<HTMLButtonElement>(
+    '.day.weekday:not(.marked)'
+  );
+
+  if (!weekday?.dataset.date) return;
+
+  openNewEventDialog(weekday.dataset.date);
+});
 
 export function renderCalendar() {
-  const grid = document.querySelector<HTMLDivElement>('#calendar-grid')!;
   grid.innerHTML = '';
 
   const weekdays = getLocalizedWeekdays(state.language);
@@ -137,35 +221,4 @@ export function renderCalendar() {
 
     translateElement(grid);
   }
-
-  grid.addEventListener('click', (e) => {
-    const btn = (e.target as HTMLButtonElement).closest<HTMLButtonElement>(
-      '.btn'
-    );
-
-    if (btn?.dataset.eventId) {
-      switch (btn.value) {
-        case 'delete':
-          openDeleteEventDialog(btn.dataset.eventId);
-          break;
-        case 'edit': {
-          const event = state.calendar!.events.find(
-            (ev) => ev.id === btn.dataset.eventId
-          );
-          if (event) {
-            openEditEventDialog(event);
-          }
-        }
-      }
-      return;
-    }
-
-    const weekday = (e.target as HTMLButtonElement).closest<HTMLButtonElement>(
-      '.day.weekday:not(.marked)'
-    );
-
-    if (!weekday?.dataset.date) return;
-
-    openNewEventDialog(weekday.dataset.date);
-  });
 }

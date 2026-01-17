@@ -17,55 +17,7 @@
     <header class="header">
       <h1 data-label="title"></h1>
 
-      <div class="calendar-controls">
-        <select id="calendar-select"></select>
-        <button
-          class="btn btn-secondary btn-icon"
-          id="new-calendar-btn"
-          data-title="newCalendar"
-        >
-          <app-icon name="new-calendar"></app-icon>
-        </button>
-        <button
-          class="btn btn-secondary btn-icon btn-disabled d-none"
-          id="save-calendar-btn"
-          data-title="save"
-        >
-          <app-icon name="save-calendar"></app-icon>
-        </button>
-        <button
-          class="btn btn-secondary btn-icon btn-danger btn-disabled d-none"
-          id="delete-calendar-btn"
-          disabled
-          data-title="delete"
-        >
-          <app-icon name="trash"></app-icon>
-        </button>
-        <!-- <button class="btn btn-secondary" id="settings-btn" data-label="settings"></button> -->
-        <button
-          class="btn btn-secondary btn-icon"
-          id="new-event-btn"
-          data-title="newEvent"
-        >
-          <app-icon name="new-event"></app-icon>
-        </button>
-
-        <button
-          class="btn btn-secondary btn-icon"
-          id="import-btn"
-          data-title="import"
-        >
-          <app-icon name="import"></app-icon>
-        </button>
-
-        <button
-          class="btn btn-secondary btn-icon"
-          id="export-btn"
-          data-title="export"
-        >
-          <app-icon name="export"></app-icon>
-        </button>
-      </div>
+      <div class="calendar-controls"></div>
 
       <select id="language-select">
         <option value="en" data-label="english">English</option>
@@ -96,6 +48,42 @@
 
     <main class="layout">
       <aside class="sidebar">
+        <div class="actions">
+          <div class="calendar-actions">
+            <select id="calendar-select"></select>
+            <button
+              class="btn btn-secondary btn-icon"
+              id="new-calendar-btn"
+              data-title="newCalendar"
+            >
+              <app-icon name="new-calendar"></app-icon>
+            </button>
+            <button
+              class="btn btn-secondary btn-icon btn-danger"
+              id="delete-calendar-btn"
+              data-title="delete"
+            >
+              <app-icon name="trash"></app-icon>
+            </button>
+          </div>
+          <!-- <button class="btn btn-secondary" id="settings-btn" data-label="settings"></button> -->
+
+          <button class="btn btn-primary btn-block" id="new-event-btn">
+            <app-icon name="new-event"></app-icon>
+            <span data-label="newEvent"></span>
+          </button>
+
+          <button class="btn btn-secondary btn-block" id="import-btn">
+            <app-icon name="import"></app-icon>
+            <span data-label="import"></span>
+          </button>
+
+          <button class="btn btn-secondary btn-block" id="export-btn">
+            <app-icon name="export"></app-icon>
+            <span data-label="export"></span>
+          </button>
+        </div>
+
         <h2 data-label="settings"></h2>
 
         <div class="form-control">
@@ -170,6 +158,8 @@
         </div>
       </section>
     </main>
+
+    <div id="toast-container" aria-live="polite"></div>
 
     <dialog id="add-edit-event-dialog" closedby="any">
       <div class="dialog-header">
@@ -298,14 +288,14 @@
           <span data-label="newCalendar"></span>
         </h3>
       </div>
-      <form method="dialog">
+      <form id="new-calendar-form">
         <div class="dialog-body">
           <p data-label="createCalendarDescription"></p>
           <div class="form-control">
             <label for="calendar-name-input" data-label="titleLabel"></label>
             <input
               type="text"
-              name="calendar-name-input"
+              name="label"
               id="calendar-name-input"
               autofocus
               required
@@ -320,6 +310,7 @@
         <div class="dialog-footer">
           <button
             class="btn btn-secondary"
+            id="cancel-new-calendar"
             value="cancel"
             data-label="cancel"
             formnovalidate
@@ -355,6 +346,76 @@
             class="btn btn-danger"
             value="delete"
             data-label="delete"
+          ></button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="delete-dialog" closedby="any">
+      <div class="dialog-header">
+        <h3>
+          <app-icon name="trash"></app-icon>
+          <span data-label="deleteEvent"></span>
+        </h3>
+      </div>
+      <form method="dialog">
+        <div class="dialog-body">
+          <p class="dialog-text" data-label="deleteEventConfirmation"></p>
+          <div class="dialog-description"></div>
+        </div>
+        <div class="dialog-footer">
+          <button
+            class="btn btn-secondary"
+            value="cancel"
+            data-label="cancel"
+          ></button>
+          <button
+            class="btn btn-danger"
+            value="delete"
+            data-label="delete"
+          ></button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="confirm-dialog">
+      <div class="dialog-header">
+        <h3></h3>
+      </div>
+      <form method="dialog">
+        <div class="dialog-body">
+          <p class="dialog-text"></p>
+          <div class="dialog-description"></div>
+        </div>
+        <div class="dialog-footer">
+          <button
+            class="btn btn-secondary"
+            id="confirm-no-button"
+            data-label="cancel"
+          ></button>
+          <button
+            class="btn btn-primary"
+            id="confirm-yes-button"
+            data-label="confirm"
+          ></button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="alert-dialog">
+      <div class="dialog-header">
+        <h3></h3>
+      </div>
+      <form>
+        <div class="dialog-body">
+          <p class="dialog-text"></p>
+          <div class="dialog-description"></div>
+        </div>
+        <div class="dialog-footer">
+          <button
+            class="btn btn-primary"
+            id="alert-ok-button"
+            data-label="ok"
           ></button>
         </div>
       </form>

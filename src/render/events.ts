@@ -4,7 +4,7 @@ import { renderCalendar } from './calendar';
 import { state } from '../state/app';
 import { t, translateElement } from '../i18n';
 import { renderLegend } from './legend';
-import { getEventLegendLabel } from './utils';
+import { formatLongDate, getEventLegendLabel } from './utils';
 import { autosaveCurrentCalendar } from '../modules/calendars';
 
 const deleteDialog = document.getElementById(
@@ -172,19 +172,6 @@ export function renderEventList() {
     true,
     t('outOfRangeTitle')
   );
-}
-
-function formatLongDate(
-  dateStr: string,
-  locale: string = state.language
-): string {
-  const date = new Date(dateStr);
-  const formatter = new Intl.DateTimeFormat(locale, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-  return formatter.format(date);
 }
 
 export function openDeleteEventDialog(eventId: string) {

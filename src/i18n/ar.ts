@@ -46,13 +46,22 @@ const ar: Translations = {
   date: 'التاريخ',
   color: 'اللون',
   export: 'تصدير',
+  import: 'استيراد',
   newCalendar: 'تقويم جديد',
   brown: 'بني',
   navy: 'كحلي',
   gold: 'ذهبي',
   indigo: 'نيلي',
   preview: 'معاينة',
-  edit: 'تعديل'
+  edit: 'تعديل',
+  deleteCalendar: 'حذف التقويم',
+  deleteCalendarConfirmation: 'هل أنت متأكد أنك تريد حذف هذا التقويم؟',
+  accept: 'قبول',
+  yes: 'نعم',
+  no: 'لا',
+  error: 'خطأ',
+  eventNotFound: 'الحدث غير موجود',
+  eventDeleted: 'تم حذف الحدث بنجاح'
 };
 
 export default ar;
