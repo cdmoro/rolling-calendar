@@ -33,10 +33,7 @@ export function getTranslations() {
 export function applyTranslations() {
   const dict = getTranslations();
 
-  document.querySelectorAll<HTMLElement>('[data-label]').forEach((el) => {
-    const key = el.dataset.label as keyof typeof dict;
-    el.textContent = dict[key];
-  });
+  translateElement();
 
   document.documentElement.setAttribute('lang', state.language);
   document.documentElement.setAttribute(
@@ -46,7 +43,37 @@ export function applyTranslations() {
   document.title = dict.title;
 }
 
-export function t(key: TranslationKey) {
+export function translateElement(el = document.body as HTMLElement) {
   const dict = getTranslations();
-  return dict[key];
+
+  el.querySelectorAll<HTMLElement>('[data-label]').forEach((el) => {
+    const key = el.dataset.label as keyof typeof dict;
+    el.textContent = dict[key];
+  });
+
+  el.querySelectorAll<HTMLElement>('[data-title]').forEach((el) => {
+    const key = el.dataset.title as keyof typeof dict;
+    el.setAttribute('title', dict[key]);
+  });
+
+  el.querySelectorAll<HTMLElement>('[data-placeholder]').forEach((el) => {
+    const key = el.dataset.placeholder as keyof typeof dict;
+    el.setAttribute('placeholder', dict[key]);
+  });
+}
+
+export function t(key: TranslationKey, placeholders?: Record<string, string | undefined>) {
+  const dict = getTranslations();
+  let translation = dict[key] || `[${key}]`;
+
+  if (placeholders) {
+    for (const [placeholderKey, value] of Object.entries(placeholders)) {
+      const regex = new RegExp(`\\{${placeholderKey}\\}`, 'g');
+
+      if (value === undefined) continue;
+      translation = translation.replace(regex, value);
+    }
+  }
+
+  return translation;
 }

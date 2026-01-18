@@ -1,19 +1,15 @@
-import type { CalendarEvent, CalendarState } from '../types/calendar';
-
-export const calendarState: CalendarState = {
-  startYear: new Date().getFullYear(),
-  startMonth: new Date().getMonth(),
-  calendarTitle: '',
-  calendarSubtitle: '',
-  events: []
-};
+import type { CalendarEvent } from '../types/calendar';
+import { state } from './app';
 
 export function getFilteredEvents(events: CalendarEvent[]) {
-  const startDate = new Date(calendarState.startYear, calendarState.startMonth);
+  const startDate = new Date(
+    state.calendar!.startYear,
+    state.calendar!.startMonth
+  );
 
   const endDate = new Date(
-    calendarState.startYear,
-    calendarState.startMonth + 12
+    state.calendar!.startYear,
+    state.calendar!.startMonth + 12
   );
 
   const inRangeEvents = events.filter((event: CalendarEvent) => {
@@ -34,30 +30,4 @@ export function getFilteredEvents(events: CalendarEvent[]) {
     inRangeEvents,
     outOfRangeEvents
   };
-}
-
-export function initCalendarState() {
-  const savedStartMonth = localStorage.getItem('startMonth');
-  const savedCalendarTitle = localStorage.getItem('calendarTitle');
-  const savedCalendarSubtitle = localStorage.getItem('calendarSubtitle');
-  const savedEvents = localStorage.getItem('events');
-
-  if (savedStartMonth) {
-    const [y, m] = savedStartMonth.split('-').map(Number);
-    calendarState.startMonth = m - 1;
-    calendarState.startYear = y;
-  }
-
-  calendarState.calendarTitle =
-    savedCalendarTitle ?? calendarState.calendarTitle;
-  calendarState.calendarSubtitle =
-    savedCalendarSubtitle ?? calendarState.calendarSubtitle;
-
-  if (savedEvents) {
-    try {
-      calendarState.events = JSON.parse(savedEvents);
-    } catch {
-      calendarState.events = [];
-    }
-  }
 }

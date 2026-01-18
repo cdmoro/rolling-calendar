@@ -1,9 +1,10 @@
 export type CalendarState = {
   startYear: number;
   startMonth: number;
-  calendarTitle: string;
-  calendarSubtitle: string;
+  calendarTitle?: string;
+  calendarSubtitle?: string;
   events: CalendarEvent[];
+  color: string;
 };
 
 export type EventType =
@@ -25,13 +26,11 @@ export type CalendarEvent = {
 
 export type CalendarDocument = {
   id: string;
-  title: string;
-  subtitle: string;
+  title?: string;
   createdAt: string;
   updatedAt: string;
-  startYear: number;
-  startMonth: number;
-  events: CalendarEvent[];
+  state: CalendarState;
+  isDraft: boolean;
 };
 
 export type MonthGridCell = Date | null;

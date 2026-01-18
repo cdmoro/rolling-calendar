@@ -1,4 +1,5 @@
 import type { MonthGrid } from '../types/calendar';
+import type { Language } from '../types/app';
 
 export function getFixedMonthGrid(year: number, month: number): MonthGrid {
   const firstDay = new Date(year, month, 1);
@@ -12,4 +13,23 @@ export function getFixedMonthGrid(year: number, month: number): MonthGrid {
   while (cells.length < 42) cells.push(null);
 
   return Array.from({ length: 6 }, (_, i) => cells.slice(i * 7, i * 7 + 7));
+}
+
+export function getLocalizedWeekdays(lang: Language): string[] {
+  const formatter = new Intl.DateTimeFormat(lang, {
+    weekday: 'short'
+  });
+
+  // Sunday = 2023-01-01
+  const baseDate = new Date(2023, 0, 1);
+
+  return Array.from({ length: 7 }, (_, i) =>
+    formatter.format(
+      new Date(
+        baseDate.getFullYear(),
+        baseDate.getMonth(),
+        baseDate.getDate() + i
+      )
+    )
+  );
 }

@@ -1,3 +1,5 @@
+import { getFileName } from './utils';
+
 export async function exportAsImage(): Promise<void> {
   const { default: html2canvas } = await import('html2canvas');
 
@@ -5,12 +7,12 @@ export async function exportAsImage(): Promise<void> {
   if (!el) return;
 
   const canvas = await html2canvas(el, {
-    backgroundColor: null,
+    backgroundColor: '#FFFFFF',
     scale: 2
   });
 
   const link = document.createElement('a');
-  link.download = 'rolling-calendar.png';
+  link.download = `${getFileName()}.png`;
   link.href = canvas.toDataURL('image/png');
   link.click();
 }

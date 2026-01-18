@@ -1,19 +1,44 @@
-import { calendarState, getFilteredEvents } from '../state/calendar';
+import { getFilteredEvents } from '../state/calendar';
 import type { CalendarEvent } from '../types/calendar';
 import { renderCalendar } from './calendar';
 import { state } from '../state/app';
-import { t } from '../i18n';
+import { t, translateElement } from '../i18n';
 import { renderLegend } from './legend';
-import { getEventLegendLabel } from './utils';
+import { formatLongDate, getEventLegendLabel } from './utils';
+import { autosaveCurrentCalendar } from '../modules/calendars';
+
+const deleteDialog = document.getElementById(
+  'delete-dialog'
+) as HTMLDialogElement;
+let pendingDeleteEventId: string | null = null;
+
+deleteDialog.addEventListener('close', () => {
+  if (deleteDialog.returnValue === 'delete' && pendingDeleteEventId) {
+    handleDelete(pendingDeleteEventId);
+  }
+
+  document.querySelector<HTMLDivElement>(
+    '#delete-dialog .dialog-description'
+  )!.innerHTML = '';
+  pendingDeleteEventId = null;
+});
 
 function splitInTwoColumns<T>(items: T[]): [T[], T[]] {
   const mid = Math.ceil(items.length / 2);
   return [items.slice(0, mid), items.slice(mid)];
 }
 
-function formatEventDate(
+export function toHumanReadableDate(date: Date): string {
+  const formatter = new Intl.DateTimeFormat(state.language, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+  return formatter.format(date);
+}
+
+export function formatEventDate(
   event: CalendarEvent,
-  locale: string = state.language,
   showYear: boolean = false
 ): string {
   const start = new Date(event.start);
@@ -28,7 +53,7 @@ function formatEventDate(
     start.getFullYear() === end.getFullYear() &&
     start.getMonth() === end.getMonth();
 
-  const monthFormatter = new Intl.DateTimeFormat(locale, {
+  const monthFormatter = new Intl.DateTimeFormat(state.language, {
     month: 'short'
   });
 
@@ -52,11 +77,11 @@ function formatEventDate(
 function handleDelete(id: string) {
   if (!id) return;
 
-  const index = calendarState.events.findIndex((event) => event.id === id);
+  const index = state.calendar!.events.findIndex((event) => event.id === id);
 
   if (index !== -1) {
-    calendarState.events.splice(index, 1);
-    localStorage.setItem('events', JSON.stringify(calendarState.events));
+    state.calendar!.events.splice(index, 1);
+    autosaveCurrentCalendar();
     renderEventList();
     renderCalendar();
     renderLegend();
@@ -97,7 +122,7 @@ function renderEventListSection(
     div.classList.add(event.type || 'no-activity');
     div.title = getEventLegendLabel(event.type);
 
-    const dateText = formatEventDate(event, state.language, showYear);
+    const dateText = formatEventDate(event, showYear);
 
     div.innerHTML = `
       <span class="event-icon"></span>
@@ -126,8 +151,9 @@ function renderEventListSection(
     const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
       '.event-delete'
     );
-    if (!btn) return;
-    handleDelete(btn.dataset.id!);
+    if (!btn?.dataset.id) return;
+
+    openDeleteEventDialog(btn.dataset.id);
   };
 }
 
@@ -136,7 +162,7 @@ export function renderEventList() {
   list.innerHTML = '';
 
   const { inRangeEvents, outOfRangeEvents } = getFilteredEvents(
-    calendarState.events
+    state.calendar!.events
   );
 
   renderEventListSection(inRangeEvents, '#event-list', false);
@@ -146,4 +172,29 @@ export function renderEventList() {
     true,
     t('outOfRangeTitle')
   );
+}
+
+export function openDeleteEventDialog(eventId: string) {
+  const event = state.calendar!.events.find((e) => e.id === eventId);
+  if (!event) return;
+
+  const dialog = document.getElementById('delete-dialog') as HTMLDialogElement;
+  pendingDeleteEventId = eventId;
+
+  const dates =
+    event.start === event.end
+      ? `<p><strong data-label="date"></strong>: ${formatLongDate(event.start, state.language)}</p>`
+      : `<p><strong data-label="startDate"></strong>: ${formatLongDate(event.start, state.language)}</p>
+       <p><strong data-label="endDate"></strong>: ${formatLongDate(event.end, state.language)}</p>`;
+
+  document.querySelector<HTMLDivElement>(
+    '#delete-dialog .dialog-description'
+  )!.innerHTML = `
+    <p><strong data-label="titleLabel"></strong>: ${event.title}</p>
+    ${dates}
+    <p><strong data-label="type"></strong>: ${getEventLegendLabel(event.type)}</p>
+  `;
+
+  translateElement(dialog);
+  dialog.showModal();
 }
