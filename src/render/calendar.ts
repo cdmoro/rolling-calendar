@@ -13,7 +13,7 @@ import { t, translateElement } from '../i18n';
 import { confirmDialog } from '../modules/dialogs';
 import { renderLegend } from './legend';
 import { autosaveCurrentCalendar } from '../modules/calendars';
-import { notify } from '../modules/notifications';
+import { Toast } from '../modules/notifications';
 
 const grid = document.querySelector<HTMLDivElement>('#calendar-grid')!;
 
@@ -64,13 +64,11 @@ grid.addEventListener('click', async (e) => {
             renderCalendar();
             renderLegend();
 
-            notify(t('eventDeleted'), {
-              type: 'success',
+            Toast.success(t('eventDeleted'), {
               id: 'event-deleted'
             });
           } else {
-            notify(t('eventNotFound'), {
-              type: 'error',
+            Toast.error(t('eventNotFound'), {
               id: 'event-not-found'
             });
           }

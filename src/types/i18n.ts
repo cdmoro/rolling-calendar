@@ -71,6 +71,7 @@ export const translationKeys = [
   'error',
   'eventNotFound',
   'eventDeleted',
+  'calendarDeleted'
 ] as const;
 
 export type TranslationKey = (typeof translationKeys)[number];

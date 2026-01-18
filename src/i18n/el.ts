@@ -64,7 +64,8 @@ const el: Translations = {
   no: 'Όχι',
   error: 'Σφάλμα',
   eventNotFound: 'Το γεγονός δεν βρέθηκε',
-  eventDeleted: 'Το γεγονός διαγράφηκε με επιτυχία'
+  eventDeleted: 'Το γεγονός διαγράφηκε με επιτυχία',
+  calendarDeleted: 'Το ημερολόγιο <strong>{calendar_name}</strong> διαγράφηκε με επιτυχία'
 };
 
 export default el;

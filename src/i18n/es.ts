@@ -63,7 +63,8 @@ const es: Translations = {
   no: 'No',
   error: 'Error',
   eventNotFound: 'Evento no encontrado',
-  eventDeleted: 'Evento eliminado con éxito'
+  eventDeleted: 'Evento eliminado con éxito',
+  calendarDeleted: 'Calendario <strong>{calendar_name}</strong> eliminado con éxito'
 };
 
 export default es;

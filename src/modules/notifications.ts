@@ -7,7 +7,25 @@ const active = new Map<string, InternalNotification>();
 
 /* ---------- public API ---------- */
 
-export function notify(
+export class Toast {
+  static success(message: string, options: NotifyOptions = {}) {
+    showToast(message, { ...options, type: 'success' });
+  }
+
+  static error(message: string, options: NotifyOptions = {}) {
+    showToast(message, { ...options, type: 'error' });
+  }
+
+  static info(message: string, options: NotifyOptions = {}) {
+    showToast(message, { ...options, type: 'info' });
+  }
+
+  static warning(message: string, options: NotifyOptions = {}) {
+    showToast(message, { ...options, type: 'warning' });
+  }
+}
+
+export function showToast(
   message: string,
   options: NotifyOptions = {}
 ): void {
@@ -62,7 +80,7 @@ function createNotificationElement(
 
   const text = document.createElement('div');
   text.className = 'notification__message';
-  text.textContent = message;
+  text.innerHTML = message;
 
   el.appendChild(text);
 

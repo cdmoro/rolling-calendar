@@ -64,7 +64,8 @@ const pt: Translations = {
   no: 'Não',
   error: 'Erro',
   eventNotFound: 'Evento não encontrado',
-  eventDeleted: 'Evento excluído com sucesso'
+  eventDeleted: 'Evento excluído com sucesso',
+  calendarDeleted: 'Calendário <strong>{calendar_name}</strong> excluído com sucesso'
 };
 
 export default pt;

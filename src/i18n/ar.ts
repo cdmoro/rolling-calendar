@@ -61,7 +61,8 @@ const ar: Translations = {
   no: 'لا',
   error: 'خطأ',
   eventNotFound: 'الحدث غير موجود',
-  eventDeleted: 'تم حذف الحدث بنجاح'
+  eventDeleted: 'تم حذف الحدث بنجاح',
+  calendarDeleted: 'تم حذف التقويم <strong>{calendar_name}</strong> بنجاح'
 };
 
 export default ar;

@@ -61,7 +61,8 @@ const en: Translations = {
   no: 'No',
   error: 'Error',
   eventNotFound: 'Event not found',
-  eventDeleted: 'Event deleted successfully'
+  eventDeleted: 'Event deleted successfully',
+  calendarDeleted: 'Calendar <strong>{calendar_name}</strong> deleted successfully'
 };
 
 export default en;

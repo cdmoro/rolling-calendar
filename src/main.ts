@@ -6,10 +6,12 @@ import { initExport } from './modules/export';
 import { renderUI } from './render';
 import {
   autosaveCurrentCalendar,
+  createDraftCalendar,
   openNewCalendarDialog
 } from './modules/calendars';
 import './components/app-icon';
 import { confirmDialog } from './modules/dialogs';
+import { Toast } from './modules/notifications';
 
 const startMonthInput =
   document.querySelector<HTMLInputElement>('#start-month')!;
@@ -29,8 +31,7 @@ const endDateInput = document.querySelector<HTMLInputElement>(
   '#add-edit-event-dialog #event-end-date-input'
 )!;
 
-const colorSelect = document
-  .querySelector<HTMLSelectElement>('#color-select')!;
+const colorSelect = document.querySelector<HTMLSelectElement>('#color-select')!;
 
 function hexToRgb(hex: string) {
   const bigint = parseInt(hex.replace('#', ''), 16);
@@ -84,40 +85,80 @@ window
 //   form.reset();
 // }
 
-document.querySelector<HTMLButtonElement>('#delete-calendar-btn')!.addEventListener('click', async () => {
-  const calendarId = state.currentCalendarId;
-  if (!calendarId) return;
-  
-  const index = state.calendars.findIndex((cal) => cal.id === calendarId);
-  if (index === -1) return;
+document
+  .querySelector<HTMLButtonElement>('#delete-calendar-btn')!
+  .addEventListener('click', async () => {
+    const calendarId = state.currentCalendarId;
+    if (!calendarId) return;
 
-  const confirmDelete = await confirmDialog({
-    title: t('deleteCalendar'),
-    message: t('deleteCalendarConfirmation'),
-    confirmButtonText: t('delete'),
-    cancelButtonText: t('cancel'),
-    confirmButtonClass: 'btn-danger'
+    const index = state.calendars.findIndex((cal) => cal.id === calendarId);
+    if (index === -1) return;
+
+    const confirmDelete = await confirmDialog({
+      title: t('deleteCalendar'),
+      message: t('deleteCalendarConfirmation'),
+      confirmButtonText: t('delete'),
+      cancelButtonText: t('cancel'),
+      confirmButtonClass: 'btn-danger'
+    });
+
+    if (confirmDelete) {
+      const deletedCalendarTitle = state.calendars[index].title;
+      state.calendars.splice(index, 1);
+      localStorage.setItem('calendars', JSON.stringify(state.calendars));
+
+      if (state.calendars.length > 0) {
+        calendarSelect.querySelector(`option[value=${calendarId}]`)?.remove();
+
+        const newCurrentCalendar = state.calendars[0];
+        state.currentCalendarId = newCurrentCalendar.id!;
+        state.calendar = structuredClone(newCurrentCalendar.state);
+        localStorage.setItem('currentCalendarId', newCurrentCalendar.id!);
+        calendarSelect.value = newCurrentCalendar.id!;
+      } else {
+        const draftCalendar = createDraftCalendar();
+        state.calendars.push(draftCalendar);
+
+        calendarSelect.innerHTML = `
+        <option value="${draftCalendar.id!}" data-label="untitledCalendar">
+          ${t('untitledCalendar')}
+        </option>
+      `;
+        calendarSelect.value = draftCalendar.id!;
+        state.currentCalendarId = draftCalendar.id!;
+        state.calendar = structuredClone(draftCalendar.state);
+        localStorage.setItem('currentCalendarId', draftCalendar.id!);
+      }
+
+      Toast.success(
+        t('calendarDeleted', {
+          calendar_name: deletedCalendarTitle
+        },),
+        {
+          id: 'calendar-deleted'
+        }
+      );
+
+      calendarTitleInput.value = state.calendar.calendarTitle || '';
+      calendarSubtitleInput.value = state.calendar.calendarSubtitle || '';
+      startMonthInput.value = `${state.calendar.startYear}-${String(
+        state.calendar.startMonth + 1
+      ).padStart(2, '0')}`;
+      colorSelect.value = state.calendar.color;
+      document.documentElement.style.setProperty(
+        '--accent-color-rgb',
+        hexToRgb(state.calendar.color)
+      );
+      document.documentElement.style.setProperty(
+        '--accent-text-color',
+        getForegroundColor(state.calendar.color)
+      );
+
+      resolveCalendarHeader();
+
+      renderUI();
+    }
   });
-
-  if (confirmDelete) {
-    console.log('Deleting calendar with ID:', calendarId);
-    // state.calendars.splice(index, 1);
-    // localStorage.setItem('calendars', JSON.stringify(state.calendars));
-
-    // if (state.calendars.length > 0) {
-    //   const newCurrentCalendar = state.calendars[0];
-    //   state.currentCalendarId = newCurrentCalendar.id!;
-    //   state.calendar = structuredClone(newCurrentCalendar.state);
-    //   localStorage.setItem('currentCalendarId', newCurrentCalendar.id!);
-    // } else {
-    //   state.currentCalendarId = null;
-    //   state.calendar = null;
-    //   localStorage.removeItem('currentCalendarId');
-    // }
-
-    // renderUI();
-  }
-});
 
 calendarSelect.addEventListener('change', (e) => {
   const selectedCalendarId = (e.target as HTMLSelectElement).value;
@@ -230,13 +271,12 @@ document
     setTheme(state.theme, state.calendar!.color);
   });
 
-
-  colorSelect.addEventListener('input', (e) => {
-    const theme = document.querySelector<HTMLSelectElement>('#theme-select')!
-      .value as Theme;
-    state.calendar!.color = (e.target as HTMLSelectElement).value;
-    setTheme(theme, state.calendar!.color);
-  });
+colorSelect.addEventListener('input', (e) => {
+  const theme = document.querySelector<HTMLSelectElement>('#theme-select')!
+    .value as Theme;
+  state.calendar!.color = (e.target as HTMLSelectElement).value;
+  setTheme(theme, state.calendar!.color);
+});
 
 startDateInput.addEventListener('change', (e) => {
   endDateInput.min = (e.target as HTMLInputElement).value;

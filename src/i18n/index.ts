@@ -62,7 +62,18 @@ export function translateElement(el = document.body as HTMLElement) {
   });
 }
 
-export function t(key: TranslationKey) {
+export function t(key: TranslationKey, placeholders?: Record<string, string | undefined>) {
   const dict = getTranslations();
-  return dict[key] || `[${key}]`;
+  let translation = dict[key] || `[${key}]`;
+
+  if (placeholders) {
+    for (const [placeholderKey, value] of Object.entries(placeholders)) {
+      const regex = new RegExp(`\\{${placeholderKey}\\}`, 'g');
+
+      if (value === undefined) continue;
+      translation = translation.replace(regex, value);
+    }
+  }
+
+  return translation;
 }
