@@ -28,11 +28,18 @@ function splitInTwoColumns<T>(items: T[]): [T[], T[]] {
   return [items.slice(0, mid), items.slice(mid)];
 }
 
-export function toHumanReadableDate(date: Date): string {
+export function toHumanReadableDate(date: Date, time: boolean = false): string {
   const formatter = new Intl.DateTimeFormat(state.language, {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
+    ...(time
+      ? {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        }
+      : {})
   });
   return formatter.format(date);
 }

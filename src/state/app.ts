@@ -10,8 +10,8 @@ export const state: State = {
   calendar: null
 };
 
-const calendarSelect =
-  document.querySelector<HTMLSelectElement>('#calendar-select')!;
+// const calendarSelect =
+//   document.querySelector<HTMLSelectElement>('#calendar-select')!;
 
 export function initState() {
   const savedLanguage = localStorage.getItem('language') as State['language'];
@@ -37,13 +37,13 @@ export function initState() {
     const draftCalendar = createDraftCalendar();
     state.calendars.push(draftCalendar);
 
-    calendarSelect.value = draftCalendar.id!;
+    // calendarSelect.value = draftCalendar.id!;
 
     const untitledCalendarOption = document.createElement('option');
     untitledCalendarOption.value = draftCalendar.id!;
     untitledCalendarOption.textContent = t('untitledCalendar');
     untitledCalendarOption.dataset.label = 'untitledCalendar';
-    calendarSelect.appendChild(untitledCalendarOption);
+    // calendarSelect.appendChild(untitledCalendarOption);
 
     state.currentCalendarId = draftCalendar.id;
     state.calendar = structuredClone(draftCalendar.state);
@@ -57,7 +57,7 @@ export function initState() {
     untitledCalendarOption.textContent = t('untitledCalendar');
     untitledCalendarOption.dataset.label = 'untitledCalendar';
 
-    calendarSelect.appendChild(untitledCalendarOption);
+    // calendarSelect.appendChild(untitledCalendarOption);
 
     state.calendar = structuredClone(state.calendars[0].state);
     state.currentCalendarId = state.calendars[0].id;
@@ -65,8 +65,8 @@ export function initState() {
     state.calendars.forEach((calendar) => {
       const option = document.createElement('option');
       option.value = calendar.id!;
-      option.textContent = calendar.title!;
-      calendarSelect.appendChild(option);
+      option.textContent = calendar.name;
+      // calendarSelect.appendChild(option);
     });
 
     if (state.calendars.find((doc) => doc.id === savedCurrentCalendarId)) {
@@ -74,7 +74,7 @@ export function initState() {
       state.calendar = structuredClone(
         state.calendars.find((doc) => doc.id === savedCurrentCalendarId)!.state
       );
-      calendarSelect.value = savedCurrentCalendarId!;
+      // calendarSelect.value = savedCurrentCalendarId!;
     }
   }
 }

@@ -4,11 +4,10 @@ import type { AlertDialogParams, ConfirmDialogParams } from '../types/dialogs';
 export async function alertDialog({
   title,
   message,
-  detail,
+  detail
 }: AlertDialogParams): Promise<void> {
   return new Promise((resolve) => {
-    const dialog =
-      document.querySelector<HTMLDialogElement>('#alert-dialog')!;
+    const dialog = document.querySelector<HTMLDialogElement>('#alert-dialog')!;
     const titleEl = dialog.querySelector<HTMLHeadingElement>('h3')!;
     const messageEl =
       dialog.querySelector<HTMLParagraphElement>('.dialog-text')!;

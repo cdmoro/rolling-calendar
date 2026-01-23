@@ -64,7 +64,14 @@ const it: Translations = {
   error: 'Errore',
   eventNotFound: 'Evento non trovato',
   eventDeleted: 'Evento eliminato con successo',
-  calendarDeleted: 'Calendario <strong>{calendar_name}</strong> eliminato con successo'
+  calendarDeleted:
+    'Calendario <strong>{calendar_name}</strong> eliminato con successo',
+  name: 'Nome',
+  calendarOpened:
+    'Calendario <strong>{calendar_name}</strong> aperto con successo',
+  calendarNotFound:
+    'Calendario non trovato',
+  myCalendars: 'I miei calendari'
 };
 
 export default it;

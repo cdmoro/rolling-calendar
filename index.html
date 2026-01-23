@@ -15,7 +15,28 @@
 
   <body>
     <header class="header">
-      <h1 data-label="title"></h1>
+      <input type="color" id="calendar-color-input" list="color-list" />
+      <datalist id="color-list">
+        <option value="#4a90e2" data-label="blue">Blue</option>
+        <option value="#808000" data-label="olive">Olive</option>
+        <option value="#e74c3c" data-label="red">Red</option>
+        <option value="#8e44ad" data-label="redgrape">Red Grape</option>
+        <option value="#e67e22" data-label="orange">Orange</option>
+        <option value="#1abc9c" data-label="teal">Teal</option>
+        <option value="#e84393" data-label="pink">Pink</option>
+        <option value="#00bcd4" data-label="cyan">Cyan</option>
+        <option value="#cddc39" data-label="lime">Lime</option>
+        <option value="#9c27b0" data-label="purple">Purple</option>
+        <option value="#27ae60" data-label="green">Green</option>
+        <option value="#701215" data-label="burgundy">Burgundy</option>
+        <option value="#7f8c8d" data-label="grey">Grey</option>
+        <option value="#795548" data-label="brown">Brown</option>
+        <option value="#476684" data-label="navy">Navy</option>
+        <option value="#d4af37" data-label="gold">Gold</option>
+        <option value="#3f51b5" data-label="indigo">Indigo</option>
+      </datalist>
+
+      <h1 id="calendar-name"></h1>
 
       <div class="calendar-controls"></div>
 
@@ -50,27 +71,48 @@
       <aside class="sidebar">
         <div class="actions">
           <div class="calendar-actions">
-            <select id="calendar-select"></select>
-            <button
-              class="btn btn-secondary btn-icon"
-              id="new-calendar-btn"
-              data-title="newCalendar"
-            >
-              <app-icon name="new-calendar"></app-icon>
-            </button>
-            <button
-              class="btn btn-secondary btn-icon btn-danger"
-              id="delete-calendar-btn"
-              data-title="delete"
-            >
-              <app-icon name="trash"></app-icon>
-            </button>
+            <!-- <select id="calendar-select"></select> -->
+            
           </div>
           <!-- <button class="btn btn-secondary" id="settings-btn" data-label="settings"></button> -->
 
           <button class="btn btn-primary btn-block" id="new-event-btn">
             <app-icon name="new-event"></app-icon>
             <span data-label="newEvent"></span>
+          </button>
+
+          <button class="btn btn-secondary btn-block" id="calendar-settings">
+            <app-icon name="edit"></app-icon>
+            <span data-label="settings"></span>
+          </button>
+
+          <button
+              class="btn btn-secondary btn-block"
+              id="delete-calendar-btn"
+            >
+              <app-icon name="trash"></app-icon>
+              <span data-label="deleteCalendar"></span>
+            </button>
+
+            <h2 data-label="export">Export</h2>
+
+            <button id="export-image" class="btn btn-secondary btn-block">PNG</button>
+            <button id="export-pdf" class="btn btn-secondary btn-block">PDF</button>
+            <button id="export-ics" class="btn btn-secondary btn-block">ICS</button>
+
+            <hr />
+
+            <button
+              class="btn btn-secondary btn-block"
+              id="new-calendar-btn"
+            >
+              <app-icon name="new-calendar"></app-icon>
+              <span data-label="newCalendar"></span>
+            </button>
+
+          <button class="btn btn-secondary btn-block" id="manage-calendars-btn">
+            <app-icon name="new-calendar"></app-icon>
+            <span data-label="myCalendars"></span>
           </button>
 
           <!-- <button class="btn btn-secondary btn-block" id="import-btn">
@@ -84,7 +126,7 @@
           </button> -->
         </div>
 
-        <h2 data-label="settings"></h2>
+        <!-- <h2 data-label="settings"></h2>
 
         <div class="form-control">
           <label for="start-month" data-label="startMonth"></label>
@@ -110,9 +152,9 @@
             id="calendar-subtitle-input"
             placeholder="2025-2026 Academic Calendar"
           />
-        </div>
+        </div> -->
 
-        <div class="form-control">
+        <!-- <div class="form-control">
           <label for="color-select" data-label="color"></label>
           <input type="color" id="color-select" list="color-list" />
           <datalist id="color-list">
@@ -134,13 +176,7 @@
             <option value="#d4af37" data-label="gold">Gold</option>
             <option value="#3f51b5" data-label="indigo">Indigo</option>
           </datalist>
-        </div>
-
-        <h2 data-label="export">Export</h2>
-
-        <button id="export-image" class="btn btn-secondary">PNG</button>
-        <button id="export-pdf" class="btn btn-secondary">PDF</button>
-        <button id="export-ics" class="btn btn-secondary">ICS</button>
+        </div> -->
       </aside>
 
       <section class="main-section">
@@ -421,6 +457,102 @@
       </form>
     </dialog>
 
+    <dialog id="calendars-dialog" closedby="any">
+      <div class="dialog-header">
+        <h3>
+          <app-icon name="new-calendar"></app-icon>
+          <span data-label="myCalendars"></span>
+        </h3>
+      </div>
+      <form method="dialog">
+        <div class="dialog-body">
+          <div id="calendar-list"></div>
+        </div>
+        <div class="dialog-footer">
+          <button
+            class="btn btn-primary"
+            id="close-calendars-button"
+            data-label="close"
+          ></button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="calendar-settings-dialog" closedby="any">
+      <div class="dialog-header">
+        <h3>
+          <app-icon name="edit"></app-icon>
+          <span data-label="settings"></span>
+        </h3>
+      </div>
+      <form method="dialog">
+        <div class="dialog-body">
+          <div class="form-control">
+          <label for="start-month" data-label="startMonth"></label>
+          <input type="month" id="start-month" />
+        </div>
+
+        <div class="form-control">
+          <label for="calendar-title-input" data-label="calendarTitle"></label>
+          <input
+            type="text"
+            id="calendar-title-input"
+            placeholder="Institution"
+          />
+        </div>
+
+        <div class="form-control">
+          <label
+            for="calendar-subtitle-input"
+            data-label="calendarSubtitle"
+          ></label>
+          <input
+            type="text"
+            id="calendar-subtitle-input"
+            placeholder="2025-2026 Academic Calendar"
+          />
+        </div>
+
+        <div class="form-control">
+          <label for="color-select" data-label="color"></label>
+          <input type="color" id="color-select" list="color-list" />
+          <datalist id="color-list">
+            <option value="#4a90e2" data-label="blue">Blue</option>
+            <option value="#808000" data-label="olive">Olive</option>
+            <option value="#e74c3c" data-label="red">Red</option>
+            <option value="#8e44ad" data-label="redgrape">Red Grape</option>
+            <option value="#e67e22" data-label="orange">Orange</option>
+            <option value="#1abc9c" data-label="teal">Teal</option>
+            <option value="#e84393" data-label="pink">Pink</option>
+            <option value="#00bcd4" data-label="cyan">Cyan</option>
+            <option value="#cddc39" data-label="lime">Lime</option>
+            <option value="#9c27b0" data-label="purple">Purple</option>
+            <option value="#27ae60" data-label="green">Green</option>
+            <option value="#701215" data-label="burgundy">Burgundy</option>
+            <option value="#7f8c8d" data-label="grey">Grey</option>
+            <option value="#795548" data-label="brown">Brown</option>
+            <option value="#476684" data-label="navy">Navy</option>
+            <option value="#d4af37" data-label="gold">Gold</option>
+            <option value="#3f51b5" data-label="indigo">Indigo</option>
+          </datalist>
+        </div>
+      </form>
+      <div class="dialog-footer">
+        <button
+          class="btn btn-secondary"
+          id="cancel-calendar-settings"
+          value="cancel"
+          data-label="cancel"
+          formnovalidate
+        ></button>
+        <button
+          class="btn btn-primary"
+          value="save"
+          data-label="save"
+        ></button>
+      </div>
+    </dialog>
+
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
       <symbol viewBox="260 205 27 32" id="icon-trash">
         <path
@@ -433,12 +565,10 @@
         <path
           fill="currentColor"
           d="M7 1C6.44772 1 6 1.44772 6 2V3H5C3.34315 3 2 4.34315 2 6V20C2 21.6569 3.34315 23 5 23H13.101C12.5151 22.4259 12.0297 21.7496 11.6736 21H5C4.44772 21 4 20.5523 4 20V11H20V11.2899C20.7224 11.5049 21.396 11.8334 22 12.2547V6C22 4.34315 20.6569 3 19 3H18V2C18 1.44772 17.5523 1 17 1C16.4477 1 16 1.44772 16 2V3H8V2C8 1.44772 7.55228 1 7 1ZM16 6V5H8V6C8 6.55228 7.55228 7 7 7C6.44772 7 6 6.55228 6 6V5H5C4.44772 5 4 5.44772 4 6V9H20V6C20 5.44772 19.5523 5 19 5H18V6C18 6.55228 17.5523 7 17 7C16.4477 7 16 6.55228 16 6Z"
-          fill="#0F0F0F"
         ></path>
         <path
           fill="currentColor"
           d="M17 16C17 15.4477 17.4477 15 18 15C18.5523 15 19 15.4477 19 16V17H20C20.5523 17 21 17.4477 21 18C21 18.5523 20.5523 19 20 19H19V20C19 20.5523 18.5523 21 18 21C17.4477 21 17 20.5523 17 20V19H16C15.4477 19 15 18.5523 15 18C15 17.4477 15.4477 17 16 17H17V16Z"
-          fill="#0F0F0F"
         ></path>
         <path
           fill="currentColor"
@@ -494,6 +624,15 @@
           fill="currentColor"
           stroke-width="2"
           d="M5 16L5 17C5 18.1046 5.89543 19 7 19L17 19C18.1046 19 19 18.1046 19 17V16"
+        ></path>
+      </symbol>
+
+      <symbol viewBox="0 0 24 24" id="icon-open-folder">
+        <path
+          fill="currentColor"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M1 5C1 3.34315 2.34315 2 4 2H8.55848C9.84977 2 10.9962 2.82629 11.4045 4.05132L11.7208 5H20C21.1046 5 22 5.89543 22 7V9.00961C23.1475 9.12163 23.9808 10.196 23.7695 11.3578L22.1332 20.3578C21.9603 21.3087 21.132 22 20.1654 22H3C1.89543 22 1 21.1046 1 20V5ZM20 9V7H11.7208C10.8599 7 10.0956 6.44914 9.82339 5.63246L9.50716 4.68377C9.37105 4.27543 8.98891 4 8.55848 4H4C3.44772 4 3 4.44772 3 5V12.2709L3.35429 10.588C3.54913 9.66249 4.36562 9 5.31139 9H20ZM3.36634 20C3.41777 19.9109 3.4562 19.8122 3.47855 19.706L5.31139 11L21 11H21.8018L20.1654 20L3.36634 20Z"
         ></path>
       </symbol>
     </svg>

@@ -59,13 +59,20 @@ const de: Translations = {
   deleteCalendar: 'Kalender löschen',
   deleteCalendarConfirmation:
     'Sind Sie sicher, dass Sie diesen Kalender löschen möchten?',
-    accept: 'Akzeptieren',
-    yes: 'Ja',
-    no: 'Nein',
-    error: 'Fehler',
-    eventNotFound: 'Ereignis nicht gefunden',
-    eventDeleted: 'Ereignis erfolgreich gelöscht',
-    calendarDeleted: 'Kalender <strong>{calendar_name}</strong> erfolgreich gelöscht'
+  accept: 'Akzeptieren',
+  yes: 'Ja',
+  no: 'Nein',
+  error: 'Fehler',
+  eventNotFound: 'Ereignis nicht gefunden',
+  eventDeleted: 'Ereignis erfolgreich gelöscht',
+  calendarDeleted:
+    'Kalender <strong>{calendar_name}</strong> erfolgreich gelöscht',
+  name: 'Name',
+  calendarOpened:
+    'Kalender <strong>{calendar_name}</strong> erfolgreich geöffnet',
+  calendarNotFound:
+    'Kalender nicht gefunden',
+  myCalendars: 'Meine Kalender'
 };
 
 export default de;

@@ -26,7 +26,7 @@ export type CalendarEvent = {
 
 export type CalendarDocument = {
   id: string;
-  title?: string;
+  name: string;
   createdAt: string;
   updatedAt: string;
   state: CalendarState;

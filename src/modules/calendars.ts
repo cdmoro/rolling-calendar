@@ -1,19 +1,22 @@
-import { translateElement } from '../i18n';
+import { t, translateElement } from '../i18n';
 import { renderUI } from '../render';
 import { state } from '../state/app';
 import type { CalendarDocument } from '../types/calendar';
 import { getTypedForm, type NewCalendarFormElements } from '../types/forms';
 
-  const newCalendarDialog = document.querySelector<HTMLDialogElement>(
-    '#new-calendar-dialog'
-  )!;
-  const newCalendarDialogForm = getTypedForm<NewCalendarFormElements>('#new-calendar-dialog form#new-calendar-form');
-  const calendarSelect = document.querySelector<HTMLSelectElement>('#calendar-select')!;
+const newCalendarDialog = document.querySelector<HTMLDialogElement>(
+  '#new-calendar-dialog'
+)!;
+const newCalendarDialogForm = getTypedForm<NewCalendarFormElements>(
+  '#new-calendar-dialog form#new-calendar-form'
+);
+// const calendarSelect =
+//   document.querySelector<HTMLSelectElement>('#calendar-select')!;
 
 export function createDraftCalendar(): CalendarDocument {
   return {
     id: crypto.randomUUID(),
-    title: undefined,
+    name: t('untitledCalendar'),
     isDraft: true,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
@@ -75,36 +78,38 @@ newCalendarDialog.querySelector<HTMLButtonElement>(
 
 newCalendarDialogForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  const title = newCalendarDialogForm.elements.label.value.trim();
+  const name = newCalendarDialogForm.elements.label.value.trim();
 
-  if (title === '') {
+  if (name === '') {
     return;
   }
 
   if (state.calendars.length === 1 && state.calendars[0].isDraft) {
-    const calendars: CalendarDocument[] = [{
-      ...state.calendars[0],
-      isDraft: false,
-      title,
-      updatedAt: new Date().toISOString(),
-    }];
+    const calendars: CalendarDocument[] = [
+      {
+        ...state.calendars[0],
+        isDraft: false,
+        name,
+        updatedAt: new Date().toISOString()
+      }
+    ];
     localStorage.setItem('calendars', JSON.stringify(calendars));
 
-    calendarSelect.innerHTML = '';
+    // calendarSelect.innerHTML = '';
 
     const option = document.createElement('option');
     option.value = calendars[0].id!;
-    option.textContent = title;
-    option.dataset.label = title;
+    option.textContent = name;
+    option.dataset.label = name;
 
-    calendarSelect.value = calendars[0].id!;
-    calendarSelect.appendChild(option);
+    // calendarSelect.value = calendars[0].id!;
+    // calendarSelect.appendChild(option);
 
     newCalendarDialog.close();
   } else {
-    const newCalendar = {
+    const newCalendar: CalendarDocument = {
       id: crypto.randomUUID(),
-      title,
+      name,
       isDraft: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -125,12 +130,12 @@ newCalendarDialogForm.addEventListener('submit', (e) => {
 
     const option = document.createElement('option');
     option.value = newCalendar.id!;
-    option.textContent = title;
-    option.dataset.label = title;
+    option.textContent = name;
+    option.dataset.label = name;
 
-    calendarSelect.appendChild(option);
-    calendarSelect.value = newCalendar.id!;
-    
+    // calendarSelect.appendChild(option);
+    // calendarSelect.value = newCalendar.id!;
+
     autosaveCurrentCalendar();
     renderUI();
     newCalendarDialog.close();

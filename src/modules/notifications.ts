@@ -1,4 +1,8 @@
-import type { InternalNotification, NotifyOptions, NotifyType } from "../types/app";
+import type {
+  InternalNotification,
+  NotifyOptions,
+  NotifyType
+} from '../types/app';
 
 const DEFAULT_DURATION = 3000;
 
@@ -25,10 +29,7 @@ export class Toast {
   }
 }
 
-export function showToast(
-  message: string,
-  options: NotifyOptions = {}
-): void {
+function showToast(message: string, options: NotifyOptions = {}): void {
   ensureContainer();
 
   const {
@@ -122,7 +123,7 @@ function removeNotification(id: string) {
 }
 
 function removeNotificationByElement(el: HTMLElement) {
-  const entry = [...active.values()].find(n => n.element === el);
+  const entry = [...active.values()].find((n) => n.element === el);
   if (entry) {
     removeNotification(entry.id);
   }

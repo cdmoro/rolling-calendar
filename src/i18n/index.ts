@@ -62,7 +62,10 @@ export function translateElement(el = document.body as HTMLElement) {
   });
 }
 
-export function t(key: TranslationKey, placeholders?: Record<string, string | undefined>) {
+export function t(
+  key: TranslationKey,
+  placeholders?: Record<string, string | undefined>
+) {
   const dict = getTranslations();
   let translation = dict[key] || `[${key}]`;
 
@@ -74,6 +77,17 @@ export function t(key: TranslationKey, placeholders?: Record<string, string | un
       translation = translation.replace(regex, value);
     }
   }
+
+  return translation;
+}
+
+export function tv2(key: TranslationKey, ...values: string[]) {
+  const dict = getTranslations();
+  let translation = dict[key] || `[${key}]`;
+
+  values.forEach((value) => {
+    translation = translation.replace('{}', value);
+  });
 
   return translation;
 }
