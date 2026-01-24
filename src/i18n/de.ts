@@ -70,8 +70,7 @@ const de: Translations = {
   name: 'Name',
   calendarOpened:
     'Kalender <strong>{calendar_name}</strong> erfolgreich geöffnet',
-  calendarNotFound:
-    'Kalender nicht gefunden',
+  calendarNotFound: 'Kalender nicht gefunden',
   myCalendars: 'Meine Kalender'
 };
 

@@ -65,9 +65,10 @@ const en: Translations = {
   calendarDeleted:
     'Calendar <strong>{calendar_name}</strong> deleted successfully',
   name: 'Name',
-  calendarOpened: 'Calendar <strong>{calendar_name}</strong> opened successfully',
+  calendarOpened:
+    'Calendar <strong>{calendar_name}</strong> opened successfully',
   calendarNotFound: 'Calendar not found',
-  myCalendars: 'My Calendars',
+  myCalendars: 'My Calendars'
 };
 
 export default en;

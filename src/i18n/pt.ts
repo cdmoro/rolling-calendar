@@ -70,8 +70,7 @@ const pt: Translations = {
   name: 'Nome',
   calendarOpened:
     'Calendário <strong>{calendar_name}</strong> aberto com sucesso',
-  calendarNotFound:
-    'Calendário não encontrado',
+  calendarNotFound: 'Calendário não encontrado',
   myCalendars: 'Meus calendários'
 };
 

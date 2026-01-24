@@ -69,9 +69,8 @@ const es: Translations = {
   name: 'Nombre',
   calendarOpened:
     'Calendario <strong>{calendar_name}</strong> abierto con éxito',
-  calendarNotFound:
-    'Calendario no encontrado',
-  myCalendars: 'Mis calendarios',
+  calendarNotFound: 'Calendario no encontrado',
+  myCalendars: 'Mis calendarios'
 };
 
 export default es;

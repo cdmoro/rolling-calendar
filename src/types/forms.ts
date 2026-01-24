@@ -17,3 +17,11 @@ export interface AddEditEventFormElements extends HTMLFormControlsCollection {
   end: HTMLInputElement;
   type: HTMLSelectElement;
 }
+
+export interface CalendarFormElements extends HTMLFormControlsCollection {
+  'calendar-name-input': HTMLInputElement;
+  'start-month': HTMLInputElement;
+  'calendar-title-input': HTMLInputElement;
+  'calendar-subtitle-input': HTMLInputElement;
+  'color-select': HTMLInputElement;
+}

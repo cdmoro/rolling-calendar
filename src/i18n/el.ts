@@ -70,8 +70,7 @@ const el: Translations = {
   name: 'Όνομα',
   calendarOpened:
     'Το ημερολόγιο <strong>{calendar_name}</strong> άνοιξε με επιτυχία',
-  calendarNotFound:
-    'Το ημερολόγιο δεν βρέθηκε',
+  calendarNotFound: 'Το ημερολόγιο δεν βρέθηκε',
   myCalendars: 'Τα Ημερολόγιά μου'
 };
 

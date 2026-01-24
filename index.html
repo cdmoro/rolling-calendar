@@ -16,25 +16,6 @@
   <body>
     <header class="header">
       <input type="color" id="calendar-color-input" list="color-list" />
-      <datalist id="color-list">
-        <option value="#4a90e2" data-label="blue">Blue</option>
-        <option value="#808000" data-label="olive">Olive</option>
-        <option value="#e74c3c" data-label="red">Red</option>
-        <option value="#8e44ad" data-label="redgrape">Red Grape</option>
-        <option value="#e67e22" data-label="orange">Orange</option>
-        <option value="#1abc9c" data-label="teal">Teal</option>
-        <option value="#e84393" data-label="pink">Pink</option>
-        <option value="#00bcd4" data-label="cyan">Cyan</option>
-        <option value="#cddc39" data-label="lime">Lime</option>
-        <option value="#9c27b0" data-label="purple">Purple</option>
-        <option value="#27ae60" data-label="green">Green</option>
-        <option value="#701215" data-label="burgundy">Burgundy</option>
-        <option value="#7f8c8d" data-label="grey">Grey</option>
-        <option value="#795548" data-label="brown">Brown</option>
-        <option value="#476684" data-label="navy">Navy</option>
-        <option value="#d4af37" data-label="gold">Gold</option>
-        <option value="#3f51b5" data-label="indigo">Indigo</option>
-      </datalist>
 
       <h1 id="calendar-name"></h1>
 
@@ -72,7 +53,6 @@
         <div class="actions">
           <div class="calendar-actions">
             <!-- <select id="calendar-select"></select> -->
-            
           </div>
           <!-- <button class="btn btn-secondary" id="settings-btn" data-label="settings"></button> -->
 
@@ -86,33 +66,34 @@
             <span data-label="settings"></span>
           </button>
 
-          <button
-              class="btn btn-secondary btn-block"
-              id="delete-calendar-btn"
-            >
-              <app-icon name="trash"></app-icon>
-              <span data-label="deleteCalendar"></span>
-            </button>
+          <button class="btn btn-secondary btn-block" id="delete-calendar-btn">
+            <app-icon name="trash"></app-icon>
+            <span data-label="deleteCalendar"></span>
+          </button>
 
-            <h2 data-label="export">Export</h2>
+          <h2 data-label="export">Export</h2>
 
-            <button id="export-image" class="btn btn-secondary btn-block">PNG</button>
-            <button id="export-pdf" class="btn btn-secondary btn-block">PDF</button>
-            <button id="export-ics" class="btn btn-secondary btn-block">ICS</button>
+          <button id="export-image" class="btn btn-secondary btn-block">
+            PNG
+          </button>
+          <button id="export-pdf" class="btn btn-secondary btn-block">
+            PDF
+          </button>
+          <button id="export-ics" class="btn btn-secondary btn-block">
+            ICS
+          </button>
 
-            <hr />
+          <hr />
 
-            <button
-              class="btn btn-secondary btn-block"
-              id="new-calendar-btn"
-            >
-              <app-icon name="new-calendar"></app-icon>
-              <span data-label="newCalendar"></span>
-            </button>
+          <button class="btn btn-secondary btn-block" id="new-calendar-btn">
+            <app-icon name="new-calendar"></app-icon>
+            <span data-label="newCalendar"></span>
+          </button>
 
           <button class="btn btn-secondary btn-block" id="manage-calendars-btn">
             <app-icon name="new-calendar"></app-icon>
             <span data-label="myCalendars"></span>
+            <span id="calendar-count"></span>
           </button>
 
           <!-- <button class="btn btn-secondary btn-block" id="import-btn">
@@ -478,7 +459,7 @@
       </form>
     </dialog>
 
-    <dialog id="calendar-settings-dialog" closedby="any">
+    <dialog id="calendar-dialog" closedby="any">
       <div class="dialog-header">
         <h3>
           <app-icon name="edit"></app-icon>
@@ -488,70 +469,80 @@
       <form method="dialog">
         <div class="dialog-body">
           <div class="form-control">
-          <label for="start-month" data-label="startMonth"></label>
-          <input type="month" id="start-month" />
+            <label for="calendar-name-input" data-label="calendarName"></label>
+            <input type="text" id="calendar-name-input" />
+          </div>
+          <div class="form-control">
+            <label for="start-month" data-label="startMonth"></label>
+            <input type="month" id="start-month" />
+          </div>
+
+          <div class="form-control">
+            <label
+              for="calendar-title-input"
+              data-label="calendarTitle"
+            ></label>
+            <input
+              type="text"
+              id="calendar-title-input"
+              placeholder="Institution"
+            />
+          </div>
+
+          <div class="form-control">
+            <label
+              for="calendar-subtitle-input"
+              data-label="calendarSubtitle"
+            ></label>
+            <input
+              type="text"
+              id="calendar-subtitle-input"
+              placeholder="2025-2026 Academic Calendar"
+            />
+          </div>
+
+          <div class="form-control">
+            <label for="color-select" data-label="color"></label>
+            <input type="color" id="color-select" list="color-list" />
+          </div>
         </div>
 
-        <div class="form-control">
-          <label for="calendar-title-input" data-label="calendarTitle"></label>
-          <input
-            type="text"
-            id="calendar-title-input"
-            placeholder="Institution"
-          />
-        </div>
-
-        <div class="form-control">
-          <label
-            for="calendar-subtitle-input"
-            data-label="calendarSubtitle"
-          ></label>
-          <input
-            type="text"
-            id="calendar-subtitle-input"
-            placeholder="2025-2026 Academic Calendar"
-          />
-        </div>
-
-        <div class="form-control">
-          <label for="color-select" data-label="color"></label>
-          <input type="color" id="color-select" list="color-list" />
-          <datalist id="color-list">
-            <option value="#4a90e2" data-label="blue">Blue</option>
-            <option value="#808000" data-label="olive">Olive</option>
-            <option value="#e74c3c" data-label="red">Red</option>
-            <option value="#8e44ad" data-label="redgrape">Red Grape</option>
-            <option value="#e67e22" data-label="orange">Orange</option>
-            <option value="#1abc9c" data-label="teal">Teal</option>
-            <option value="#e84393" data-label="pink">Pink</option>
-            <option value="#00bcd4" data-label="cyan">Cyan</option>
-            <option value="#cddc39" data-label="lime">Lime</option>
-            <option value="#9c27b0" data-label="purple">Purple</option>
-            <option value="#27ae60" data-label="green">Green</option>
-            <option value="#701215" data-label="burgundy">Burgundy</option>
-            <option value="#7f8c8d" data-label="grey">Grey</option>
-            <option value="#795548" data-label="brown">Brown</option>
-            <option value="#476684" data-label="navy">Navy</option>
-            <option value="#d4af37" data-label="gold">Gold</option>
-            <option value="#3f51b5" data-label="indigo">Indigo</option>
-          </datalist>
+        <div class="dialog-footer">
+          <button
+            class="btn btn-secondary"
+            id="cancel-calendar-settings"
+            value="cancel"
+            data-label="cancel"
+            formnovalidate
+          ></button>
+          <button
+            class="btn btn-primary"
+            value="save"
+            data-label="save"
+          ></button>
         </div>
       </form>
-      <div class="dialog-footer">
-        <button
-          class="btn btn-secondary"
-          id="cancel-calendar-settings"
-          value="cancel"
-          data-label="cancel"
-          formnovalidate
-        ></button>
-        <button
-          class="btn btn-primary"
-          value="save"
-          data-label="save"
-        ></button>
-      </div>
     </dialog>
+
+    <datalist id="color-list">
+      <option value="#4a90e2" data-label="blue">Blue</option>
+      <option value="#808000" data-label="olive">Olive</option>
+      <option value="#e74c3c" data-label="red">Red</option>
+      <option value="#8e44ad" data-label="redgrape">Red Grape</option>
+      <option value="#e67e22" data-label="orange">Orange</option>
+      <option value="#1abc9c" data-label="teal">Teal</option>
+      <option value="#e84393" data-label="pink">Pink</option>
+      <option value="#00bcd4" data-label="cyan">Cyan</option>
+      <option value="#cddc39" data-label="lime">Lime</option>
+      <option value="#9c27b0" data-label="purple">Purple</option>
+      <option value="#27ae60" data-label="green">Green</option>
+      <option value="#701215" data-label="burgundy">Burgundy</option>
+      <option value="#7f8c8d" data-label="grey">Grey</option>
+      <option value="#795548" data-label="brown">Brown</option>
+      <option value="#476684" data-label="navy">Navy</option>
+      <option value="#d4af37" data-label="gold">Gold</option>
+      <option value="#3f51b5" data-label="indigo">Indigo</option>
+    </datalist>
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
       <symbol viewBox="260 205 27 32" id="icon-trash">
