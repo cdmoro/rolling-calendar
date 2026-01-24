@@ -100,3 +100,15 @@ export async function confirmDialog({
     dialog.showModal();
   });
 }
+
+export function setupDialogs() {
+  document.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement)?.closest("[data-dialog-close]");
+    if (!btn) return;
+
+    const dialog = btn.closest("dialog");
+    if (!dialog) return;
+
+    dialog.close("cancel");
+  });
+}

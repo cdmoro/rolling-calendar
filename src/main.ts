@@ -10,7 +10,7 @@ import {
   openNewCalendarDialog
 } from './modules/calendars';
 import './components/app-icon';
-import { confirmDialog } from './modules/dialogs';
+import { confirmDialog, setupDialogs } from './modules/dialogs';
 import { Toast } from './modules/notifications';
 import { toHumanReadableDate } from './render/events';
 import { getTypedForm, type CalendarFormElements } from './types/forms';
@@ -393,6 +393,7 @@ function main() {
   applyTranslations();
   renderUI();
   initExport();
+  setupDialogs();
 
   const calendarList = calendarsDialog.querySelector('#calendar-list')!;
 

@@ -24,12 +24,6 @@ document.querySelector<HTMLButtonElement>('#new-event-btn')!.onclick = () => {
   openNewEventDialog(toLocalISODate(getCalendarStartDate()));
 };
 
-addEditEventDialog.querySelector<HTMLButtonElement>(
-  '#cancel-add-edit-event'
-)!.onclick = () => {
-  addEditEventDialog.close();
-};
-
 function updateLegendPreview() {
   const day = addEditEventForm.elements.start.value
     .substring(8, 10)
