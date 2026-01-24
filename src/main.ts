@@ -241,6 +241,8 @@ calendarDialogBtn.addEventListener('click', () => {
   calendarDialogForm['color-select'].value = state.calendar!.color;
   
   calendarDialog.showModal();
+
+  calendarDialogForm['calendar-title-input'].focus();
 });
 
 document

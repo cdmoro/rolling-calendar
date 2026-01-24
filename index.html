@@ -298,7 +298,7 @@
       </form>
     </dialog>
 
-    <dialog id="new-calendar-dialog" closedby="any">
+    <!-- <dialog id="new-calendar-dialog" closedby="any">
       <div class="dialog-header">
         <h3>
           <app-icon name="new-calendar"></app-icon>
@@ -339,7 +339,7 @@
           ></button>
         </div>
       </form>
-    </dialog>
+    </dialog> -->
 
     <dialog id="delete-dialog" closedby="any">
       <div class="dialog-header">
@@ -469,12 +469,12 @@
       <form method="dialog">
         <div class="dialog-body">
           <div class="form-control">
-            <label for="calendar-name-input" data-label="calendarName"></label>
-            <input type="text" id="calendar-name-input" />
+            <label for="calendar-name-input" data-label="name"></label>
+            <input type="text" id="calendar-name-input" required />
           </div>
           <div class="form-control">
             <label for="start-month" data-label="startMonth"></label>
-            <input type="month" id="start-month" />
+            <input type="month" id="start-month" required />
           </div>
 
           <div class="form-control">
