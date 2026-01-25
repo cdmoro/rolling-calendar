@@ -8,10 +8,13 @@ const el: Translations = {
   blue: 'Μπλε',
   brown: 'Καφέ',
   burgundy: 'Βουργουνδί',
-  calendarCreated: 'Το ημερολόγιο <strong>{calendar_name}</strong> δημιουργήθηκε με επιτυχία',
-  calendarDeleted: 'Το ημερολόγιο <strong>{calendar_name}</strong> διαγράφηκε με επιτυχία',
+  calendarCreated:
+    'Το ημερολόγιο <strong>{calendar_name}</strong> δημιουργήθηκε με επιτυχία',
+  calendarDeleted:
+    'Το ημερολόγιο <strong>{calendar_name}</strong> διαγράφηκε με επιτυχία',
   calendarNotFound: 'Το ημερολόγιο δεν βρέθηκε',
-  calendarOpened: 'Το ημερολόγιο <strong>{calendar_name}</strong> άνοιξε με επιτυχία',
+  calendarOpened:
+    'Το ημερολόγιο <strong>{calendar_name}</strong> άνοιξε με επιτυχία',
   calendarSubtitle: 'Υπότιτλος',
   calendarSubtitlePlaceholder: 'Ακαδημαϊκό Ημερολόγιο 2025-2026',
   calendarTitle: 'Τίτλος',
@@ -24,9 +27,11 @@ const el: Translations = {
   date: 'Ημερομηνία',
   delete: 'Διαγραφή',
   deleteCalendar: 'Διαγραφή Ημερολογίου',
-  deleteCalendarConfirmation: 'Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το ημερολόγιο;',
+  deleteCalendarConfirmation:
+    'Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το ημερολόγιο;',
   deleteEvent: 'Διαγραφή Γεγονότος',
-  deleteEventConfirmation: 'Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το γεγονός;',
+  deleteEventConfirmation:
+    'Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το γεγονός;',
   edit: 'Επεξεργασία',
   editCalendar: 'Επεξεργασία Ημερολογίου',
   editEvent: 'Επεξεργασία γεγονότος',
@@ -54,7 +59,8 @@ const el: Translations = {
   noActivity: 'Καμία δραστηριότητα',
   olive: 'Ελιά',
   orange: 'Πορτοκαλί',
-  outOfRangeTitle: 'Γεγονότα εκτός εύρους (δεν εμφανίζονται κατά την εξαγωγή ημερολογίου)',
+  outOfRangeTitle:
+    'Γεγονότα εκτός εύρους (δεν εμφανίζονται κατά την εξαγωγή ημερολογίου)',
   pink: 'Ροζ',
   preview: 'Προεπισκόπηση',
   purple: 'Μωβ',

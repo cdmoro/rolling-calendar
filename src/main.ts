@@ -14,6 +14,7 @@ import { confirmDialog, setupDialogs } from './modules/dialogs';
 import { Toast } from './modules/notifications';
 import { toHumanReadableDate } from './render/events';
 import { getTypedForm, type CalendarFormElements } from './types/forms';
+import { ls } from './modules/local-storage';
 
 const calendarNameInput = document.querySelector<HTMLInputElement>(
   '#calendar-name-input'
@@ -64,7 +65,7 @@ calendarDialog.addEventListener('close', (e) => {
     if (!calendar) {
       Toast.error(t('calendarNotFound'), { id: 'calendar-not-found' });
       calendar = createDraftCalendar();
-    };
+    }
 
     calendar.name = calendarDialogForm['calendar-name-input'].value.trim();
     calendarNameTitle.textContent = calendar.name;
@@ -108,8 +109,8 @@ calendarDialog.addEventListener('close', (e) => {
     calendarNameTitle.textContent = newCalendar.name;
     calendarCount.textContent = `(${state.calendars.length})`;
 
-    localStorage.setItem('calendars', JSON.stringify(state.calendars));
-    localStorage.setItem('currentCalendarId', state.currentCalendarId);
+    ls.setItem('calendars', state.calendars);
+    ls.setItem('currentCalendarId', state.currentCalendarId);
 
     updateCalendarList();
 
@@ -125,7 +126,6 @@ calendarDialog.addEventListener('close', (e) => {
 });
 // const calendarSelect =
 //   document.querySelector<HTMLSelectElement>('#calendar-select')!;
-
 
 const startDateInput = document.querySelector<HTMLInputElement>(
   '#add-edit-event-dialog #event-start-date-input'
@@ -172,8 +172,7 @@ export function setTheme(theme: Theme, color: string = '#4a90e2') {
   html.style.setProperty('--accent-color-rgb', hexToRgb(color));
   html.style.setProperty('--accent-text-color', getForegroundColor(color));
 
-  localStorage.setItem('theme', `${theme}`);
-  localStorage.setItem('color', `${color}`);
+  ls.setItem('theme', `${theme}`);
 
   if (state.calendar) {
     state.calendar.color = color;
@@ -212,7 +211,7 @@ async function deleteCalendar(id: string) {
 
   if (confirmDelete) {
     state.calendars.splice(index, 1);
-    localStorage.setItem('calendars', JSON.stringify(state.calendars));
+    ls.setItem('calendars', state.calendars);
 
     if (state.calendars.length > 0) {
       // calendarSelect.querySelector(`option[value=${id}]`)?.remove();
@@ -220,28 +219,24 @@ async function deleteCalendar(id: string) {
       const lastUpdatedCalendar = state.calendars.find((cal, _, arr) => {
         return (
           new Date(cal.updatedAt) >=
-          new Date(
-            Math.max(
-              ...arr.map((c) => new Date(c.updatedAt).getTime())
-            )
-          )
+          new Date(Math.max(...arr.map((c) => new Date(c.updatedAt).getTime())))
         );
       });
 
       const newCurrentCalendar = lastUpdatedCalendar || state.calendars[0];
       state.currentCalendarId = newCurrentCalendar.id!;
       state.calendar = structuredClone(newCurrentCalendar.state);
-      
-      localStorage.setItem('currentCalendarId', newCurrentCalendar.id!);
+
+      ls.setItem('currentCalendarId', newCurrentCalendar.id!);
       calendarNameTitle.textContent = newCurrentCalendar.name;
     } else {
       const draftCalendar = createDraftCalendar();
-      
+
       state.calendars.push(draftCalendar);
       state.currentCalendarId = draftCalendar.id!;
       state.calendar = structuredClone(draftCalendar.state);
-      
-      localStorage.setItem('currentCalendarId', draftCalendar.id!);
+
+      ls.setItem('currentCalendarId', draftCalendar.id!);
       calendarNameTitle.textContent = t('untitledCalendar');
     }
 
@@ -313,7 +308,7 @@ function openCalendar(id: string) {
   if (selectedCalendar) {
     state.currentCalendarId = selectedCalendar.id!;
     state.calendar = structuredClone(selectedCalendar.state);
-    localStorage.setItem('currentCalendarId', selectedCalendar.id!);
+    ls.setItem('currentCalendarId', selectedCalendar.id!);
     calendarTitleInput.value = state.calendar.calendarTitle || '';
     calendarSubtitleInput.value = state.calendar.calendarSubtitle || '';
     startMonthInput.value = `${state.calendar.startYear}-${String(
@@ -342,32 +337,6 @@ function openCalendar(id: string) {
     Toast.error(t('calendarNotFound'), { id: 'calendar-not-found' });
   }
 }
-
-// calendarSelect.addEventListener('change', (e) => {
-//   openCalendar((e.target as HTMLSelectElement).value);
-// });
-
-// startMonthInput.addEventListener('change', (e) => {
-//   const [y, m] = (e.target as HTMLInputElement).value.split('-').map(Number);
-
-//   localStorage.setItem('startMonth', (e.target as HTMLInputElement).value);
-
-//   const minDate = `${y}-${String(m).padStart(2, '0')}-01`;
-//   startDateInput.min = minDate;
-//   endDateInput.min = minDate;
-
-//   if (state.calendar) {
-//     state.calendar.startYear = y;
-//     state.calendar.startMonth = m - 1;
-//     autosaveCurrentCalendar();
-//   }
-
-//   renderUI();
-//   // resetForm();
-// });
-
-// calendarTitleInput.addEventListener('input', () => resolveCalendarHeader());
-// calendarSubtitleInput.addEventListener('input', () => resolveCalendarHeader());
 
 function resolveCalendarHeader() {
   const headerDiv = document.querySelector<HTMLDivElement>('#calendar-header')!;
@@ -409,7 +378,7 @@ document
   .querySelector<HTMLSelectElement>('#language-select')!
   .addEventListener('change', (e) => {
     state.language = (e.target as HTMLSelectElement).value as Language;
-    localStorage.setItem('language', state.language);
+    ls.setItem('language', state.language);
     applyTranslations();
     renderUI();
   });

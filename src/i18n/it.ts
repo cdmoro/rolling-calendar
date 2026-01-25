@@ -8,10 +8,13 @@ const it: Translations = {
   blue: 'Blu',
   brown: 'Marrone',
   burgundy: 'Bordeaux',
-  calendarCreated: 'Calendario <strong>{calendar_name}</strong> creato con successo',
-  calendarDeleted: 'Calendario <strong>{calendar_name}</strong> eliminato con successo',
+  calendarCreated:
+    'Calendario <strong>{calendar_name}</strong> creato con successo',
+  calendarDeleted:
+    'Calendario <strong>{calendar_name}</strong> eliminato con successo',
   calendarNotFound: 'Calendario non trovato',
-  calendarOpened: 'Calendario <strong>{calendar_name}</strong> aperto con successo',
+  calendarOpened:
+    'Calendario <strong>{calendar_name}</strong> aperto con successo',
   calendarSubtitle: 'Sottotitolo',
   calendarSubtitlePlaceholder: 'Calendario accademico 2025-2026',
   calendarTitle: 'Titolo',
@@ -24,7 +27,8 @@ const it: Translations = {
   date: 'Data',
   delete: 'Elimina',
   deleteCalendar: 'Elimina calendario',
-  deleteCalendarConfirmation: 'Sei sicuro di voler eliminare questo calendario?',
+  deleteCalendarConfirmation:
+    'Sei sicuro di voler eliminare questo calendario?',
   deleteEvent: 'Elimina evento',
   deleteEventConfirmation: 'Sei sicuro di voler eliminare questo evento?',
   edit: 'Modifica',
@@ -54,7 +58,8 @@ const it: Translations = {
   noActivity: 'Nessuna attività',
   olive: 'Oliva',
   orange: 'Arancione',
-  outOfRangeTitle: 'Eventi fuori intervallo (non mostrati durante l’esportazione del calendario)',
+  outOfRangeTitle:
+    'Eventi fuori intervallo (non mostrati durante l’esportazione del calendario)',
   pink: 'Rosa',
   preview: 'Anteprima',
   purple: 'Porpora',

@@ -1,5 +1,11 @@
 import type { CalendarDocument, CalendarState } from './calendar';
 
+export type LocalStorageKey =
+  | 'language'
+  | 'theme'
+  | 'calendars'
+  | 'currentCalendarId';
+
 export type Language = 'en' | 'es' | 'it' | 'fr' | 'pt' | 'de';
 export type Theme = 'auto' | 'light' | 'dark';
 

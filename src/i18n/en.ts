@@ -8,10 +8,13 @@ const en: Translations = {
   blue: 'Blue',
   brown: 'Brown',
   burgundy: 'Burgundy',
-  calendarCreated: 'Calendar <strong>{calendar_name}</strong> created successfully',
-  calendarDeleted: 'Calendar <strong>{calendar_name}</strong> deleted successfully',
+  calendarCreated:
+    'Calendar <strong>{calendar_name}</strong> created successfully',
+  calendarDeleted:
+    'Calendar <strong>{calendar_name}</strong> deleted successfully',
   calendarNotFound: 'Calendar not found',
-  calendarOpened: 'Calendar <strong>{calendar_name}</strong> opened successfully',
+  calendarOpened:
+    'Calendar <strong>{calendar_name}</strong> opened successfully',
   calendarSubtitle: 'Subtitle',
   calendarSubtitlePlaceholder: '2025-2026 Academic Calendar',
   calendarTitle: 'Title',

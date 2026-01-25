@@ -6,7 +6,7 @@ export const languagesKeys = [
   'greek',
   'italian',
   'portuguese',
-  'spanish',
+  'spanish'
 ] as const;
 
 export const translationKeys = [
@@ -79,7 +79,7 @@ export const translationKeys = [
   'titleLabel',
   'type',
   'untitledCalendar',
-  'yes',
+  'yes'
 ] as const;
 
 export type TranslationKey = (typeof translationKeys)[number];

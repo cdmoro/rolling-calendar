@@ -8,10 +8,13 @@ const de: Translations = {
   blue: 'Blau',
   brown: 'Braun',
   burgundy: 'Burgunderrot',
-  calendarCreated: 'Kalender <strong>{calendar_name}</strong> erfolgreich erstellt',
-  calendarDeleted: 'Kalender <strong>{calendar_name}</strong> erfolgreich gelöscht',
+  calendarCreated:
+    'Kalender <strong>{calendar_name}</strong> erfolgreich erstellt',
+  calendarDeleted:
+    'Kalender <strong>{calendar_name}</strong> erfolgreich gelöscht',
   calendarNotFound: 'Kalender nicht gefunden',
-  calendarOpened: 'Kalender <strong>{calendar_name}</strong> erfolgreich geöffnet',
+  calendarOpened:
+    'Kalender <strong>{calendar_name}</strong> erfolgreich geöffnet',
   calendarSubtitle: 'Untertitel',
   calendarSubtitlePlaceholder: 'Akademischer Kalender 2025-2026',
   calendarTitle: 'Titel',
@@ -24,9 +27,11 @@ const de: Translations = {
   date: 'Datum',
   delete: 'Löschen',
   deleteCalendar: 'Kalender löschen',
-  deleteCalendarConfirmation: 'Sind Sie sicher, dass Sie diesen Kalender löschen möchten?',
+  deleteCalendarConfirmation:
+    'Sind Sie sicher, dass Sie diesen Kalender löschen möchten?',
   deleteEvent: 'Ereignis löschen',
-  deleteEventConfirmation: 'Sind Sie sicher, dass Sie dieses Ereignis löschen möchten?',
+  deleteEventConfirmation:
+    'Sind Sie sicher, dass Sie dieses Ereignis löschen möchten?',
   edit: 'Bearbeiten',
   editCalendar: 'Kalender bearbeiten',
   editEvent: 'Ereignis bearbeiten',
@@ -54,7 +59,8 @@ const de: Translations = {
   noActivity: 'Keine Aktivität',
   olive: 'Olivgrün',
   orange: 'Orange',
-  outOfRangeTitle: 'Außerhalb des Bereichs liegende Ereignisse (werden beim Exportieren des Kalenders nicht angezeigt)',
+  outOfRangeTitle:
+    'Außerhalb des Bereichs liegende Ereignisse (werden beim Exportieren des Kalenders nicht angezeigt)',
   pink: 'Rosa',
   preview: 'Vorschau',
   purple: 'Violett',

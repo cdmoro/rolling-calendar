@@ -8,10 +8,13 @@ const fr: Translations = {
   blue: 'Bleu',
   brown: 'Marron',
   burgundy: 'Bordeaux',
-  calendarCreated: 'Calendrier <strong>{calendar_name}</strong> créé avec succès',
-  calendarDeleted: 'Calendrier <strong>{calendar_name}</strong> supprimé avec succès',
+  calendarCreated:
+    'Calendrier <strong>{calendar_name}</strong> créé avec succès',
+  calendarDeleted:
+    'Calendrier <strong>{calendar_name}</strong> supprimé avec succès',
   calendarNotFound: 'Calendrier non trouvé',
-  calendarOpened: 'Calendrier <strong>{calendar_name}</strong> ouvert avec succès',
+  calendarOpened:
+    'Calendrier <strong>{calendar_name}</strong> ouvert avec succès',
   calendarSubtitle: 'Sous-titre',
   calendarSubtitlePlaceholder: 'Calendrier académique 2025-2026',
   calendarTitle: 'Titre',
@@ -24,7 +27,8 @@ const fr: Translations = {
   date: 'Date',
   delete: 'Supprimer',
   deleteCalendar: 'Supprimer le calendrier',
-  deleteCalendarConfirmation: 'Êtes-vous sûr de vouloir supprimer ce calendrier ?',
+  deleteCalendarConfirmation:
+    'Êtes-vous sûr de vouloir supprimer ce calendrier ?',
   deleteEvent: 'Supprimer l’événement',
   deleteEventConfirmation: 'Êtes-vous sûr de vouloir supprimer cet événement ?',
   edit: 'Modifier',
@@ -54,7 +58,8 @@ const fr: Translations = {
   noActivity: 'Pas d’activité',
   olive: 'Olive',
   orange: 'Orange',
-  outOfRangeTitle: 'Événements hors plage (non affichés lors de l’exportation du calendrier)',
+  outOfRangeTitle:
+    'Événements hors plage (non affichés lors de l’exportation du calendrier)',
   pink: 'Rose',
   preview: 'Aperçu',
   purple: 'Pourpre',

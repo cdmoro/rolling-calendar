@@ -102,13 +102,13 @@ export async function confirmDialog({
 }
 
 export function setupDialogs() {
-  document.addEventListener("click", (e) => {
-    const btn = (e.target as HTMLElement)?.closest("[data-dialog-close]");
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement)?.closest('[data-dialog-close]');
     if (!btn) return;
 
-    const dialog = btn.closest("dialog");
+    const dialog = btn.closest('dialog');
     if (!dialog) return;
 
-    dialog.close("cancel");
+    dialog.close('cancel');
   });
 }
