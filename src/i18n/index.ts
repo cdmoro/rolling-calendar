@@ -63,7 +63,7 @@ export function translateElement(el = document.body as HTMLElement) {
 }
 
 export function t(
-  key: TranslationKey,
+  key: TranslationKey | LanguageKey,
   placeholders?: Record<string, string | undefined>
 ) {
   const dict = getTranslations();

@@ -86,13 +86,13 @@ export function autosaveCurrentCalendar() {
 //   newCalendarDialog.close();
 // };
 
-calendarDialogForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const name = calendarDialogForm['calendar-name-input'].value.trim();
+// calendarDialogForm.addEventListener('submit', (e) => {
+//   e.preventDefault();
+//   const name = calendarDialogForm['calendar-name-input'].value.trim();
 
-  if (name === '') {
-    return;
-  }
+//   if (name === '') {
+//     return;
+//   }
 
   // if (state.calendars.length === 1 && state.calendars[0].isDraft) {
   //   const calendars: CalendarDocument[] = [
@@ -176,17 +176,25 @@ calendarDialogForm.addEventListener('submit', (e) => {
   // renderUI();
 
   // newCalendarDialog.close();
-});
+// });
 
 export function openNewCalendarDialog() {
   // newCalendarDialogForm.reset();
   // translateElement(newCalendarDialog);
   // newCalendarDialog.showModal();
+  const submitBtn = calendarDialog.querySelector<HTMLButtonElement>('button[type="submit"]')!
+  calendarDialog.querySelector('h3')!.innerHTML = `
+    <app-icon name="new-calendar"></app-icon>
+    <span>${t('newCalendar')}</span>
+  `;
+
   calendarDialogForm['calendar-name-input'].value = '';
   calendarDialogForm['start-month'].value = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`;
   calendarDialogForm['calendar-title-input'].value = '';
   calendarDialogForm['calendar-subtitle-input'].value = '';
   calendarDialogForm['color-select'].value = DEFAULT_COLOR;
+  submitBtn.textContent = t('save');
+  submitBtn.value = 'create';
   
   calendarDialog.showModal();
 

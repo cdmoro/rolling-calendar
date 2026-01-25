@@ -461,10 +461,7 @@
 
     <dialog id="calendar-dialog" closedby="any">
       <div class="dialog-header">
-        <h3>
-          <app-icon name="edit"></app-icon>
-          <span data-label="settings"></span>
-        </h3>
+        <h3></h3>
       </div>
       <form method="dialog">
         <div class="dialog-body">
@@ -486,6 +483,7 @@
               type="text"
               id="calendar-title-input"
               placeholder="Institution"
+              data-placeholder="calendarTitlePlaceholder"
             />
           </div>
 
@@ -498,6 +496,7 @@
               type="text"
               id="calendar-subtitle-input"
               placeholder="2025-2026 Academic Calendar"
+              data-placeholder="calendarSubtitlePlaceholder"
             />
           </div>
 
@@ -519,7 +518,6 @@
           <button
             class="btn btn-primary"
             value="save"
-            data-label="save"
             type="submit"
           ></button>
         </div>
