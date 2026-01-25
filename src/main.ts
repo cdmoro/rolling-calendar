@@ -217,24 +217,30 @@ async function deleteCalendar(id: string) {
     if (state.calendars.length > 0) {
       // calendarSelect.querySelector(`option[value=${id}]`)?.remove();
 
-      const newCurrentCalendar = state.calendars[0];
+      const lastUpdatedCalendar = state.calendars.find((cal, _, arr) => {
+        return (
+          new Date(cal.updatedAt) >=
+          new Date(
+            Math.max(
+              ...arr.map((c) => new Date(c.updatedAt).getTime())
+            )
+          )
+        );
+      });
+
+      const newCurrentCalendar = lastUpdatedCalendar || state.calendars[0];
       state.currentCalendarId = newCurrentCalendar.id!;
       state.calendar = structuredClone(newCurrentCalendar.state);
+      
       localStorage.setItem('currentCalendarId', newCurrentCalendar.id!);
-      // calendarSelect.value = newCurrentCalendar.id!;
       calendarNameTitle.textContent = newCurrentCalendar.name;
     } else {
       const draftCalendar = createDraftCalendar();
+      
       state.calendars.push(draftCalendar);
-
-      // calendarSelect.innerHTML = `
-      //   <option value="${draftCalendar.id!}" data-label="untitledCalendar">
-      //     ${t('untitledCalendar')}
-      //   </option>
-      // `;
-      // calendarSelect.value = draftCalendar.id!;
       state.currentCalendarId = draftCalendar.id!;
       state.calendar = structuredClone(draftCalendar.state);
+      
       localStorage.setItem('currentCalendarId', draftCalendar.id!);
       calendarNameTitle.textContent = t('untitledCalendar');
     }
@@ -249,13 +255,7 @@ async function deleteCalendar(id: string) {
       }
     );
 
-    // calendarTitleInput.value = state.calendar.calendarTitle || '';
-    // calendarSubtitleInput.value = state.calendar.calendarSubtitle || '';
-    // startMonthInput.value = `${state.calendar.startYear}-${String(
-    //   state.calendar.startMonth + 1
-    // ).padStart(2, '0')}`;
     colorSelectHeader.value = state.calendar.color;
-    // colorSelect.value = state.calendar.color;
     document.documentElement.style.setProperty(
       '--accent-color-rgb',
       hexToRgb(state.calendar.color)
@@ -266,7 +266,8 @@ async function deleteCalendar(id: string) {
     );
 
     resolveCalendarHeader();
-
+    updateCalendarList();
+    autosaveCurrentCalendar();
     renderUI();
   }
 }
@@ -277,7 +278,7 @@ calendarDialogBtn.addEventListener('click', () => {
   )!;
   calendarDialog.querySelector('h3')!.innerHTML = `
     <app-icon name="edit"></app-icon>
-    <span>${t('settings')}</span>
+    <span>${t('editCalendar')}</span>
   `;
 
   calendarDialogForm['calendar-name-input'].value = state.calendars.find(

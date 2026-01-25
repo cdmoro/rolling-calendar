@@ -28,6 +28,7 @@ const el: Translations = {
   deleteEvent: 'Διαγραφή Γεγονότος',
   deleteEventConfirmation: 'Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το γεγονός;',
   edit: 'Επεξεργασία',
+  editCalendar: 'Επεξεργασία Ημερολογίου',
   editEvent: 'Επεξεργασία γεγονότος',
   endDate: 'Ημερομηνία λήξης',
   error: 'Σφάλμα',

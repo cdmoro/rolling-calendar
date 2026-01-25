@@ -51,19 +51,19 @@
     <main class="layout">
       <aside class="sidebar">
         <div class="actions">
-          <div class="calendar-actions">
-            <!-- <select id="calendar-select"></select> -->
-          </div>
-          <!-- <button class="btn btn-secondary" id="settings-btn" data-label="settings"></button> -->
-
           <button class="btn btn-primary btn-block" id="new-event-btn">
             <app-icon name="new-event"></app-icon>
             <span data-label="newEvent"></span>
           </button>
 
+          <!-- <button class="btn btn-secondary btn-block" id="add-edit-events-btn">
+            <app-icon name="edit"></app-icon>
+            <span data-label="manageEvents"></span>
+          </button> -->
+
           <button class="btn btn-secondary btn-block" id="calendar-settings">
             <app-icon name="edit"></app-icon>
-            <span data-label="settings"></span>
+            <span data-label="editCalendar"></span>
           </button>
 
           <button class="btn btn-secondary btn-block" id="delete-calendar-btn">
@@ -106,58 +106,6 @@
             <span data-label="export"></span>
           </button> -->
         </div>
-
-        <!-- <h2 data-label="settings"></h2>
-
-        <div class="form-control">
-          <label for="start-month" data-label="startMonth"></label>
-          <input type="month" id="start-month" />
-        </div>
-
-        <div class="form-control">
-          <label for="calendar-title-input" data-label="calendarTitle"></label>
-          <input
-            type="text"
-            id="calendar-title-input"
-            placeholder="Institution"
-          />
-        </div>
-
-        <div class="form-control">
-          <label
-            for="calendar-subtitle-input"
-            data-label="calendarSubtitle"
-          ></label>
-          <input
-            type="text"
-            id="calendar-subtitle-input"
-            placeholder="2025-2026 Academic Calendar"
-          />
-        </div> -->
-
-        <!-- <div class="form-control">
-          <label for="color-select" data-label="color"></label>
-          <input type="color" id="color-select" list="color-list" />
-          <datalist id="color-list">
-            <option value="#4a90e2" data-label="blue">Blue</option>
-            <option value="#808000" data-label="olive">Olive</option>
-            <option value="#e74c3c" data-label="red">Red</option>
-            <option value="#8e44ad" data-label="redgrape">Red Grape</option>
-            <option value="#e67e22" data-label="orange">Orange</option>
-            <option value="#1abc9c" data-label="teal">Teal</option>
-            <option value="#e84393" data-label="pink">Pink</option>
-            <option value="#00bcd4" data-label="cyan">Cyan</option>
-            <option value="#cddc39" data-label="lime">Lime</option>
-            <option value="#9c27b0" data-label="purple">Purple</option>
-            <option value="#27ae60" data-label="green">Green</option>
-            <option value="#701215" data-label="burgundy">Burgundy</option>
-            <option value="#7f8c8d" data-label="grey">Grey</option>
-            <option value="#795548" data-label="brown">Brown</option>
-            <option value="#476684" data-label="navy">Navy</option>
-            <option value="#d4af37" data-label="gold">Gold</option>
-            <option value="#3f51b5" data-label="indigo">Indigo</option>
-          </datalist>
-        </div> -->
       </aside>
 
       <section class="main-section">

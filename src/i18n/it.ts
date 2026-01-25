@@ -28,6 +28,7 @@ const it: Translations = {
   deleteEvent: 'Elimina evento',
   deleteEventConfirmation: 'Sei sicuro di voler eliminare questo evento?',
   edit: 'Modifica',
+  editCalendar: 'Modifica calendario',
   editEvent: 'Modifica evento',
   endDate: 'Data di fine',
   error: 'Errore',

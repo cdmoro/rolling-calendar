@@ -37,6 +37,7 @@ export const translationKeys = [
   'deleteEvent',
   'deleteEventConfirmation',
   'edit',
+  'editCalendar',
   'editEvent',
   'endDate',
   'error',

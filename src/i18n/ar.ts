@@ -28,6 +28,7 @@ const ar: Translations = {
   deleteEvent: 'حذف الحدث',
   deleteEventConfirmation: 'هل أنت متأكد أنك تريد حذف هذا الحدث؟',
   edit: 'تعديل',
+  editCalendar: 'تعديل التقويم',
   editEvent: 'تعديل الحدث',
   endDate: 'تاريخ الانتهاء',
   error: 'خطأ',

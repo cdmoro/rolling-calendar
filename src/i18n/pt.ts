@@ -28,6 +28,7 @@ const pt: Translations = {
   deleteEvent: 'Excluir evento',
   deleteEventConfirmation: 'Você tem certeza de que deseja excluir este evento?',
   edit: 'Editar',
+  editCalendar: 'Editar calendário',
   editEvent: 'Editar evento',
   endDate: 'Data de término',
   error: 'Erro',
