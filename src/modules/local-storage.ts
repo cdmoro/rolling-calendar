@@ -12,10 +12,14 @@ export const ls = {
   },
   getItemOr<T>(key: LocalStorageKey, defaultValue: T): T {
     const item = localStorage.getItem(key);
-    if (!item) return defaultValue;
+    if (!item) {
+      localStorage.setItem(key, JSON.stringify(defaultValue));
+      return defaultValue;
+    }
     try {
       return JSON.parse(item) as T;
     } catch {
+      localStorage.setItem(key, JSON.stringify(defaultValue));
       return defaultValue;
     }
   },

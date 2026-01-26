@@ -9,9 +9,11 @@ import ar from './ar';
 import { store } from '../store';
 import type { LanguageKey, TranslationKey } from '../types/i18n';
 import { updateMetaTitle } from '../modules/calendars';
+import type { Language } from '../types/app';
 
 const DICTS = { en, es, fr, it, pt, de, el, ar };
 const RTL_LANGUAGES: string[] = ['ar'];
+const SUPPORTED_LANGUAGES = Object.keys(DICTS) as Language[];
 
 export const languageTranslation: Record<LanguageKey, string> = {
   english: 'English',
@@ -23,6 +25,14 @@ export const languageTranslation: Record<LanguageKey, string> = {
   greek: 'Ελληνικά',
   arabic: 'العربية'
 };
+
+export function getLanguageOrDefault(): Language {
+  const lang = navigator.language.slice(0, 2).toLowerCase();
+
+  return SUPPORTED_LANGUAGES.includes(lang as Language)
+    ? (lang as Language)
+    : 'en';
+}
 
 export function getTranslations() {
   return {

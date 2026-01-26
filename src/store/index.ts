@@ -1,11 +1,11 @@
-import { t } from '../i18n';
+import { getLanguageOrDefault, t } from '../i18n';
 import { createDraftCalendar } from '../modules/calendars';
 import { ls } from '../modules/local-storage';
 import { type Theme, type Language, type Store } from '../types/app';
 import { type CalendarDocument } from '../types/calendar';
 
 export const store: Store = {
-  language: 'en',
+  language: getLanguageOrDefault(),
   theme: 'auto',
   calendars: [],
   currentCalendarId: null,

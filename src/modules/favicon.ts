@@ -37,8 +37,10 @@ export function setFavicon(color: string, foregroundColor: string) {
 
   link.href = url;
 
-  let meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-  
+  let meta = document.querySelector<HTMLMetaElement>(
+    'meta[name="theme-color"]'
+  );
+
   if (!meta) {
     meta = document.createElement('meta');
     meta.name = 'theme-color';

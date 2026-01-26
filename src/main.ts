@@ -59,10 +59,6 @@ calendarDialog.addEventListener('close', (e) => {
   const action = (e.target as HTMLDialogElement)?.returnValue;
 
   if (action === 'save') {
-    // let calendar = state.calendars.find(
-    //   (cal) => cal.id === state.currentCalendarId
-    // );
-
     if (!store.calendar) {
       Toast.error(t('calendarNotFound'), { id: 'calendar-not-found' });
       store.calendar = createDraftCalendar();
@@ -87,8 +83,6 @@ calendarDialog.addEventListener('close', (e) => {
           calendarDialogForm['calendar-subtitle-input'].value.trim()
       }
     };
-
-    // state.calendar = structuredClone(calendar.state);
   }
 
   if (action === 'create') {
@@ -128,6 +122,10 @@ calendarDialog.addEventListener('close', (e) => {
   }
 
   updateColor();
+  setFavicon(
+    store.calendar!.state.color,
+    getForegroundColor(store.calendar!.state.color)
+  );
   autosaveCurrentCalendar();
   resolveCalendarHeader();
   renderUI();
@@ -199,11 +197,6 @@ window
     }
   });
 
-// function resetForm() {
-//   const form = document.querySelector<HTMLFormElement>('#event-form')!;
-//   form.reset();
-// }
-
 async function deleteCalendar(id: string) {
   const index = store.calendars.findIndex((cal) => cal.id === id);
   if (index === -1) return;
@@ -224,8 +217,6 @@ async function deleteCalendar(id: string) {
     ls.setItem('calendars', store.calendars);
 
     if (store.calendars.length > 0) {
-      // calendarSelect.querySelector(`option[value=${id}]`)?.remove();
-
       const lastUpdatedCalendar = store.calendars.find((cal, _, arr) => {
         return (
           new Date(cal.updatedAt) >=
@@ -265,10 +256,14 @@ async function deleteCalendar(id: string) {
       '--accent-color-rgb',
       hexToRgb(store.calendar.state.color)
     );
+
+    const foregroundColor = getForegroundColor(store.calendar.state.color);
+
     document.documentElement.style.setProperty(
       '--accent-text-color',
-      getForegroundColor(store.calendar.state.color)
+      foregroundColor
     );
+    setFavicon(store.calendar.state.color, foregroundColor);
 
     resolveCalendarHeader();
     updateCalendarList();
@@ -336,7 +331,10 @@ function openCalendar(id: string) {
     calendarNameTitle.textContent = selectedCalendar.name;
 
     updateColor();
-    setFavicon(store.calendar.state.color, getForegroundColor(store.calendar.state.color));
+    setFavicon(
+      store.calendar.state.color,
+      getForegroundColor(store.calendar.state.color)
+    );
     resolveCalendarHeader();
     autosaveCurrentCalendar();
     renderUI();
@@ -495,7 +493,7 @@ function main() {
 
   html.setAttribute('data-theme', `${resolvedTheme}`);
   html.style.setProperty('--accent-color-rgb', hexToRgb(color));
-  
+
   const foregroundColor = getForegroundColor(color);
   html.style.setProperty('--accent-text-color', foregroundColor);
   setFavicon(color, foregroundColor);

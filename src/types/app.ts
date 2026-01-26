@@ -6,7 +6,7 @@ export type LocalStorageKey =
   | 'calendars'
   | 'currentCalendarId';
 
-export type Language = 'en' | 'es' | 'it' | 'fr' | 'pt' | 'de';
+export type Language = 'en' | 'es' | 'it' | 'fr' | 'pt' | 'de' | 'el' | 'ar';
 export type Theme = 'auto' | 'light' | 'dark';
 
 export type Store = {
