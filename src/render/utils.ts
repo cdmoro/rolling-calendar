@@ -1,5 +1,5 @@
 import { t } from '../i18n';
-import { state } from '../state/app';
+import { store } from '../store';
 import type { EventType } from '../types/calendar';
 import type { TranslationKey } from '../types/i18n';
 
@@ -18,7 +18,7 @@ export function getEventLegendLabel(type: EventType): string {
 
 export function formatLongDate(
   dateStr: string,
-  locale: string = state.language
+  locale: string = store.language
 ): string {
   const date = new Date(dateStr);
   const formatter = new Intl.DateTimeFormat(locale, {

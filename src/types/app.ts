@@ -1,4 +1,4 @@
-import type { CalendarDocument, CalendarState } from './calendar';
+import type { CalendarDocument } from './calendar';
 
 export type LocalStorageKey =
   | 'language'
@@ -9,12 +9,12 @@ export type LocalStorageKey =
 export type Language = 'en' | 'es' | 'it' | 'fr' | 'pt' | 'de';
 export type Theme = 'auto' | 'light' | 'dark';
 
-export type State = {
+export type Store = {
   language: Language;
   theme: Theme;
   calendars: CalendarDocument[];
   currentCalendarId: string | null;
-  calendar: CalendarState | null;
+  calendar: CalendarDocument | null;
 };
 
 export type WeekStart = 0 | 1;

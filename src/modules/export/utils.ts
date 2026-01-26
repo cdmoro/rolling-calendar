@@ -1,9 +1,9 @@
-import { state } from '../../state/app';
+import { store } from '../../store';
 
 export function getFileName(): string {
-  const title = state.calendar!.calendarTitle || 'Rolling Calendar';
-  const month = state.calendar!.startMonth + 1;
-  const year = state.calendar!.startYear;
+  const title = store.calendar!.state.calendarTitle || 'Rolling Calendar';
+  const month = store.calendar!.state.startMonth + 1;
+  const year = store.calendar!.state.startYear;
 
   let fileName = title
     .toLowerCase()

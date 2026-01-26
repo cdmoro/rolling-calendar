@@ -6,7 +6,7 @@ import {
   toLocalISODate
 } from '../modules/events';
 import { getLocalizedWeekdays, getFixedMonthGrid } from '../modules/calendar';
-import { state } from '../state/app';
+import { store } from '../store';
 import { EVENT_LEGEND, formatLongDate, getEventLegendLabel } from './utils';
 import { formatEventDate, renderEventList } from './events';
 import { t, translateElement } from '../i18n';
@@ -23,7 +23,7 @@ grid.addEventListener('click', async (e) => {
   );
 
   if (btn?.dataset.eventId) {
-    const event = state.calendar!.events.find(
+    const event = store.calendar!.state.events.find(
       (ev) => ev.id === btn.dataset.eventId
     );
 
@@ -34,9 +34,9 @@ grid.addEventListener('click', async (e) => {
         // openDeleteEventDialog(btn.dataset.eventId);
         const dates =
           event.start === event.end
-            ? `<p><strong>${t('date')}</strong>: ${formatLongDate(event.start, state.language)}</p>`
-            : `<p><strong>${t('startDate')}</strong>: ${formatLongDate(event.start, state.language)}</p>
-                 <p><strong>${t('endDate')}</strong>: ${formatLongDate(event.end, state.language)}</p>`;
+            ? `<p><strong>${t('date')}</strong>: ${formatLongDate(event.start, store.language)}</p>`
+            : `<p><strong>${t('startDate')}</strong>: ${formatLongDate(event.start, store.language)}</p>
+                 <p><strong>${t('endDate')}</strong>: ${formatLongDate(event.end, store.language)}</p>`;
         const detail = `
               <p><strong>${t('titleLabel')}</strong>: ${event.title}</p>
               ${dates}
@@ -53,12 +53,12 @@ grid.addEventListener('click', async (e) => {
         });
 
         if (doDelete) {
-          const index = state.calendar!.events.findIndex(
+          const index = store.calendar!.state.events.findIndex(
             (event) => event.id === btn.dataset.eventId
           );
 
           if (index !== -1) {
-            state.calendar!.events.splice(index, 1);
+            store.calendar!.state.events.splice(index, 1);
             autosaveCurrentCalendar();
             renderEventList();
             renderCalendar();
@@ -97,12 +97,12 @@ grid.addEventListener('click', async (e) => {
 export function renderCalendar() {
   grid.innerHTML = '';
 
-  const weekdays = getLocalizedWeekdays(state.language);
+  const weekdays = getLocalizedWeekdays(store.language);
 
   for (let i = 0; i < 12; i++) {
     const date = new Date(
-      state.calendar!.startYear,
-      state.calendar!.startMonth + i
+      store.calendar!.state.startYear,
+      store.calendar!.state.startMonth + i
     );
 
     const monthEl = document.createElement('div');
@@ -111,7 +111,7 @@ export function renderCalendar() {
     /* ---- Month title ---- */
     const title = document.createElement('div');
     title.className = 'month-title';
-    title.textContent = date.toLocaleString(state.language, {
+    title.textContent = date.toLocaleString(store.language, {
       month: 'long',
       year: 'numeric'
     });

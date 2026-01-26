@@ -1,17 +1,25 @@
 import { t } from '../i18n';
-import { state } from '../state/app';
+import { store } from '../store';
 import type { CalendarDocument } from '../types/calendar';
 import { getTypedForm, type CalendarFormElements } from '../types/forms';
 import { ls } from './local-storage';
 
 const DEFAULT_COLOR = '#4a90e2';
-
 const calendarDialog =
   document.querySelector<HTMLDialogElement>('#calendar-dialog')!;
-
 const calendarDialogForm = getTypedForm<CalendarFormElements>(
   '#calendar-dialog form'
 );
+
+export function updateMetaTitle() {
+  const appTitle = t('title');
+
+  if (!store.calendar) {
+    document.title = appTitle;
+    return;
+  }
+  document.title = `${store.calendar.name} - ${appTitle}`;
+}
 
 export function createDraftCalendar(): CalendarDocument {
   return {
@@ -29,45 +37,24 @@ export function createDraftCalendar(): CalendarDocument {
   };
 }
 
-export function getCurrentCalendar() {
-  if (state.currentCalendarId === null)
-    return state.calendars.find((doc) => doc.isDraft) ?? null;
-  return (
-    state.calendars.find((doc) => doc.id === state.currentCalendarId) ?? null
-  );
-}
-
-export function saveCalendar(calendar: CalendarDocument) {
-  const index =
-    state.currentCalendarId === null
-      ? 0
-      : state.calendars.findIndex((doc) => doc.id === calendar.id);
-
-  if (index !== -1) {
-    state.calendars[index] = calendar;
-  } else {
-    state.calendars.push(calendar);
-  }
-
-  ls.setItem('calendars', state.calendars);
-}
-
 export function autosaveCurrentCalendar() {
-  if (!state.currentCalendarId) return;
+  if (!store.currentCalendarId) return;
 
-  const index = state.calendars.findIndex(
-    (d) => d.id === state.currentCalendarId
+  const index = store.calendars.findIndex(
+    (d) => d.id === store.currentCalendarId
   );
 
-  if (index === -1 || !state.calendar) return;
+  if (index === -1 || !store.calendar) return;
 
-  state.calendars[index] = {
-    ...state.calendars[index],
+  store.calendars[index] = {
+    ...store.calendars[index],
+    ...store.calendar,
     updatedAt: new Date().toISOString(),
-    state: structuredClone(state.calendar)
+    state: structuredClone(store.calendar.state)
   };
 
-  ls.setItem('calendars', state.calendars);
+  updateMetaTitle();
+  ls.setItem('calendars', store.calendars);
 }
 
 export function openNewCalendarDialog() {

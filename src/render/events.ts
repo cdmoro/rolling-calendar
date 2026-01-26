@@ -1,11 +1,11 @@
-import { getFilteredEvents } from '../state/calendar';
 import type { CalendarEvent } from '../types/calendar';
 import { renderCalendar } from './calendar';
-import { state } from '../state/app';
+import { store } from '../store';
 import { t, translateElement } from '../i18n';
 import { renderLegend } from './legend';
 import { formatLongDate, getEventLegendLabel } from './utils';
 import { autosaveCurrentCalendar } from '../modules/calendars';
+import { getFilteredEvents } from '../modules/calendar';
 
 const deleteDialog = document.getElementById(
   'delete-dialog'
@@ -29,7 +29,7 @@ function splitInTwoColumns<T>(items: T[]): [T[], T[]] {
 }
 
 export function toHumanReadableDate(date: Date, time: boolean = false): string {
-  const formatter = new Intl.DateTimeFormat(state.language, {
+  const formatter = new Intl.DateTimeFormat(store.language, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -60,7 +60,7 @@ export function formatEventDate(
     start.getFullYear() === end.getFullYear() &&
     start.getMonth() === end.getMonth();
 
-  const monthFormatter = new Intl.DateTimeFormat(state.language, {
+  const monthFormatter = new Intl.DateTimeFormat(store.language, {
     month: 'short'
   });
 
@@ -84,10 +84,12 @@ export function formatEventDate(
 function handleDelete(id: string) {
   if (!id) return;
 
-  const index = state.calendar!.events.findIndex((event) => event.id === id);
+  const index = store.calendar!.state.events.findIndex(
+    (event) => event.id === id
+  );
 
   if (index !== -1) {
-    state.calendar!.events.splice(index, 1);
+    store.calendar!.state.events.splice(index, 1);
     autosaveCurrentCalendar();
     renderEventList();
     renderCalendar();
@@ -169,7 +171,7 @@ export function renderEventList() {
   list.innerHTML = '';
 
   const { inRangeEvents, outOfRangeEvents } = getFilteredEvents(
-    state.calendar!.events
+    store.calendar!.state.events
   );
 
   renderEventListSection(inRangeEvents, '#event-list', false);
@@ -182,7 +184,7 @@ export function renderEventList() {
 }
 
 export function openDeleteEventDialog(eventId: string) {
-  const event = state.calendar!.events.find((e) => e.id === eventId);
+  const event = store.calendar!.state.events.find((e) => e.id === eventId);
   if (!event) return;
 
   const dialog = document.getElementById('delete-dialog') as HTMLDialogElement;
@@ -190,9 +192,9 @@ export function openDeleteEventDialog(eventId: string) {
 
   const dates =
     event.start === event.end
-      ? `<p><strong data-label="date"></strong>: ${formatLongDate(event.start, state.language)}</p>`
-      : `<p><strong data-label="startDate"></strong>: ${formatLongDate(event.start, state.language)}</p>
-       <p><strong data-label="endDate"></strong>: ${formatLongDate(event.end, state.language)}</p>`;
+      ? `<p><strong data-label="date"></strong>: ${formatLongDate(event.start, store.language)}</p>`
+      : `<p><strong data-label="startDate"></strong>: ${formatLongDate(event.start, store.language)}</p>
+       <p><strong data-label="endDate"></strong>: ${formatLongDate(event.end, store.language)}</p>`;
 
   document.querySelector<HTMLDivElement>(
     '#delete-dialog .dialog-description'

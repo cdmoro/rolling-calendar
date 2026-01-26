@@ -6,8 +6,9 @@ import pt from './pt';
 import de from './de';
 import el from './el';
 import ar from './ar';
-import { state } from '../state/app';
+import { store } from '../store';
 import type { LanguageKey, TranslationKey } from '../types/i18n';
+import { updateMetaTitle } from '../modules/calendars';
 
 const DICTS = { en, es, fr, it, pt, de, el, ar };
 const RTL_LANGUAGES: string[] = ['ar'];
@@ -25,22 +26,20 @@ export const languageTranslation: Record<LanguageKey, string> = {
 
 export function getTranslations() {
   return {
-    ...DICTS[state.language],
+    ...DICTS[store.language],
     ...languageTranslation
   };
 }
 
 export function applyTranslations() {
-  const dict = getTranslations();
-
   translateElement();
+  updateMetaTitle();
 
-  document.documentElement.setAttribute('lang', state.language);
+  document.documentElement.setAttribute('lang', store.language);
   document.documentElement.setAttribute(
     'dir',
-    RTL_LANGUAGES.includes(state.language as LanguageKey) ? 'rtl' : 'ltr'
+    RTL_LANGUAGES.includes(store.language as LanguageKey) ? 'rtl' : 'ltr'
   );
-  document.title = dict.title;
 }
 
 export function translateElement(el = document.body as HTMLElement) {

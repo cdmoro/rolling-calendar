@@ -1,4 +1,4 @@
-import { state } from '../../state/app';
+import { store } from '../../store';
 import { getFileName } from './utils';
 
 export async function exportAsPdf(): Promise<void> {
@@ -32,9 +32,9 @@ export async function exportAsPdf(): Promise<void> {
   const x = (pageWidth - imgWidth) / 2;
   const y = margin;
 
-  const title = state.calendar!.calendarTitle || 'Rolling Calendar';
-  const subtitle = state.calendar!.calendarSubtitle
-    ? ` - ${state.calendar!.calendarSubtitle}`
+  const title = store.calendar!.state.calendarTitle || 'Rolling Calendar';
+  const subtitle = store.calendar!.state.calendarSubtitle
+    ? ` - ${store.calendar!.state.calendarSubtitle}`
     : '';
 
   pdf.setProperties({ title: `${title}${subtitle}` });

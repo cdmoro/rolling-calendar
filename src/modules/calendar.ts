@@ -1,5 +1,6 @@
-import type { MonthGrid } from '../types/calendar';
+import type { CalendarEvent, MonthGrid } from '../types/calendar';
 import type { Language } from '../types/app';
+import { store } from '../store';
 
 export function getFixedMonthGrid(year: number, month: number): MonthGrid {
   const firstDay = new Date(year, month, 1);
@@ -32,4 +33,35 @@ export function getLocalizedWeekdays(lang: Language): string[] {
       )
     )
   );
+}
+
+export function getFilteredEvents(events: CalendarEvent[]) {
+  const startDate = new Date(
+    store.calendar!.state.startYear,
+    store.calendar!.state.startMonth
+  );
+
+  const endDate = new Date(
+    store.calendar!.state.startYear,
+    store.calendar!.state.startMonth + 12
+  );
+
+  const inRangeEvents = events.filter((event: CalendarEvent) => {
+    const eventStartDate = new Date(event.start);
+    const eventEndDate = new Date(event.end);
+
+    return eventStartDate >= startDate && eventEndDate <= endDate;
+  });
+
+  const outOfRangeEvents = events.filter((event: CalendarEvent) => {
+    const eventStartDate = new Date(event.start);
+    const eventEndDate = new Date(event.end);
+
+    return eventStartDate < startDate || eventEndDate > endDate;
+  });
+
+  return {
+    inRangeEvents,
+    outOfRangeEvents
+  };
 }

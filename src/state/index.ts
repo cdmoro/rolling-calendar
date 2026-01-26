@@ -1,10 +1,10 @@
 import { t } from '../i18n';
 import { createDraftCalendar } from '../modules/calendars';
 import { ls } from '../modules/local-storage';
-import { type Theme, type Language, type State } from '../types/app';
+import { type Theme, type Language, type Store } from '../types/app';
 import { type CalendarDocument } from '../types/calendar';
 
-export const state: State = {
+export const state: Store = {
   language: 'en',
   theme: 'auto',
   calendars: [],
@@ -32,7 +32,7 @@ export function initState() {
     untitledCalendarOption.dataset.label = 'untitledCalendar';
 
     state.currentCalendarId = draftCalendar.id;
-    state.calendar = structuredClone(draftCalendar.state);
+    state.calendar = structuredClone(draftCalendar);
 
     ls.setItem('calendars', state.calendars);
     ls.setItem('currentCalendarId', draftCalendar.id);
@@ -46,16 +46,18 @@ export function initState() {
     untitledCalendarOption.textContent = t('untitledCalendar');
     untitledCalendarOption.dataset.label = 'untitledCalendar';
 
-    state.calendar = structuredClone(state.calendars[0].state);
+    state.calendar = structuredClone(state.calendars[0]);
     state.currentCalendarId = state.calendars[0].id;
     return;
   }
 
-  if (state.calendars.find((doc) => doc.id === savedCurrentCalendarId)) {
+  const currentCalendar = state.calendars.find(
+    (doc) => doc.id === savedCurrentCalendarId
+  );
+
+  if (currentCalendar) {
     state.currentCalendarId = savedCurrentCalendarId;
-    state.calendar = structuredClone(
-      state.calendars.find((doc) => doc.id === savedCurrentCalendarId)!.state
-    );
+    state.calendar = structuredClone(currentCalendar);
     return;
   }
 }

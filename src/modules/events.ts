@@ -1,5 +1,5 @@
 import type { CalendarEvent, EventType } from '../types/calendar';
-import { state } from '../state/app';
+import { store } from '../store';
 import { getTypedForm, type AddEditEventFormElements } from '../types/forms';
 import { sortEventsByStartDate } from '../main';
 import { autosaveCurrentCalendar } from './calendars';
@@ -17,7 +17,11 @@ const preview =
   addEditEventForm.querySelector<HTMLDivElement>('#legend-preview')!;
 
 function getCalendarStartDate(): Date {
-  return new Date(state.calendar!.startYear, state.calendar!.startMonth, 1);
+  return new Date(
+    store.calendar!.state.startYear,
+    store.calendar!.state.startMonth,
+    1
+  );
 }
 
 document.querySelector<HTMLButtonElement>('#new-event-btn')!.onclick = () => {
@@ -56,24 +60,24 @@ addEditEventForm.addEventListener('submit', (e) => {
   };
 
   if (data.get('id')) {
-    const eventIndex = state.calendar!.events.findIndex(
+    const eventIndex = store.calendar!.state.events.findIndex(
       (ev) => ev.id === data.get('id')
     );
 
     if (eventIndex !== -1) {
-      state.calendar!.events[eventIndex] = {
+      store.calendar!.state.events[eventIndex] = {
         ...eventData,
         id: data.get('id') as string
       };
     }
   } else {
-    state.calendar!.events.push({
+    store.calendar!.state.events.push({
       ...eventData,
       id: crypto.randomUUID()
     });
   }
 
-  sortEventsByStartDate(state.calendar!.events);
+  sortEventsByStartDate(store.calendar!.state.events);
   autosaveCurrentCalendar();
   renderUI();
 
@@ -126,7 +130,7 @@ export function openEditEventDialog(event: CalendarEvent) {
 
 export function isDayMarked(day: Date): CalendarEvent | null {
   return (
-    state.calendar!.events.find(
+    store.calendar!.state.events.find(
       (e) => new Date(e.start) <= day && new Date(e.end) >= day
     ) ?? null
   );
@@ -142,7 +146,7 @@ export function toLocalISODate(date: Date): string {
 export function getEvent(day: Date): CalendarEvent | null {
   const dayIso = toLocalISODate(day);
 
-  const event = state.calendar!.events.find((e) => {
+  const event = store.calendar!.state.events.find((e) => {
     const start = e.start;
     const end = e.end ?? e.start;
 

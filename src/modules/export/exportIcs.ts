@@ -1,4 +1,4 @@
-import { state } from '../../state/app';
+import { store } from '../../store';
 import { getFileName } from './utils';
 
 function formatIcsDate(iso: string): string {
@@ -24,7 +24,7 @@ function download(content: string, filename: string, type: string) {
 }
 
 export function exportAsIcs(): void {
-  const events = state.calendar!.events;
+  const events = store.calendar!.state.events;
 
   let ics = [
     'BEGIN:VCALENDAR',
