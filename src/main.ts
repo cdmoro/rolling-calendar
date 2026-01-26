@@ -16,7 +16,7 @@ import { formatEventDate, toHumanReadableDate } from './render/events';
 import { getTypedForm, type CalendarFormElements } from './types/forms';
 import { ls } from './modules/local-storage';
 import { setFavicon } from './modules/favicon';
-import { EVENT_LEGEND, getEventLegendLabel } from './render/utils';
+import { getEventLegendLabel } from './render/utils';
 import { isEventInRange } from './modules/calendar';
 
 const calendarNameInput = document.querySelector<HTMLInputElement>(
@@ -151,9 +151,8 @@ const calendarsDialog =
   document.querySelector<HTMLDialogElement>('#calendars-dialog')!;
 const calendarList = calendarsDialog.querySelector('#calendar-list')!;
 
-const eventsBtn = document.querySelector<HTMLButtonElement>(
-  '#manage-events-btn'
-)!;
+const eventsBtn =
+  document.querySelector<HTMLButtonElement>('#manage-events-btn')!;
 const eventsDialog =
   document.querySelector<HTMLDialogElement>('#events-dialog')!;
 const eventList = eventsDialog.querySelector('#event-list')!;

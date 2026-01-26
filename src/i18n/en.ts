@@ -59,7 +59,8 @@ const en: Translations = {
   olive: 'Olive',
   orange: 'Orange',
   outOfRange: 'Out of range',
-  outOfRangeTitle: 'Out-of-range events won\'t be shown when exporting calendars',
+  outOfRangeTitle:
+    'Out-of-range events won’t be shown when exporting calendars',
   pink: 'Pink',
   preview: 'Preview',
   purple: 'Purple',

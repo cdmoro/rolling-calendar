@@ -60,7 +60,8 @@ const fr: Translations = {
   olive: 'Olive',
   orange: 'Orange',
   outOfRange: 'Hors plage',
-  outOfRangeTitle: 'Les événements hors plage ne seront pas affichés lors de l’exportation des calendriers',
+  outOfRangeTitle:
+    'Les événements hors plage ne seront pas affichés lors de l’exportation des calendriers',
   pink: 'Rose',
   preview: 'Aperçu',
   purple: 'Pourpre',

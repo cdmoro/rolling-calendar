@@ -61,7 +61,8 @@ const pt: Translations = {
   olive: 'Oliva',
   orange: 'Laranja',
   outOfRange: 'Fora do intervalo',
-  outOfRangeTitle: 'Eventos fora do intervalo não serão exibidos ao exportar calendários',
+  outOfRangeTitle:
+    'Eventos fora do intervalo não serão exibidos ao exportar calendários',
   pink: 'Rosa',
   preview: 'Pré-visualização',
   purple: 'Púrpura',

@@ -617,9 +617,9 @@ body.exporting #out-of-range-event-list {
 }
 
 .list-item.community-event .list-icon {
-    background-color: var(--accent-color);
-    transform: rotate(45deg) scale(.75);
-    border-radius: 0;
+  background-color: var(--accent-color);
+  transform: rotate(45deg) scale(0.75);
+  border-radius: 0;
 }
 
 .event-item.start-end-period .event-icon {

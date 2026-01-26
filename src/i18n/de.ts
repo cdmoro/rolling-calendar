@@ -61,7 +61,8 @@ const de: Translations = {
   olive: 'Olivgrün',
   orange: 'Orange',
   outOfRange: 'Außerhalb des Bereichs',
-  outOfRangeTitle: 'Außerhalb des Bereichs liegende Ereignisse werden beim Exportieren von Kalendern nicht angezeigt',
+  outOfRangeTitle:
+    'Außerhalb des Bereichs liegende Ereignisse werden beim Exportieren von Kalendern nicht angezeigt',
   pink: 'Rosa',
   preview: 'Vorschau',
   purple: 'Violett',

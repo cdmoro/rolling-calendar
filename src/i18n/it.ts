@@ -61,7 +61,7 @@ const it: Translations = {
   orange: 'Arancione',
   outOfRange: 'Fuori intervallo',
   outOfRangeTitle:
-    "Gli eventi fuori intervallo non verranno mostrati durante l'esportazione dei calendari",
+    'Gli eventi fuori intervallo non verranno mostrati durante l’esportazione dei calendari',
   pink: 'Rosa',
   preview: 'Anteprima',
   purple: 'Porpora',
