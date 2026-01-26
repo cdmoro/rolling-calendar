@@ -35,7 +35,7 @@ export function getLocalizedWeekdays(lang: Language): string[] {
   );
 }
 
-export function getFilteredEvents(events: CalendarEvent[]) {
+export function isEventInRange(event: CalendarEvent) {
   const startDate = new Date(
     store.calendar!.state.startYear,
     store.calendar!.state.startMonth
@@ -46,22 +46,15 @@ export function getFilteredEvents(events: CalendarEvent[]) {
     store.calendar!.state.startMonth + 12
   );
 
-  const inRangeEvents = events.filter((event: CalendarEvent) => {
-    const eventStartDate = new Date(event.start);
-    const eventEndDate = new Date(event.end);
+  const eventStartDate = new Date(event.start);
+  const eventEndDate = new Date(event.end);
 
-    return eventStartDate >= startDate && eventEndDate <= endDate;
-  });
+  return eventStartDate >= startDate && eventEndDate <= endDate;
+}
 
-  const outOfRangeEvents = events.filter((event: CalendarEvent) => {
-    const eventStartDate = new Date(event.start);
-    const eventEndDate = new Date(event.end);
-
-    return eventStartDate < startDate || eventEndDate > endDate;
-  });
-
+export function getFilteredEvents(events: CalendarEvent[]) {
   return {
-    inRangeEvents,
-    outOfRangeEvents
+    inRangeEvents: events.filter(isEventInRange),
+    outOfRangeEvents: events.filter((event) => !isEventInRange(event))
   };
 }

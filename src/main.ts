@@ -12,10 +12,12 @@ import {
 import './components/app-icon';
 import { confirmDialog, setupDialogs } from './modules/dialogs';
 import { Toast } from './modules/notifications';
-import { toHumanReadableDate } from './render/events';
+import { formatEventDate, toHumanReadableDate } from './render/events';
 import { getTypedForm, type CalendarFormElements } from './types/forms';
 import { ls } from './modules/local-storage';
 import { setFavicon } from './modules/favicon';
+import { EVENT_LEGEND, getEventLegendLabel } from './render/utils';
+import { isEventInRange } from './modules/calendar';
 
 const calendarNameInput = document.querySelector<HTMLInputElement>(
   '#calendar-name-input'
@@ -109,7 +111,7 @@ calendarDialog.addEventListener('close', (e) => {
     store.currentCalendarId = newCalendar.id!;
     store.calendar = structuredClone(newCalendar);
     calendarNameTitle.textContent = newCalendar.name;
-    calendarCount.textContent = `(${store.calendars.length})`;
+    calendarCount.textContent = store.calendars.length.toString();
 
     ls.setItem('calendars', store.calendars);
     ls.setItem('currentCalendarId', store.currentCalendarId);
@@ -148,6 +150,18 @@ const colorSelectHeader = document.querySelector<HTMLInputElement>(
 const calendarsDialog =
   document.querySelector<HTMLDialogElement>('#calendars-dialog')!;
 const calendarList = calendarsDialog.querySelector('#calendar-list')!;
+
+const eventsBtn = document.querySelector<HTMLButtonElement>(
+  '#manage-events-btn'
+)!;
+const eventsDialog =
+  document.querySelector<HTMLDialogElement>('#events-dialog')!;
+const eventList = eventsDialog.querySelector('#event-list')!;
+
+eventsBtn.addEventListener('click', () => {
+  updateEventList();
+  eventsDialog.showModal();
+});
 
 function hexToRgb(hex: string) {
   const bigint = parseInt(hex.replace('#', ''), 16);
@@ -241,7 +255,7 @@ async function deleteCalendar(id: string) {
       calendarNameTitle.textContent = t('untitledCalendar');
     }
 
-    calendarCount.textContent = `(${store.calendars.length})`;
+    calendarCount.textContent = store.calendars.length.toString();
     Toast.success(
       t('calendarDeleted', {
         calendar_name: calendarName
@@ -266,7 +280,6 @@ async function deleteCalendar(id: string) {
     setFavicon(store.calendar.state.color, foregroundColor);
 
     resolveCalendarHeader();
-    updateCalendarList();
     autosaveCurrentCalendar();
     renderUI();
   }
@@ -421,6 +434,37 @@ document
     calendarsDialog.showModal();
   });
 
+function uptdateEventCount() {
+  const eventCountEl = document.querySelector<HTMLSpanElement>('#event-count')!;
+  eventCountEl.textContent = store.calendar!.state.events.length.toString();
+}
+
+function updateEventList() {
+  eventList.innerHTML = '';
+
+  store.calendar!.state.events.forEach((event) => {
+    const inRange = isEventInRange(event);
+    const div = document.createElement('div');
+
+    div.className = `list-item ${event.type || 'no-activity'}`;
+    div.classList.toggle('out-of-range', !inRange);
+    div.innerHTML = `
+      <span class="list-icon"></span>
+      <div class="list-info">
+        <h4 class="list-title">${event.title}</h4>
+        <div class="list-dates">${formatEventDate(event, true)}</div>
+        <div class="list-type">${getEventLegendLabel(event.type || 'no-activity')}${!inRange ? ` • ${t('outOfRange')}` : ''}</div>
+      </div>
+      <div class="list-actions">
+        <button class="btn btn-danger btn-icon btn-delete-event" data-id="${event.id}" title="${t('delete')}">
+          <app-icon name="trash"></app-icon>
+        </button>
+      </div>
+    `;
+    eventList.appendChild(div);
+  });
+}
+
 function updateCalendarList() {
   const calendars = structuredClone(store.calendars);
 
@@ -434,15 +478,15 @@ function updateCalendarList() {
     })
     .forEach((cal) => {
       const calendarListItem = document.createElement('div');
-      calendarListItem.className = 'calendar-list-item';
+      calendarListItem.className = 'list-item';
       calendarListItem.innerHTML = `
-      <div class="calendar-color-indicator" style="background: ${cal.state.color};"></div>
-      <div class="calendar-state">
-        <h4 class="calendar-title">${cal.name}</h4>
-        <div class="calendar-events-count">${cal.state.events.length} ${t('events')}</div>
-        <div class="calendar-updated-at">${toHumanReadableDate(new Date(cal.updatedAt), true)}</div>
+      <div class="list-icon" style="background: ${cal.state.color};"></div>
+      <div class="list-info">
+        <h4 class="list-title">${cal.name}</h4>
+        <div class="list-dates">${cal.state.events.length} ${t('events')}</div>
+        <div class="list-updated-at">${toHumanReadableDate(new Date(cal.updatedAt), true)}</div>
       </div>
-      <div class="calendar-actions">
+      <div class="list-actions">
         <button class="btn btn-secondary btn-icon btn-open-calendar" data-id="${cal.id}" data-title="open">
           <app-icon name="open-folder"></app-icon>
         </button>
@@ -462,6 +506,8 @@ function main() {
   initExport();
   setupDialogs();
   updateCalendarList();
+  updateEventList();
+  uptdateEventCount();
 
   calendarList.addEventListener('click', (e) => {
     const openBtn = (e.target as HTMLElement).closest<HTMLButtonElement>(
@@ -504,7 +550,7 @@ function main() {
     calendarNameTitle.textContent = calendarName;
     calendarNameInput.value = calendarName;
   }
-  calendarCount.textContent = `(${store.calendars.length})`;
+  calendarCount.textContent = store.calendars.length.toString();
 
   resolveCalendarHeader();
 

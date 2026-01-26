@@ -53,10 +53,11 @@
             <span data-label="newEvent"></span>
           </button>
 
-          <!-- <button class="btn btn-secondary btn-block" id="add-edit-events-btn">
-            <app-icon name="edit"></app-icon>
-            <span data-label="manageEvents"></span>
-          </button> -->
+          <button class="btn btn-secondary btn-block" id="manage-events-btn">
+            <app-icon name="new-event"></app-icon>
+            <span data-label="events" class="btn-label"></span>
+            <span id="event-count"></span>
+          </button>
 
           <button class="btn btn-secondary btn-block" id="calendar-settings">
             <app-icon name="edit"></app-icon>
@@ -89,7 +90,7 @@
 
           <button class="btn btn-secondary btn-block" id="manage-calendars-btn">
             <app-icon name="new-calendar"></app-icon>
-            <span data-label="myCalendars"></span>
+            <span data-label="myCalendars" class="btn-label"></span>
             <span id="calendar-count"></span>
           </button>
 
@@ -243,49 +244,6 @@
       </form>
     </dialog>
 
-    <!-- <dialog id="new-calendar-dialog" closedby="any">
-      <div class="dialog-header">
-        <h3>
-          <app-icon name="new-calendar"></app-icon>
-          <span data-label="newCalendar"></span>
-        </h3>
-      </div>
-      <form id="new-calendar-form">
-        <div class="dialog-body">
-          <p data-label="createCalendarDescription"></p>
-          <div class="form-control">
-            <label for="calendar-name-input" data-label="titleLabel"></label>
-            <input
-              type="text"
-              name="label"
-              id="calendar-name-input"
-              autofocus
-              required
-            />
-            <div
-              class="dialog-description"
-              data-label="calendarNameDescription"
-            ></div>
-          </div>
-          <div class="dialog-error"></div>
-        </div>
-        <div class="dialog-footer">
-          <button
-            class="btn btn-secondary"
-            id="cancel-new-calendar"
-            value="cancel"
-            data-label="cancel"
-            formnovalidate
-          ></button>
-          <button
-            class="btn btn-primary"
-            value="create"
-            data-label="save"
-          ></button>
-        </div>
-      </form>
-    </dialog> -->
-
     <dialog id="delete-dialog" closedby="any">
       <div class="dialog-header">
         <h3>
@@ -392,12 +350,34 @@
       </div>
       <form method="dialog">
         <div class="dialog-body">
-          <div id="calendar-list"></div>
+          <div id="calendar-list" class="list"></div>
         </div>
         <div class="dialog-footer">
           <button
             class="btn btn-primary"
             id="close-calendars-button"
+            data-label="close"
+          ></button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="events-dialog" closedby="any">
+      <div class="dialog-header">
+        <h3>
+          <app-icon name="new-event"></app-icon>
+          <span data-label="events"></span>
+        </h3>
+      </div>
+      <form method="dialog">
+        <div class="dialog-body">
+          <div id="event-list" class="list"></div>
+          <div class="out-of-range-legend" data-label="outOfRangeTitle"></div>
+        </div>
+        <div class="dialog-footer">
+          <button
+            class="btn btn-primary"
+            id="close-events-button"
             data-label="close"
           ></button>
         </div>

@@ -20,6 +20,7 @@ const it: Translations = {
   calendarTitle: 'Titolo',
   calendarTitlePlaceholder: 'Istituzione',
   cancel: 'Annulla',
+  close: 'Chiudi',
   color: 'Colore',
   communityEvent: 'Evento comunitario',
   cyan: 'Ciano',
@@ -58,8 +59,9 @@ const it: Translations = {
   noActivity: 'Nessuna attività',
   olive: 'Oliva',
   orange: 'Arancione',
+  outOfRange: 'Fuori intervallo',
   outOfRangeTitle:
-    'Eventi fuori intervallo (non mostrati durante l’esportazione del calendario)',
+    "Gli eventi fuori intervallo non verranno mostrati durante l'esportazione dei calendari",
   pink: 'Rosa',
   preview: 'Anteprima',
   purple: 'Porpora',

@@ -20,6 +20,7 @@ const el: Translations = {
   calendarTitle: 'Τίτλος',
   calendarTitlePlaceholder: 'Ίδρυμα',
   cancel: 'Ακύρωση',
+  close: 'Κλείσιμο',
   color: 'Χρώμα',
   communityEvent: 'Κοινοτικό Γεγονός',
   cyan: 'Κυανό',
@@ -59,8 +60,8 @@ const el: Translations = {
   noActivity: 'Καμία δραστηριότητα',
   olive: 'Ελιά',
   orange: 'Πορτοκαλί',
-  outOfRangeTitle:
-    'Γεγονότα εκτός εύρους (δεν εμφανίζονται κατά την εξαγωγή ημερολογίου)',
+  outOfRange: 'Εκτός εύρους',
+  outOfRangeTitle: 'Τα γεγονότα εκτός εύρους δεν θα εμφανίζονται κατά την εξαγωγή ημερολογίων',
   pink: 'Ροζ',
   preview: 'Προεπισκόπηση',
   purple: 'Μωβ',

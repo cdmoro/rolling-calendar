@@ -20,6 +20,7 @@ const fr: Translations = {
   calendarTitle: 'Titre',
   calendarTitlePlaceholder: 'Institution',
   cancel: 'Annuler',
+  close: 'Fermer',
   color: 'Couleur',
   communityEvent: 'Événement communautaire',
   cyan: 'Cyan',
@@ -58,8 +59,8 @@ const fr: Translations = {
   noActivity: 'Pas d’activité',
   olive: 'Olive',
   orange: 'Orange',
-  outOfRangeTitle:
-    'Événements hors plage (non affichés lors de l’exportation du calendrier)',
+  outOfRange: 'Hors plage',
+  outOfRangeTitle: 'Les événements hors plage ne seront pas affichés lors de l’exportation des calendriers',
   pink: 'Rose',
   preview: 'Aperçu',
   purple: 'Pourpre',
