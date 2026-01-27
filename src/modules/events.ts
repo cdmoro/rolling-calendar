@@ -52,24 +52,20 @@ addEditEventForm.addEventListener('submit', (e) => {
     data.set('end', data.get('start') as string);
   }
 
-  const eventData: Omit<CalendarEvent, 'id'> = {
+  const eventData: CalendarEvent = {
+    id: data.get('id') as string,
     title: data.get('title') as string,
     start: data.get('start') as string,
     end: data.get('end') as string,
     type: data.get('type') as CalendarEvent['type']
   };
 
-  if (data.get('id')) {
-    const eventIndex = store.calendar!.state.events.findIndex(
-      (ev) => ev.id === data.get('id')
-    );
+  const eventIndex = store.calendar!.state.events.findIndex(
+    (ev) => ev.id === eventData.id
+  );
 
-    if (eventIndex !== -1) {
-      store.calendar!.state.events[eventIndex] = {
-        ...eventData,
-        id: data.get('id') as string
-      };
-    }
+  if (eventIndex !== -1) {
+    store.calendar!.state.events[eventIndex] = structuredClone(eventData);
   } else {
     store.calendar!.state.events.push({
       ...eventData,
@@ -126,14 +122,6 @@ export function openEditEventDialog(event: CalendarEvent) {
   addEditEventDialog.querySelector('#confirm-add-edit-event')!.textContent =
     t('save');
   addEditEventDialog.showModal();
-}
-
-export function isDayMarked(day: Date): CalendarEvent | null {
-  return (
-    store.calendar!.state.events.find(
-      (e) => new Date(e.start) <= day && new Date(e.end) >= day
-    ) ?? null
-  );
 }
 
 export function toLocalISODate(date: Date): string {

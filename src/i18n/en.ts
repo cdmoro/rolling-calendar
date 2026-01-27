@@ -56,6 +56,7 @@ const en: Translations = {
   newEvent: 'New event',
   no: 'No',
   noActivity: 'No activity',
+  noEventsFound: 'No events found',
   olive: 'Olive',
   orange: 'Orange',
   outOfRange: 'Out of range',

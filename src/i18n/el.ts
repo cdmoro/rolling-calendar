@@ -58,6 +58,7 @@ const el: Translations = {
   newEvent: 'Νέο γεγονός',
   no: 'Όχι',
   noActivity: 'Καμία δραστηριότητα',
+  noEventsFound: 'Δεν βρέθηκαν γεγονότα',
   olive: 'Ελιά',
   orange: 'Πορτοκαλί',
   outOfRange: 'Εκτός εύρους',

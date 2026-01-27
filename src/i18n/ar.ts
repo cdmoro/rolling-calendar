@@ -53,6 +53,7 @@ const ar: Translations = {
   newEvent: 'حدث جديد',
   no: 'لا',
   noActivity: 'لا توجد نشاطات',
+  noEventsFound: 'لم يتم العثور على أحداث',
   olive: 'زيتوني',
   orange: 'برتقالي',
   outOfRange: 'خارج النطاق',

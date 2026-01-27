@@ -62,6 +62,7 @@ export const translationKeys = [
   'newEvent',
   'no',
   'noActivity',
+  'noEventsFound',
   'olive',
   'orange',
   'outOfRange',

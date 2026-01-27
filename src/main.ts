@@ -317,6 +317,19 @@ document
     await deleteCalendar(calendarId);
   });
 
+function updateActiveCalendarInList() {
+  const calendarItems =
+    calendarList.querySelectorAll<HTMLDivElement>('.list-item');
+
+  calendarItems.forEach((item) => {
+    console.log(item.dataset.id, store.currentCalendarId);
+    item.classList.toggle(
+      'active',
+      item.dataset.id === store.currentCalendarId
+    );
+  });
+}
+
 function openCalendar(id: string) {
   const selectedCalendar = store.calendars.find((cal) => cal.id === id);
 
@@ -347,9 +360,13 @@ function openCalendar(id: string) {
       store.calendar.state.color,
       getForegroundColor(store.calendar.state.color)
     );
+    // updateCalendarList();
     resolveCalendarHeader();
-    autosaveCurrentCalendar();
+    // autosaveCurrentCalendar();
+    updateActiveCalendarInList();
+    uptdateEventCount();
     renderUI();
+
     Toast.info(t('calendarOpened', { calendar_name: selectedCalendar.name }), {
       id: 'calendar-opened'
     });
@@ -382,7 +399,7 @@ function resolveCalendarHeader() {
   if (store.calendar) {
     store.calendar.state.calendarTitle = title;
     store.calendar.state.calendarSubtitle = subtitle;
-    autosaveCurrentCalendar();
+    // autosaveCurrentCalendar();
   }
 }
 
@@ -441,6 +458,20 @@ function uptdateEventCount() {
 function updateEventList() {
   eventList.innerHTML = '';
 
+  if (store.calendar!.state.events.length === 0) {
+    const noEventsEl = document.createElement('div');
+    noEventsEl.className = 'empty-list';
+    noEventsEl.innerHTML = `
+      <div>${t('noEventsFound')}</div>
+      <!--button class="btn btn-primary btn-sm" id="add-first-event-btn">
+        <app-icon name="new-event"></app-icon>
+        <span>${t('newEvent')}</span>
+      </button-->
+    `;
+    eventList.appendChild(noEventsEl);
+    return;
+  }
+
   store.calendar!.state.events.forEach((event) => {
     const inRange = isEventInRange(event);
     const div = document.createElement('div');
@@ -478,8 +509,14 @@ function updateCalendarList() {
     .forEach((cal) => {
       const calendarListItem = document.createElement('div');
       calendarListItem.className = 'list-item';
+      calendarListItem.dataset.id = cal.id;
+      calendarListItem.classList.toggle(
+        'active',
+        cal.id === store.currentCalendarId
+      );
+      // ${cal.id === store.currentCalendarId ? '✓' : ''}
       calendarListItem.innerHTML = `
-      <div class="list-icon" style="background: ${cal.state.color};"></div>
+      <div class="list-icon" style="background: ${cal.state.color}; color: ${getForegroundColor(cal.state.color)};"></div>
       <div class="list-info">
         <h4 class="list-title">${cal.name}</h4>
         <div class="list-dates">${cal.state.events.length} ${t('events')}</div>

@@ -57,6 +57,7 @@ const it: Translations = {
   newEvent: 'Nuovo evento',
   no: 'No',
   noActivity: 'Nessuna attività',
+  noEventsFound: 'Nessun evento trovato',
   olive: 'Oliva',
   orange: 'Arancione',
   outOfRange: 'Fuori intervallo',

@@ -58,6 +58,7 @@ const de: Translations = {
   newEvent: 'Neues Ereignis',
   no: 'Nein',
   noActivity: 'Keine Aktivität',
+  noEventsFound: 'Keine Ereignisse gefunden',
   olive: 'Olivgrün',
   orange: 'Orange',
   outOfRange: 'Außerhalb des Bereichs',

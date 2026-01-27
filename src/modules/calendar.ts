@@ -47,7 +47,7 @@ export function isEventInRange(event: CalendarEvent) {
   );
 
   const eventStartDate = new Date(event.start);
-  const eventEndDate = new Date(event.end);
+  const eventEndDate = new Date(event.end || event.start);
 
   return eventStartDate >= startDate && eventEndDate <= endDate;
 }

@@ -190,11 +190,13 @@ export function openDeleteEventDialog(eventId: string) {
   const dialog = document.getElementById('delete-dialog') as HTMLDialogElement;
   pendingDeleteEventId = eventId;
 
+  console.log('event', event);
+
   const dates =
-    event.start === event.end
-      ? `<p><strong data-label="date"></strong>: ${formatLongDate(event.start, store.language)}</p>`
-      : `<p><strong data-label="startDate"></strong>: ${formatLongDate(event.start, store.language)}</p>
-       <p><strong data-label="endDate"></strong>: ${formatLongDate(event.end, store.language)}</p>`;
+    event.start === event.end || !event.end
+      ? `<p><strong data-label="date"></strong>: ${formatLongDate(event.start)}</p>`
+      : `<p><strong data-label="startDate"></strong>: ${formatLongDate(event.start)}</p>
+       <p><strong data-label="endDate"></strong>: ${formatLongDate(event.end)}</p>`;
 
   document.querySelector<HTMLDivElement>(
     '#delete-dialog .dialog-description'

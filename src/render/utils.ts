@@ -16,12 +16,9 @@ export function getEventLegendLabel(type: EventType): string {
   return t(EVENT_LEGEND[type]) || t('noActivity');
 }
 
-export function formatLongDate(
-  dateStr: string,
-  locale: string = store.language
-): string {
+export function formatLongDate(dateStr: string): string {
   const date = new Date(dateStr);
-  const formatter = new Intl.DateTimeFormat(locale, {
+  const formatter = new Intl.DateTimeFormat(store.language, {
     year: 'numeric',
     month: 'long',
     day: 'numeric'

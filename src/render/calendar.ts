@@ -31,12 +31,11 @@ grid.addEventListener('click', async (e) => {
 
     switch (btn.value) {
       case 'delete': {
-        // openDeleteEventDialog(btn.dataset.eventId);
         const dates =
-          event.start === event.end
-            ? `<p><strong>${t('date')}</strong>: ${formatLongDate(event.start, store.language)}</p>`
-            : `<p><strong>${t('startDate')}</strong>: ${formatLongDate(event.start, store.language)}</p>
-                 <p><strong>${t('endDate')}</strong>: ${formatLongDate(event.end, store.language)}</p>`;
+          event.start === event.end || !event.end
+            ? `<p><strong>${t('date')}</strong>: ${formatLongDate(event.start)}</p>`
+            : `<p><strong>${t('startDate')}</strong>: ${formatLongDate(event.start)}</p>
+               <p><strong>${t('endDate')}</strong>: ${formatLongDate(event.end)}</p>`;
         const detail = `
               <p><strong>${t('titleLabel')}</strong>: ${event.title}</p>
               ${dates}

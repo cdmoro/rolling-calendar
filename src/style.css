@@ -1000,7 +1000,6 @@ dialog .list .list-item {
   display: flex;
   align-items: center;
   gap: 1rem;
-  border-radius: 0.25rem;
 }
 
 dialog .list .list-item:hover {
@@ -1014,6 +1013,11 @@ dialog .list .list-item:hover {
   border: 1px solid var(--border-color);
   flex-shrink: 0;
   margin-inline-start: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .list-info {
@@ -1055,5 +1059,15 @@ header #calendar-color-input {
 .out-of-range-legend {
   margin-top: 0.75rem;
   font-size: 0.85rem;
+  color: var(--muted-color);
+}
+
+#calendar-list .list-item.active .list-icon::before {
+  content: '✓';
+}
+
+.list .empty-list {
+  padding: 1rem;
+  text-align: center;
   color: var(--muted-color);
 }
