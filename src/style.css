@@ -276,13 +276,19 @@ header input {
   padding: 4px 6px;
   border-bottom: solid 1px var(--accent-color-40);
   min-height: 26px;
-  grid-template-columns: 9px 150px 1fr auto;
+  grid-template-columns: 9px 120px 1fr auto;
   align-items: end;
   gap: 7px;
 }
 
 .event-list-wrapper .event-item:not(.empty):hover {
   background: var(--accent-color-20);
+}
+
+.event-list-wrapper .event-item span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .event-list-wrapper h3 {
