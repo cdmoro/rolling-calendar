@@ -82,7 +82,8 @@ const pt: Translations = {
   yes: 'Sim',
   days: 'dias',
   day: 'dia',
-  duration: 'Duração'
+  duration: 'Duração',
+  noCalendarsFound: 'Nenhum calendário encontrado',
 };
 
 export default pt;

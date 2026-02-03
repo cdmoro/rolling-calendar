@@ -76,7 +76,8 @@ const ar: Translations = {
   yes: 'نعم',
   days: 'أيام',
   day: 'يوم',
-  duration: 'المدة'
+  duration: 'المدة',
+  noCalendarsFound: 'لم يتم العثور على تقاويم',
 };
 
 export default ar;

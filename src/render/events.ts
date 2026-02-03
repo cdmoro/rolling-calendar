@@ -137,12 +137,17 @@ const createEventItem = (event: CalendarEvent, showYear: boolean = false) => {
 
 function renderEventListSection(
   wrapper: HTMLElement,
+  id: string,
   columns: number = 2,
   events: CalendarEvent[],
   showYear: boolean = false,
   title?: string
 ) {
   if (events.length === 0) return;
+
+  const eventListSection = document.createElement('div');
+  eventListSection.id = id;
+  eventListSection.className = 'event-list-section';
 
   const eventListEl = document.createElement('div');
   eventListEl.className = 'event-list';
@@ -151,7 +156,7 @@ function renderEventListSection(
   if (title) {
     const titleEl = document.createElement('h3');
     titleEl.textContent = title;
-    wrapper.appendChild(titleEl);
+    eventListSection.appendChild(titleEl);
   }
 
   const eventColumns = splitIntoColumns(events, columns);
@@ -180,15 +185,8 @@ function renderEventListSection(
     }
   });
 
-  // container.onclick = (e) => {
-  //   const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
-  //     '.event-delete'
-  //   );
-  //   if (!btn?.dataset.id) return;
-
-  //   openDeleteEventDialog(btn.dataset.id);
-  // };
-  wrapper.appendChild(eventListEl);
+  eventListSection.appendChild(eventListEl);
+  wrapper.appendChild(eventListSection);
 }
 
 export function renderEventList() {
@@ -204,12 +202,13 @@ export function renderEventList() {
     store.calendar!.state.events
   );
 
-  renderEventListSection(eventListWrapper, columns, inRangeEvents);
+  renderEventListSection(eventListWrapper, 'in-range-events', columns, inRangeEvents);
 
   if (outOfRangeEvents.length === 0) return;
 
   renderEventListSection(
     eventListWrapper,
+    'out-of-range-events',
     columns,
     outOfRangeEvents,
     true,

@@ -82,7 +82,8 @@ const el: Translations = {
   yes: 'Ναι',
   days: 'ημέρες',
   day: 'ημέρα',
-  duration: 'Διάρκεια'
+  duration: 'Διάρκεια',
+  noCalendarsFound: 'Δεν βρέθηκαν ημερολόγια',
 };
 
 export default el;

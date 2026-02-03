@@ -80,7 +80,8 @@ const en: Translations = {
   yes: 'Yes',
   days: 'days',
   day: 'day',
-  duration: 'Duration'
+  duration: 'Duration',
+  noCalendarsFound: 'No calendars found',
 };
 
 export default en;

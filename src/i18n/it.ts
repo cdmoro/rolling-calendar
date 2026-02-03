@@ -81,7 +81,8 @@ const it: Translations = {
   yes: 'Sì',
   days: 'giorni',
   day: 'giorno',
-  duration: 'Durata'
+  duration: 'Durata',
+  noCalendarsFound: 'Nessun calendario trovato',
 };
 
 export default it;

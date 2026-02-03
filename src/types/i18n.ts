@@ -32,11 +32,14 @@ export const translationKeys = [
   'cyan',
   'dark',
   'date',
+  'day',
+  'days',
   'delete',
   'deleteCalendar',
   'deleteCalendarConfirmation',
   'deleteEvent',
   'deleteEventConfirmation',
+  'duration',
   'edit',
   'editCalendar',
   'editEvent',
@@ -62,6 +65,7 @@ export const translationKeys = [
   'newEvent',
   'no',
   'noActivity',
+  'noCalendarsFound',
   'noEventsFound',
   'olive',
   'orange',
@@ -83,9 +87,6 @@ export const translationKeys = [
   'type',
   'untitledCalendar',
   'yes',
-  'days',
-  'day',
-  'duration',
 ] as const;
 
 export type TranslationKey = (typeof translationKeys)[number];

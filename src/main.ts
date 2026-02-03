@@ -12,12 +12,13 @@ import {
 import './components/app-icon';
 import { confirmDialog, setupDialogs } from './modules/dialogs';
 import { Toast } from './modules/notifications';
-import { formatEventDate, toHumanReadableDate } from './render/events';
+import { formatEventDate, openDeleteEventDialog, toHumanReadableDate } from './render/events';
 import { getTypedForm, type CalendarFormElements } from './types/forms';
 import { ls } from './modules/local-storage';
 import { setFavicon } from './modules/favicon';
 import { getEventLegendLabel } from './render/utils';
 import { isEventInRange } from './modules/calendar';
+import { openEditEventDialog } from './modules/events';
 
 const calendarNameInput = document.querySelector<HTMLInputElement>(
   '#calendar-name-input'
@@ -463,10 +464,6 @@ function updateEventList() {
     noEventsEl.className = 'empty-list';
     noEventsEl.innerHTML = `
       <div>${t('noEventsFound')}</div>
-      <!--button class="btn btn-primary btn-sm" id="add-first-event-btn">
-        <app-icon name="new-event"></app-icon>
-        <span>${t('newEvent')}</span>
-      </button-->
     `;
     eventList.appendChild(noEventsEl);
     return;
@@ -509,12 +506,16 @@ function updateEventList() {
         <span class="list-icon"></span>
         <div class="list-info">
           <h4 class="list-title">${event.title}</h4>
-          <!--div class="list-dates">${formatEventDate(event, true)}</div-->
           <div class="list-type">${getEventLegendLabel(
             event.type || 'no-activity'
           )}${!inRange ? ` • ${t('outOfRange').toUpperCase()}` : ''}</div>
         </div>
         <div class="list-actions">
+          <button class="btn btn-primary btn-icon btn-edit-event" data-id="${
+            event.id
+          }" title="${t('edit')}">
+            <app-icon name="edit"></app-icon>
+          </button>
           <button class="btn btn-danger btn-icon btn-delete-event" data-id="${
             event.id
           }" title="${t('delete')}">
@@ -528,13 +529,21 @@ function updateEventList() {
 }
 
 function updateCalendarList() {
-  const calendars = structuredClone(store.calendars);
-
   calendarList.innerHTML = '';
+
+  if (store.calendars.length === 0) {
+    const noCalendarsEl = document.createElement('div');
+    noCalendarsEl.className = 'empty-list';
+    noCalendarsEl.innerHTML = `
+      <div>${t('noCalendarsFound')}</div>
+    `;
+    calendarList.appendChild(noCalendarsEl);
+    return;
+  }
 
   const groupCalendarsByMonth: Record<string, CalendarDocument[]> = {};
 
-  Object.values(calendars).forEach((cal) => {
+  Object.values(store.calendars).forEach((cal) => {
     const updatedAtDate = new Date(cal.updatedAt);
     const monthKey = `${updatedAtDate.getFullYear()}-${String(
       updatedAtDate.getMonth() + 1
@@ -573,7 +582,6 @@ function updateCalendarList() {
         'active',
         cal.id === store.currentCalendarId
       );
-      // ${cal.id === store.currentCalendarId ? '✓' : ''}
       calendarListItem.innerHTML = `
       <div class="list-icon" style="background: ${cal.state.color}; color: ${getForegroundColor(cal.state.color)};">${cal.state.events.length}</div>
       <div class="list-info">
@@ -590,6 +598,7 @@ function updateCalendarList() {
         </button>
       </div>
     `;
+
       calendarList.appendChild(calendarListItem);
     });
   });
@@ -619,6 +628,23 @@ function main() {
 
     if (deleteBtn?.dataset.id) {
       deleteCalendar(deleteBtn.dataset.id);
+    }
+  });
+
+  eventList.addEventListener('click', (e) => {
+    const editBtn = (e.target as HTMLElement).closest<HTMLButtonElement>(
+      '.btn-edit-event'
+    );
+    const deleteBtn = (e.target as HTMLElement).closest<HTMLButtonElement>(
+      '.btn-delete-event'
+    );
+
+    if (editBtn?.dataset.id) {
+      openEditEventDialog(editBtn.dataset.id);
+    }
+
+    if (deleteBtn?.dataset.id) {
+      openDeleteEventDialog(deleteBtn.dataset.id);
     }
   });
 

@@ -132,15 +132,15 @@ select {
 select {
   --arrow: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
   appearance: none;
-  padding: .375rem 2.25rem .375rem .75rem;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
   background-image: var(--arrow);
   background-repeat: no-repeat;
-  background-position: right .75rem center;
+  background-position: right 0.75rem center;
   background-size: 16px 12px;
 }
 
 [data-theme='dark'] select {
-    --arrow: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  --arrow: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
 }
 
 input:focus,
@@ -158,11 +158,11 @@ header input {
 }
 
 .form-select-sm {
-  padding-top: .25rem;
-  padding-bottom: .25rem;
-  padding-left: .5rem;
-  font-size: .875rem;
-  border-radius: .25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
 }
 
 .sidebar input,
@@ -286,7 +286,7 @@ header input {
 }
 
 .event-list-wrapper h3 {
-  margin: 0;
+  margin-top: 0;
   font-size: 0.85rem;
   font-weight: normal;
   color: var(--muted-color);
@@ -546,7 +546,7 @@ body.exporting .tooltip {
   line-height: 1.5;
 }
 
-body.exporting #out-of-range-event-list {
+body.exporting #out-of-range-events {
   display: none;
 }
 
@@ -1027,7 +1027,7 @@ dialog .list .list-item:hover {
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: .85rem;
+  font-size: 0.85rem;
 }
 
 .list-info {
@@ -1067,7 +1067,7 @@ dialog .list .list-item:hover {
 }
 
 .list-item.active {
-    background: var(--accent-color-30);
+  background: var(--accent-color-30);
 }
 
 .list .empty-list {
@@ -1186,4 +1186,13 @@ header #calendar-color-input::-moz-color-swatch {
 
 header #calendar-color-input::-webkit-color-swatch {
   border-radius: 50%;
+}
+
+.event-actions .btn-icon.btn-sm {
+  padding: 0.15rem;
+}
+
+.event-actions .btn-icon.btn-sm svg.icon {
+  height: 11px;
+  width: 11px;
 }

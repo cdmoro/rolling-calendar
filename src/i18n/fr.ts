@@ -81,7 +81,8 @@ const fr: Translations = {
   yes: 'Oui',
   days: 'jours',
   day: 'jour',
-  duration: 'Durée'
+  duration: 'Durée',
+  noCalendarsFound: 'Aucun calendrier trouvé',
 };
 
 export default fr;

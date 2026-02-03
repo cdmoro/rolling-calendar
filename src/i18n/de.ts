@@ -83,6 +83,7 @@ const de: Translations = {
   days: 'Tage',
   day: 'Tag',
   duration: 'Dauer',
+  noCalendarsFound: 'Keine Kalender gefunden',
 };
 
 export default de;
