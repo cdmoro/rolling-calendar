@@ -14,6 +14,7 @@ import { confirmDialog } from '../modules/dialogs';
 import { renderLegend } from './legend';
 import { autosaveCurrentCalendar } from '../modules/calendars';
 import { Toast } from '../modules/notifications';
+import { uptdateEventCount } from '../main';
 
 const grid = document.querySelector<HTMLDivElement>('#calendar-grid')!;
 
@@ -59,6 +60,7 @@ grid.addEventListener('click', async (e) => {
           if (index !== -1) {
             store.calendar!.state.events.splice(index, 1);
             autosaveCurrentCalendar();
+            uptdateEventCount();
             renderEventList();
             renderCalendar();
             renderLegend();
@@ -75,9 +77,7 @@ grid.addEventListener('click', async (e) => {
         break;
       }
       case 'edit': {
-        if (event) {
-          openEditEventDialog(event);
-        }
+        openEditEventDialog(btn?.dataset.eventId);
         break;
       }
     }
@@ -147,7 +147,7 @@ export function renderCalendar() {
         const event = getEvent(day);
 
         if (event) {
-          const isSingleDayEvent = event.start === event.end;
+          const isSingleDayEvent = event.start === event.end || !event.end;
 
           cell.innerHTML += `<div class="tooltip">
             <div class="tooltip-body">

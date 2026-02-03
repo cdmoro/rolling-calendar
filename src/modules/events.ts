@@ -1,10 +1,11 @@
 import type { CalendarEvent, EventType } from '../types/calendar';
 import { store } from '../store';
 import { getTypedForm, type AddEditEventFormElements } from '../types/forms';
-import { sortEventsByStartDate } from '../main';
+import { sortEventsByStartDate, uptdateEventCount } from '../main';
 import { autosaveCurrentCalendar } from './calendars';
 import { renderUI } from '../render';
 import { t } from '../i18n';
+import { Toast } from './notifications';
 
 const addEditEventDialog = document.querySelector<HTMLDialogElement>(
   '#add-edit-event-dialog'
@@ -33,12 +34,31 @@ function updateLegendPreview() {
     .substring(8, 10)
     .replace(/^0/, '');
   const type = addEditEventForm.elements.type.value as EventType;
+
   preview.innerHTML = `<span class="day weekday marked ${type}">${day}</span>`;
 }
 
-addEditEventForm.elements.start.addEventListener('change', () =>
-  updateLegendPreview()
-);
+function updateDurationDisplay() {
+  const durationDisplay = document.querySelector<HTMLInputElement>(
+    '#event-duration-display'
+  )!;
+  const startDate = new Date(addEditEventForm.elements.start.value);
+  const endDate = new Date(addEditEventForm.elements.end.value);
+  const duration = endDate.getTime() - startDate.getTime();
+  const durationInDays = duration / (1000 * 60 * 60 * 24) + 1;
+
+  durationDisplay.innerHTML =
+    durationInDays > 1 ? `${durationInDays} ${t('days')}` : `1 ${t('day')}`;
+}
+
+addEditEventForm.elements.start.addEventListener('change', () => {
+  updateLegendPreview();
+  updateDurationDisplay();
+});
+addEditEventForm.elements.end.addEventListener('change', () => {
+  updateLegendPreview();
+  updateDurationDisplay();
+});
 addEditEventForm.elements.type.addEventListener('change', () =>
   updateLegendPreview()
 );
@@ -48,9 +68,9 @@ addEditEventForm.addEventListener('submit', (e) => {
 
   const data = new FormData(addEditEventForm);
 
-  if (!data.get('end')) {
-    data.set('end', data.get('start') as string);
-  }
+  // if (!data.get('end')) {
+  //   data.set('end', data.get('start') as string);
+  // }
 
   const eventData: CalendarEvent = {
     id: data.get('id') as string,
@@ -75,6 +95,7 @@ addEditEventForm.addEventListener('submit', (e) => {
 
   sortEventsByStartDate(store.calendar!.state.events);
   autosaveCurrentCalendar();
+  uptdateEventCount();
   renderUI();
 
   addEditEventDialog.close();
@@ -84,7 +105,7 @@ addEditEventDialog.onclose = () => {
   addEditEventForm.reset();
 };
 
-function setAditEventFormValues({
+function setEventFormValues({
   id = '',
   title = '',
   start = '',
@@ -103,22 +124,32 @@ export function openNewEventDialog(dateIso: string) {
     <app-icon name="new-event"></app-icon>
     <span>${t('newEvent')}</span>
   `;
-  setAditEventFormValues({ start: dateIso });
+  setEventFormValues({ start: dateIso });
   addEditEventForm.elements.end.setAttribute('min', dateIso);
   updateLegendPreview();
+  updateDurationDisplay();
   addEditEventDialog.querySelector('#confirm-add-edit-event')!.textContent =
     t('addEvent');
   addEditEventDialog.showModal();
 }
 
-export function openEditEventDialog(event: CalendarEvent) {
+export function openEditEventDialog(id: string) {
+  const event = store.calendar!.state.events.find((e) => e.id === id);
+  if (!event) {
+    Toast.error(t('eventNotFound'), {
+      id: 'event-not-found'
+    });
+    return;
+  };
+
   addEditEventDialog.querySelector('h3')!.innerHTML = `
     <app-icon name="edit"></app-icon>
     <span>${t('editEvent')}</span>
   `;
-  setAditEventFormValues(event);
+  setEventFormValues(event);
   addEditEventForm.elements.end.setAttribute('min', event.start);
   updateLegendPreview();
+  updateDurationDisplay();
   addEditEventDialog.querySelector('#confirm-add-edit-event')!.textContent =
     t('save');
   addEditEventDialog.showModal();
@@ -136,7 +167,9 @@ export function getEvent(day: Date): CalendarEvent | null {
 
   const event = store.calendar!.state.events.find((e) => {
     const start = e.start;
-    const end = e.end ?? e.start;
+    const end = e.end;
+
+    if (!end) return dayIso === start;
 
     return dayIso >= start && dayIso <= end;
   });

@@ -78,7 +78,10 @@ const fr: Translations = {
   titleLabel: 'Titre',
   type: 'Type',
   untitledCalendar: 'Calendrier sans titre',
-  yes: 'Oui'
+  yes: 'Oui',
+  days: 'jours',
+  day: 'jour',
+  duration: 'Durée'
 };
 
 export default fr;

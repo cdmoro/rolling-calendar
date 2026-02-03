@@ -79,7 +79,10 @@ const el: Translations = {
   titleLabel: 'Τίτλος',
   type: 'Τύπος',
   untitledCalendar: 'Ημερολόγιο χωρίς τίτλο',
-  yes: 'Ναι'
+  yes: 'Ναι',
+  days: 'ημέρες',
+  day: 'ημέρα',
+  duration: 'Διάρκεια'
 };
 
 export default el;

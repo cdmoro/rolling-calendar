@@ -82,7 +82,10 @@ export const translationKeys = [
   'titleLabel',
   'type',
   'untitledCalendar',
-  'yes'
+  'yes',
+  'days',
+  'day',
+  'duration',
 ] as const;
 
 export type TranslationKey = (typeof translationKeys)[number];

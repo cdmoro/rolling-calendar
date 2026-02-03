@@ -79,7 +79,10 @@ const de: Translations = {
   titleLabel: 'Titel',
   type: 'Typ',
   untitledCalendar: 'Unbenannter Kalender',
-  yes: 'Ja'
+  yes: 'Ja',
+  days: 'Tage',
+  day: 'Tag',
+  duration: 'Dauer',
 };
 
 export default de;

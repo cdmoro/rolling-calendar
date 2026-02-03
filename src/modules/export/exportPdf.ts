@@ -1,5 +1,7 @@
+import type jsPDF from 'jspdf';
 import { store } from '../../store';
 import { getFileName } from './utils';
+import type { jsPDFOptions } from 'jspdf';
 
 export async function exportAsPdf(): Promise<void> {
   const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
@@ -12,9 +14,10 @@ export async function exportAsPdf(): Promise<void> {
 
   const canvas = await html2canvas(el, { scale: 2 });
   const imgData = canvas.toDataURL('image/png');
+  const orientation = (document.documentElement.dataset.layout || 'portrait') as jsPDFOptions['orientation'];
 
   const pdf = new jsPDF({
-    orientation: 'portrait',
+    orientation,
     unit: 'px',
     format: 'a4'
   });

@@ -77,7 +77,10 @@ const en: Translations = {
   titleLabel: 'Title',
   type: 'Type',
   untitledCalendar: 'Untitled Calendar',
-  yes: 'Yes'
+  yes: 'Yes',
+  days: 'days',
+  day: 'day',
+  duration: 'Duration'
 };
 
 export default en;

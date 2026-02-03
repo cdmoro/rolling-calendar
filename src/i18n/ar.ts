@@ -73,7 +73,10 @@ const ar: Translations = {
   titleLabel: 'العنوان',
   type: 'النوع',
   untitledCalendar: 'تقويم بدون عنوان',
-  yes: 'نعم'
+  yes: 'نعم',
+  days: 'أيام',
+  day: 'يوم',
+  duration: 'المدة'
 };
 
 export default ar;

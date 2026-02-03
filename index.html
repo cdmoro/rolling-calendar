@@ -2,47 +2,52 @@
 <html
   lang="en"
   data-theme="light"
+  data-layout="portrait"
   style="--accent-color-rgb: 74, 144, 226; --accent-text-color: #fff"
 >
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Academic Calendar</title>
     <link rel="stylesheet" href="/src/style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   </head>
 
   <body>
-    <header class="header">
-      <input type="color" id="calendar-color-input" list="color-list" />
+    <header>
+      <div class="start">
+        <input type="color" id="calendar-color-input" class="form-control-color" list="color-list" />
+        <h1 id="calendar-name"></h1>
+      </div>
 
-      <h1 id="calendar-name"></h1>
-
-      <div class="calendar-controls"></div>
-
-      <select id="language-select">
-        <option value="en" data-label="english">English</option>
-        <option value="es" data-label="spanish">Spanish</option>
-        <option value="it" data-label="italian">Italian</option>
-        <option value="fr" data-label="french">French</option>
-        <option value="pt" data-label="portuguese">Portuguese</option>
-        <option value="de" data-label="german">German</option>
-        <option value="el" data-label="greek">Greek</option>
-        <option value="ar" data-label="arabic">Arabic</option>
-      </select>
-
-      <select id="theme-select">
-        <option value="auto" data-label="auto">Auto</option>
-        <option value="light" data-label="light">Light</option>
-        <option value="dark" data-label="dark">Dark</option>
-      </select>
-
-      <a
-        class="github-link"
-        href="https://github.com/cdmoro/rolling-calendar"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <app-icon name="github"></app-icon>
-      </a>
+      <div class="end">
+        <select id="language-select" class="form-select-sm">
+          <option value="en" data-label="english">English</option>
+          <option value="es" data-label="spanish">Spanish</option>
+          <option value="it" data-label="italian">Italian</option>
+          <option value="fr" data-label="french">French</option>
+          <option value="pt" data-label="portuguese">Portuguese</option>
+          <option value="de" data-label="german">German</option>
+          <option value="el" data-label="greek">Greek</option>
+          <option value="ar" data-label="arabic">Arabic</option>
+        </select>
+        <select id="theme-select" class="form-select-sm">
+          <option value="auto" data-label="auto">Auto</option>
+          <option value="light" data-label="light">Light</option>
+          <option value="dark" data-label="dark">Dark</option>
+        </select>
+        <a
+          class="github-link"
+          href="https://github.com/cdmoro/rolling-calendar"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <app-icon name="github"></app-icon>
+        </a>
+      </div>
     </header>
 
     <main class="layout">
@@ -115,10 +120,7 @@
 
         <div class="legend"></div>
 
-        <div class="event-list">
-          <div id="event-list" class="event-list-wrapper"></div>
-          <div id="out-of-range-event-list" class="event-list-wrapper"></div>
-        </div>
+        <div class="event-list-wrapper"></div>
       </section>
     </main>
 
@@ -133,27 +135,18 @@
           <input type="hidden" id="event-id-input" name="id" />
 
           <div class="form-control">
-            <label for="event-title-input" data-label="titleLabel"></label>
+            <label for="event-title-input">
+              <span data-label="titleLabel"></span>
+              <span class="required">*</span>
+            </label>
             <input type="text" id="event-title-input" name="title" required />
           </div>
 
           <div class="form-control">
-            <label for="event-start-date-input" data-label="startDate"></label>
-            <input
-              type="date"
-              id="event-start-date-input"
-              name="start"
-              required
-            />
-          </div>
-
-          <div class="form-control">
-            <label for="event-end-date-input" data-label="endDate"></label>
-            <input type="date" id="event-end-date-input" name="end" />
-          </div>
-
-          <div class="form-control">
-            <label for="event-day-type-select" data-label="type"></label>
+            <label for="event-day-type-select">
+              <span data-label="type"></span>
+              <span class="required">*</span>
+            </label>
             <select id="event-day-type-select" name="type">
               <option
                 value="no-activity"
@@ -179,6 +172,34 @@
               ></option>
             </select>
           </div>
+
+          <div class="form-control">
+            <label for="event-start-date-input">
+              <span data-label="startDate"></span>
+              <span class="required">*</span>
+            </label>
+              <input
+                type="date"
+                id="event-start-date-input"
+                name="start"
+                required
+              />
+          </div>
+
+          <div class="form-control">
+            <label for="event-end-date-input" data-label="endDate"></label>
+            <input type="date" id="event-end-date-input" name="end" />  
+            <small class="hint">
+              <span data-label="duration"></span>:
+              <span id="event-duration-display"></span>
+            </small>
+          </div>
+
+          <!-- <div class="form-control">
+            <div class="label" data-label="duration"></div>
+            <input type="text" id="event-duration-display" readonly disabled></div>
+          </div> -->
+
           <div class="form-control">
             <div class="label" data-label="preview"></div>
             <div id="legend-preview"></div>
@@ -312,11 +333,13 @@
             class="btn btn-secondary"
             id="confirm-no-button"
             data-label="cancel"
+            type="button"
           ></button>
           <button
             class="btn btn-primary"
             id="confirm-yes-button"
             data-label="confirm"
+            type="submit"
           ></button>
         </div>
       </form>
@@ -391,12 +414,26 @@
       <form method="dialog">
         <div class="dialog-body">
           <div class="form-control">
-            <label for="calendar-name-input" data-label="name"></label>
+            <label for="calendar-name-input">
+              <span data-label="name"></span>
+              <span class="required">*</span>
+            </label>
             <input type="text" id="calendar-name-input" required />
           </div>
           <div class="form-control">
-            <label for="start-month" data-label="startMonth"></label>
+            <label for="start-month">
+              <span data-label="startMonth"></span>
+              <span class="required">*</span>
+            </label>
             <input type="month" id="start-month" required />
+          </div>
+
+          <div class="form-control">
+            <label for="color-select">
+              <span data-label="color"></span>
+              <span class="required">*</span>
+            </label>
+            <input type="color" id="color-select" class="form-control-color" list="color-list" required />
           </div>
 
           <div class="form-control">
@@ -423,11 +460,6 @@
               placeholder="2025-2026 Academic Calendar"
               data-placeholder="calendarSubtitlePlaceholder"
             />
-          </div>
-
-          <div class="form-control">
-            <label for="color-select" data-label="color"></label>
-            <input type="color" id="color-select" list="color-list" />
           </div>
         </div>
 

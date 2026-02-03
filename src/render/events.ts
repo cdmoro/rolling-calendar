@@ -6,6 +6,12 @@ import { renderLegend } from './legend';
 import { formatLongDate, getEventLegendLabel } from './utils';
 import { autosaveCurrentCalendar } from '../modules/calendars';
 import { getFilteredEvents } from '../modules/calendar';
+import { openEditEventDialog } from '../modules/events';
+
+const COLUMNS_BY_LAYOUT: Record<string, number> = {
+  portrait: 2,
+  landscape: 3
+};
 
 const deleteDialog = document.getElementById(
   'delete-dialog'
@@ -23,15 +29,23 @@ deleteDialog.addEventListener('close', () => {
   pendingDeleteEventId = null;
 });
 
-function splitInTwoColumns<T>(items: T[]): [T[], T[]] {
-  const mid = Math.ceil(items.length / 2);
-  return [items.slice(0, mid), items.slice(mid)];
+function splitIntoColumns<T>(items: T[], columns: number): T[][] {
+  const result: T[][] = [];
+  const itemsPerColumn = Math.ceil(items.length / columns);
+
+  for (let i = 0; i < columns; i++) {
+    const start = i * itemsPerColumn;
+    const end = start + itemsPerColumn;
+    result.push(items.slice(start, end));
+  }
+
+  return result;
 }
 
 export function toHumanReadableDate(date: Date, time: boolean = false): string {
   const formatter = new Intl.DateTimeFormat(store.language, {
     year: 'numeric',
-    month: 'long',
+    month: 'short',
     day: 'numeric',
     ...(time
       ? {
@@ -97,90 +111,130 @@ function handleDelete(id: string) {
   }
 }
 
+const createEventItem = (event: CalendarEvent, showYear: boolean = false) => {
+  const div = document.createElement('div');
+  div.dataset.dateStart = event.start;
+  div.classList.add('event-item', event.type || 'no-activity');
+
+  const dateText = formatEventDate(event, showYear);
+
+  div.innerHTML = `
+      <span class="event-icon"></span>
+      <span class="event-date" title="${getEventLegendLabel(event.type)}">${dateText}</span>
+      <span class="event-title" title="${event.title}">${event.title}</span>
+      <span class="event-actions">
+        <button class="event-edit btn-icon btn-sm" data-id="${event.id}" data-title="editEvent" value="edit">
+          <app-icon name="edit"></app-icon>
+        </button>
+        <button class="event-delete btn-icon btn-sm btn-danger" data-id="${event.id}" data-title="deleteEvent" value="delete">
+          <app-icon name="trash"></app-icon>
+        </button>
+      </span>
+    `;
+
+  return div;
+};
+
 function renderEventListSection(
+  wrapper: HTMLElement,
+  columns: number = 2,
   events: CalendarEvent[],
-  id: string,
   showYear: boolean = false,
   title?: string
 ) {
-  const container = document.querySelector<HTMLDivElement>(id);
-  if (!container) return;
+  if (events.length === 0) return;
 
-  container.innerHTML = '';
-
-  if (events.length === 0) {
-    return;
-  }
+  const eventListEl = document.createElement('div');
+  eventListEl.className = 'event-list';
+  eventListEl.innerHTML = '';
 
   if (title) {
     const titleEl = document.createElement('h3');
     titleEl.textContent = title;
-    container.appendChild(titleEl);
+    wrapper.appendChild(titleEl);
   }
 
-  const [leftEvents, rightEvents] = splitInTwoColumns(events);
-  const colLeft = document.createElement('div');
-  const colRight = document.createElement('div');
-  colLeft.className = 'event-col';
-  colRight.className = 'event-col';
+  const eventColumns = splitIntoColumns(events, columns);
+  const colElements: HTMLDivElement[] = [];
 
-  const createEventItem = (event: CalendarEvent) => {
-    const div = document.createElement('div');
-    div.dataset.dateStart = event.start;
-    div.classList.add('event-item');
-    div.classList.add(event.type || 'no-activity');
-    div.title = getEventLegendLabel(event.type);
+  eventColumns.forEach((columnEvents) => {
+    const col = document.createElement('div');
+    col.className = 'event-col';
 
-    const dateText = formatEventDate(event, showYear);
+    columnEvents.forEach((event) => {
+      col.appendChild(createEventItem(event, showYear));
+    });
 
-    div.innerHTML = `
-      <span class="event-icon"></span>
-      <span class="event-date">${dateText}</span>
-      <span class="event-title" title="${event.title}">${event.title}</span>
-      <span class="event-actions">
-        <button class="event-delete" data-id="${event.id}">&times;</button>
-      </span>
-    `;
-    return div;
-  };
+    colElements.push(col);
+    eventListEl.appendChild(col);
+  });
 
-  leftEvents.forEach((e) => colLeft.appendChild(createEventItem(e)));
-  rightEvents.forEach((e) => colRight.appendChild(createEventItem(e)));
+  const maxLength = Math.max(...eventColumns.map((c) => c.length));
 
-  if (leftEvents.length > rightEvents.length) {
-    const empty = document.createElement('div');
-    empty.classList.add('event-item', 'empty');
-    colRight.appendChild(empty);
-  }
+  colElements.forEach((col, i) => {
+    const diff = maxLength - eventColumns[i].length;
+    for (let j = 0; j < diff; j++) {
+      const empty = document.createElement('div');
+      empty.classList.add('event-item', 'empty');
+      col.appendChild(empty);
+    }
+  });
 
-  container.appendChild(colLeft);
-  container.appendChild(colRight);
+  // container.onclick = (e) => {
+  //   const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
+  //     '.event-delete'
+  //   );
+  //   if (!btn?.dataset.id) return;
 
-  container.onclick = (e) => {
-    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
-      '.event-delete'
-    );
-    if (!btn?.dataset.id) return;
-
-    openDeleteEventDialog(btn.dataset.id);
-  };
+  //   openDeleteEventDialog(btn.dataset.id);
+  // };
+  wrapper.appendChild(eventListEl);
 }
 
 export function renderEventList() {
-  const list = document.querySelector<HTMLDivElement>('#event-list')!;
-  list.innerHTML = '';
+  const eventListWrapper = document.querySelector<HTMLDivElement>(
+    '.event-list-wrapper'
+  )!;
+  eventListWrapper.innerHTML = '';
 
+  const columns = COLUMNS_BY_LAYOUT[
+    document.documentElement.dataset.layout || 'portrait'
+  ] || 3;
   const { inRangeEvents, outOfRangeEvents } = getFilteredEvents(
     store.calendar!.state.events
   );
 
-  renderEventListSection(inRangeEvents, '#event-list', false);
+  renderEventListSection(eventListWrapper, columns, inRangeEvents);
+
+  if (outOfRangeEvents.length === 0) return;
+
   renderEventListSection(
+    eventListWrapper,
+    columns,
     outOfRangeEvents,
-    '#out-of-range-event-list',
     true,
     t('outOfRangeTitle')
   );
+
+  translateElement(eventListWrapper);
+
+  eventListWrapper.onclick = (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
+      'button'
+    );
+
+    if (!btn?.dataset.id) return;
+
+    switch (btn.value) {
+      case 'delete': 
+        openDeleteEventDialog(btn.dataset.id);
+        break;
+      case 'edit': {
+        openEditEventDialog(btn.dataset.id);
+        break;
+      }
+    }
+  };
 }
 
 export function openDeleteEventDialog(eventId: string) {

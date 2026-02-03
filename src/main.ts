@@ -116,8 +116,6 @@ calendarDialog.addEventListener('close', (e) => {
     ls.setItem('calendars', store.calendars);
     ls.setItem('currentCalendarId', store.currentCalendarId);
 
-    updateCalendarList();
-
     Toast.success(t('calendarCreated', { calendar_name: newCalendar.name }), {
       id: 'calendar-created'
     });
@@ -129,6 +127,7 @@ calendarDialog.addEventListener('close', (e) => {
     getForegroundColor(store.calendar!.state.color)
   );
   autosaveCurrentCalendar();
+  updateCalendarList();
   resolveCalendarHeader();
   renderUI();
 });
@@ -432,6 +431,7 @@ colorSelectHeader.addEventListener('input', (e) => {
     .value as Theme;
   store.calendar!.state.color = (e.target as HTMLSelectElement).value;
   setTheme(theme, store.calendar!.state.color);
+  updateCalendarList();
 });
 
 startDateInput.addEventListener('change', (e) => {
@@ -450,7 +450,7 @@ document
     calendarsDialog.showModal();
   });
 
-function uptdateEventCount() {
+export function uptdateEventCount() {
   const eventCountEl = document.querySelector<HTMLSpanElement>('#event-count')!;
   eventCountEl.textContent = store.calendar!.state.events.length.toString();
 }
@@ -472,26 +472,58 @@ function updateEventList() {
     return;
   }
 
-  store.calendar!.state.events.forEach((event) => {
-    const inRange = isEventInRange(event);
-    const div = document.createElement('div');
+  const groupEventsByMonth: Record<string, CalendarEvent[]> = {};
 
-    div.className = `list-item ${event.type || 'no-activity'}`;
-    div.classList.toggle('out-of-range', !inRange);
-    div.innerHTML = `
-      <span class="list-icon"></span>
-      <div class="list-info">
-        <h4 class="list-title">${event.title}</h4>
-        <div class="list-dates">${formatEventDate(event, true)}</div>
-        <div class="list-type">${getEventLegendLabel(event.type || 'no-activity')}${!inRange ? ` • ${t('outOfRange')}` : ''}</div>
-      </div>
-      <div class="list-actions">
-        <button class="btn btn-danger btn-icon btn-delete-event" data-id="${event.id}" title="${t('delete')}">
-          <app-icon name="trash"></app-icon>
-        </button>
-      </div>
-    `;
-    eventList.appendChild(div);
+  Object.values(store.calendar!.state.events).forEach((event) => {
+    const eventStartDate = new Date(event.start);
+    const monthKey = `${eventStartDate.getFullYear()}-${String(
+      eventStartDate.getMonth() + 1
+    ).padStart(2, '0')}`;
+
+    if (!groupEventsByMonth[monthKey]) {
+      groupEventsByMonth[monthKey] = [];
+    }
+
+    groupEventsByMonth[monthKey].push(event);
+  });
+
+  Object.entries(groupEventsByMonth).forEach(([monthKey, events]) => {
+    const [year, month] = monthKey.split('-').map(Number);
+    const monthDate = new Date(year, month - 1);
+
+    const monthHeader = document.createElement('div');
+    monthHeader.className = 'list-heading muted';
+    monthHeader.innerHTML = `${monthDate.toLocaleString(store.language, {
+      month: 'long',
+      year: 'numeric'
+    })} • ${events.length}`;
+    eventList.appendChild(monthHeader);
+
+    events.forEach((event) => {
+      const inRange = isEventInRange(event);
+      const div = document.createElement('div');
+
+      div.className = `list-item ${event.type || 'no-activity'}`;
+      div.classList.toggle('out-of-range', !inRange);
+      div.innerHTML = `
+        <span class="list-icon"></span>
+        <div class="list-info">
+          <h4 class="list-title">${event.title}</h4>
+          <!--div class="list-dates">${formatEventDate(event, true)}</div-->
+          <div class="list-type">${getEventLegendLabel(
+            event.type || 'no-activity'
+          )}${!inRange ? ` • ${t('outOfRange').toUpperCase()}` : ''}</div>
+        </div>
+        <div class="list-actions">
+          <button class="btn btn-danger btn-icon btn-delete-event" data-id="${
+            event.id
+          }" title="${t('delete')}">
+            <app-icon name="trash"></app-icon>
+          </button>
+        </div>
+      `;
+      eventList.appendChild(div);
+    });
   });
 }
 
@@ -500,13 +532,40 @@ function updateCalendarList() {
 
   calendarList.innerHTML = '';
 
-  calendars
-    .sort((a, b) => {
+  const groupCalendarsByMonth: Record<string, CalendarDocument[]> = {};
+
+  Object.values(calendars).forEach((cal) => {
+    const updatedAtDate = new Date(cal.updatedAt);
+    const monthKey = `${updatedAtDate.getFullYear()}-${String(
+      updatedAtDate.getMonth() + 1
+    ).padStart(2, '0')}`;
+
+    if (!groupCalendarsByMonth[monthKey]) {
+      groupCalendarsByMonth[monthKey] = [];
+    }
+
+    groupCalendarsByMonth[monthKey].push(cal);
+  });
+
+  Object.entries(groupCalendarsByMonth).forEach(([monthKey, cals]) => {
+    const [year, month] = monthKey.split('-').map(Number);
+    const monthDate = new Date(year, month - 1);
+
+    const monthHeader = document.createElement('div');
+    monthHeader.className = 'list-heading muted';
+    monthHeader.innerHTML = `${monthDate.toLocaleString(store.language, {
+      month: 'long',
+      year: 'numeric'
+    })} • ${cals.length}`;
+    calendarList.appendChild(monthHeader);
+
+    cals.sort((a, b) => {
       const aTime = new Date(a.updatedAt).getTime();
       const bTime = new Date(b.updatedAt).getTime();
       return bTime - aTime;
-    })
-    .forEach((cal) => {
+    });
+
+    cals.forEach((cal) => {
       const calendarListItem = document.createElement('div');
       calendarListItem.className = 'list-item';
       calendarListItem.dataset.id = cal.id;
@@ -516,10 +575,10 @@ function updateCalendarList() {
       );
       // ${cal.id === store.currentCalendarId ? '✓' : ''}
       calendarListItem.innerHTML = `
-      <div class="list-icon" style="background: ${cal.state.color}; color: ${getForegroundColor(cal.state.color)};"></div>
+      <div class="list-icon" style="background: ${cal.state.color}; color: ${getForegroundColor(cal.state.color)};">${cal.state.events.length}</div>
       <div class="list-info">
         <h4 class="list-title">${cal.name}</h4>
-        <div class="list-dates">${cal.state.events.length} ${t('events')}</div>
+        <!--div class="list-dates">${cal.state.events.length} ${t('events')}</div-->
         <div class="list-updated-at">${toHumanReadableDate(new Date(cal.updatedAt), true)}</div>
       </div>
       <div class="list-actions">
@@ -533,6 +592,7 @@ function updateCalendarList() {
     `;
       calendarList.appendChild(calendarListItem);
     });
+  });
 }
 
 function main() {
